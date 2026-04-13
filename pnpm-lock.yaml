@@ -85,7 +85,13 @@ importers:
       '@vox/schema':
         specifier: workspace:*
         version: link:../schema
+      zod:
+        specifier: ^4.3.0
+        version: 4.3.6
     devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
       typescript:
         specifier: ^5.8.0
         version: 5.9.3

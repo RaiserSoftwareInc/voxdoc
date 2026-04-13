@@ -15,11 +15,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@vox/schema": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.12.0",
     "@vox/compiler": "workspace:*",
-    "@modelcontextprotocol/sdk": "^1.12.0"
+    "@vox/schema": "workspace:*",
+    "zod": "^4.3.0"
   },
   "devDependencies": {
+    "@types/node": "^25.6.0",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   }
