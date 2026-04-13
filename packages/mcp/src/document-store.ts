@@ -6,8 +6,9 @@ import type {
   ReviewComment,
   ReviewStatus,
   DocumentStatus,
-} from "@vox/schema";
-import { generateBlockId } from "@vox/schema";
+} from "@voxdoc/schema";
+import { generateBlockId } from "@voxdoc/schema";
+import { compile, readVoxSource } from "@voxdoc/compiler";
 
 export class DocumentStore {
   private doc: VoxDocument;
@@ -52,7 +53,7 @@ export class DocumentStore {
 
   static fromFile(filePath: string): DocumentStore {
     const content = readFileSync(filePath, "utf-8");
-    const doc = JSON.parse(content) as VoxDocument;
+    const doc = readVoxSource(content);
     return new DocumentStore(doc, filePath);
   }
 
@@ -62,7 +63,14 @@ export class DocumentStore {
       this.doc.comments = [...this.comments];
     }
     if (this.filePath) {
-      writeFileSync(this.filePath, JSON.stringify(this.doc, null, 2), "utf-8");
+      // Re-render as self-rendering HTML with embedded source JSON
+      const result = compile(this.doc);
+      if (result.success) {
+        writeFileSync(this.filePath, result.html!, "utf-8");
+      } else {
+        // Fallback to raw JSON if compile fails (e.g. missing a11y fields during authoring)
+        writeFileSync(this.filePath, JSON.stringify(this.doc, null, 2), "utf-8");
+      }
     }
   }
 

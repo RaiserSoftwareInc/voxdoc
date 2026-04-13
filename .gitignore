@@ -5,3 +5,6 @@ dist/
 *.tsbuildinfo
 .superpowers/
 .claude/
+CLAUDE.md
+my-doc.*
+mcp-test.*

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { TabsBlock } from "@vox/schema";
+import type { TabsBlock } from "@voxdoc/schema";
 
 export function Tabs({ block }: { block: TabsBlock }) {
   const [active, setActive] = useState(0);

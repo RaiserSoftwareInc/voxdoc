@@ -6,12 +6,14 @@ export function registerReviewTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.tool(
+  server.registerTool(
     "add_comment",
-    "Add a review comment to a block",
     {
-      block_id: z.string(),
-      comment: z.string(),
+      description: "Add a review comment to a block",
+      inputSchema: {
+        block_id: z.string(),
+        comment: z.string(),
+      },
     },
     async ({ block_id, comment }) => {
       const comment_id = getStore().addComment(block_id, comment);
@@ -21,22 +23,19 @@ export function registerReviewTools(
     },
   );
 
-  server.tool(
-    "list_comments",
-    "List all unresolved review comments",
-    {},
-    async () => {
-      const comments = getStore().listComments();
-      return {
-        content: [{ type: "text", text: JSON.stringify(comments, null, 2) }],
-      };
-    },
-  );
+  server.registerTool("list_comments", { description: "List all unresolved review comments" }, async () => {
+    const comments = getStore().listComments();
+    return {
+      content: [{ type: "text", text: JSON.stringify(comments, null, 2) }],
+    };
+  });
 
-  server.tool(
+  server.registerTool(
     "resolve_comment",
-    "Resolve a review comment",
-    { comment_id: z.string() },
+    {
+      description: "Resolve a review comment",
+      inputSchema: { comment_id: z.string() },
+    },
     async ({ comment_id }) => {
       getStore().resolveComment(comment_id);
       return {
@@ -45,12 +44,14 @@ export function registerReviewTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "set_block_status",
-    "Set the review status of a block",
     {
-      id: z.string(),
-      status: z.enum(["pre_approved", "pending", "flagged", "approved"]),
+      description: "Set the review status of a block",
+      inputSchema: {
+        id: z.string(),
+        status: z.enum(["pre_approved", "pending", "flagged", "approved"]),
+      },
     },
     async ({ id, status }) => {
       try {
@@ -67,11 +68,13 @@ export function registerReviewTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "set_status",
-    "Set the document review status",
     {
-      status: z.enum(["draft", "pending_review", "approved", "published"]),
+      description: "Set the document review status",
+      inputSchema: {
+        status: z.enum(["draft", "pending_review", "approved", "published"]),
+      },
     },
     async ({ status }) => {
       getStore().setStatus(status);

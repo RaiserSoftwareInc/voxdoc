@@ -1,4 +1,4 @@
-import type { TableBlock } from "@vox/schema";
+import type { TableBlock } from "@voxdoc/schema";
 
 export function Table({ block }: { block: TableBlock }) {
   return (

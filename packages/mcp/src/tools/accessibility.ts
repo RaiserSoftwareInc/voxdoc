@@ -1,18 +1,21 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { checkAccessibility } from "@vox/compiler";
+import { checkAccessibility } from "@voxdoc/compiler";
+import type { HandwritingBlock } from "@voxdoc/schema";
 import type { DocumentStore } from "../document-store.js";
 
 export function registerAccessibilityTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.tool(
+  server.registerTool(
     "set_description",
-    "Set a description on a block for accessibility",
     {
-      block_id: z.string(),
-      text: z.string(),
+      description: "Set a description on a block for accessibility",
+      inputSchema: {
+        block_id: z.string(),
+        text: z.string(),
+      },
     },
     async ({ block_id, text }) => {
       try {
@@ -29,12 +32,14 @@ export function registerAccessibilityTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "set_transcription",
-    "Verify and set transcription text on a handwriting block",
     {
-      block_id: z.string(),
-      text: z.string(),
+      description: "Verify and set transcription text on a handwriting block",
+      inputSchema: {
+        block_id: z.string(),
+        text: z.string(),
+      },
     },
     async ({ block_id, text }) => {
       const store = getStore();
@@ -51,29 +56,23 @@ export function registerAccessibilityTools(
           isError: true,
         };
       }
-      store.editBlock(block_id, {
-        transcription: {
-          ...block.transcription,
-          text,
-          status: "approved",
-        },
-      });
+      const updatedTranscription = {
+        ...block.transcription,
+        text,
+        status: "verified" as const,
+      };
+      store.editBlock(block_id, { transcription: updatedTranscription } as unknown as Partial<HandwritingBlock>);
       return {
         content: [{ type: "text", text: JSON.stringify({ success: true }) }],
       };
     },
   );
 
-  server.tool(
-    "get_accessibility_report",
-    "Get an accessibility report for the document",
-    {},
-    async () => {
-      const doc = getStore().getDocument();
-      const report = checkAccessibility(doc.blocks);
-      return {
-        content: [{ type: "text", text: JSON.stringify(report, null, 2) }],
-      };
-    },
-  );
+  server.registerTool("get_accessibility_report", { description: "Get an accessibility report for the document" }, async () => {
+    const doc = getStore().getDocument();
+    const report = checkAccessibility(doc.blocks);
+    return {
+      content: [{ type: "text", text: JSON.stringify(report, null, 2) }],
+    };
+  });
 }

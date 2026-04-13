@@ -1,4 +1,4 @@
-import type { AccordionBlock } from "@vox/schema";
+import type { AccordionBlock } from "@voxdoc/schema";
 
 export function Accordion({ block }: { block: AccordionBlock }) {
   return (

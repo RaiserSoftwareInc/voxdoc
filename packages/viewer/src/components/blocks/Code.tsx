@@ -1,4 +1,4 @@
-import type { CodeBlock } from "@vox/schema";
+import type { CodeBlock } from "@voxdoc/schema";
 
 export function Code({ block }: { block: CodeBlock }) {
   return (

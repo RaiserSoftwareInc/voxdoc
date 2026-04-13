@@ -56,7 +56,7 @@ A document is a single `.json` file with two top-level keys: `meta` and `blocks`
     "title": "Authentication API",
     "description": "Reference documentation for auth endpoints",
     "version": "1.0.0",
-    "authors": ["Bryan"],
+    "authors": ["Vox Team"],
     "tags": ["api", "authentication"],
     "status": "pending_review",
     "created": "2026-04-12T00:00:00Z",

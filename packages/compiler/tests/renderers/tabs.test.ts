@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderTabs } from "../../src/renderers/tabs.js";
-import type { TabsBlock } from "@vox/schema";
+import type { TabsBlock } from "@voxdoc/schema";
 
 describe("renderTabs", () => {
   it("renders tablist with role attributes", () => {

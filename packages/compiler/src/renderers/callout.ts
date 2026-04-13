@@ -1,4 +1,4 @@
-import type { CalloutBlock, CalloutVariant } from "@vox/schema";
+import type { CalloutBlock, CalloutVariant } from "@voxdoc/schema";
 import { marked } from "marked";
 import { escapeHtml, resolveVariables } from "../utils.js";
 

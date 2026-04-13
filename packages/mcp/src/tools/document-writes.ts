@@ -6,13 +6,15 @@ export function registerWriteTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.tool(
+  server.registerTool(
     "add_block",
-    "Add a new block to the document",
     {
-      type: z.string(),
-      content: z.record(z.string(), z.any()),
-      after: z.string().optional(),
+      description: "Add a new block to the document",
+      inputSchema: {
+        type: z.string(),
+        content: z.record(z.string(), z.any()),
+        after: z.string().optional(),
+      },
     },
     async ({ type, content, after }) => {
       const blockData = { type, ...content } as Parameters<DocumentStore["addBlock"]>[0];
@@ -23,12 +25,14 @@ export function registerWriteTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "edit_block",
-    "Edit an existing block",
     {
-      id: z.string(),
-      content: z.record(z.string(), z.any()),
+      description: "Edit an existing block",
+      inputSchema: {
+        id: z.string(),
+        content: z.record(z.string(), z.any()),
+      },
     },
     async ({ id, content }) => {
       try {
@@ -45,10 +49,12 @@ export function registerWriteTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "delete_block",
-    "Delete a block from the document",
-    { id: z.string() },
+    {
+      description: "Delete a block from the document",
+      inputSchema: { id: z.string() },
+    },
     async ({ id }) => {
       try {
         getStore().deleteBlock(id);
@@ -64,12 +70,14 @@ export function registerWriteTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "move_block",
-    "Move a block to a new position",
     {
-      id: z.string(),
-      after: z.string().optional(),
+      description: "Move a block to a new position",
+      inputSchema: {
+        id: z.string(),
+        after: z.string().optional(),
+      },
     },
     async ({ id, after }) => {
       try {
@@ -86,12 +94,14 @@ export function registerWriteTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "set_metadata",
-    "Set a metadata field",
     {
-      key: z.string(),
-      value: z.any(),
+      description: "Set a metadata field",
+      inputSchema: {
+        key: z.string(),
+        value: z.any(),
+      },
     },
     async ({ key, value }) => {
       getStore().setMetadata(key, value);
@@ -101,12 +111,14 @@ export function registerWriteTools(
     },
   );
 
-  server.tool(
+  server.registerTool(
     "set_variable",
-    "Set a template variable",
     {
-      key: z.string(),
-      value: z.string(),
+      description: "Set a template variable",
+      inputSchema: {
+        key: z.string(),
+        value: z.string(),
+      },
     },
     async ({ key, value }) => {
       getStore().setVariable(key, value);

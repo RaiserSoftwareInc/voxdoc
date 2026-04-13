@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { compile } from "../src/compiler.js";
-import type { VoxDocument, VoxBlock } from "@vox/schema";
+import type { VoxDocument, VoxBlock } from "@voxdoc/schema";
 
 function makeDoc(blocks: VoxBlock[], variables: Record<string, string> = {}): VoxDocument {
   return {

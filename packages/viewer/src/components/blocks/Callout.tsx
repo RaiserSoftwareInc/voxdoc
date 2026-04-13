@@ -1,4 +1,4 @@
-import type { CalloutBlock, CalloutVariant } from "@vox/schema";
+import type { CalloutBlock, CalloutVariant } from "@voxdoc/schema";
 
 const variantStyles: Record<CalloutVariant, { border: string; bg: string; icon: string }> = {
   info: { border: "border-blue-500", bg: "bg-blue-50 dark:bg-blue-950", icon: "i" },

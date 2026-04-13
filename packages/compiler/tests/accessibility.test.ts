@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { checkAccessibility } from "../src/accessibility.js";
-import type { VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
 
 describe("checkAccessibility", () => {
   it("passes for blocks with required accessibility fields", () => {

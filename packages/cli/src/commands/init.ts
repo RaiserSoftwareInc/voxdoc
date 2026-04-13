@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { writeFileSync } from "node:fs";
-import type { VoxDocument } from "@vox/schema";
+import type { VoxDocument } from "@voxdoc/schema";
+import { compile } from "@voxdoc/compiler";
 
 export function createDocument(options: { title?: string } = {}): VoxDocument {
   const now = new Date().toISOString();
@@ -38,6 +39,12 @@ export function initCommand(
   options: { title?: string } = {},
 ): void {
   const doc = createDocument(options);
-  writeFileSync(outputPath, JSON.stringify(doc, null, 2) + "\n", "utf-8");
+  const result = compile(doc);
+  if (result.success) {
+    writeFileSync(outputPath, result.html!, "utf-8");
+  } else {
+    // Fallback to raw JSON if compile fails (shouldn't happen for empty doc)
+    writeFileSync(outputPath, JSON.stringify(doc, null, 2) + "\n", "utf-8");
+  }
   console.log(`Created ${outputPath}`);
 }

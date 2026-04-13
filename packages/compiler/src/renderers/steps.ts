@@ -1,4 +1,4 @@
-import type { StepsBlock, VoxBlock } from "@vox/schema";
+import type { StepsBlock, VoxBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 import type { RenderContext } from "./index.js";
 

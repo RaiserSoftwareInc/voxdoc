@@ -1,4 +1,4 @@
-import type { LayoutBlock, VoxBlock } from "@vox/schema";
+import type { LayoutBlock, VoxBlock } from "@voxdoc/schema";
 import type { RenderContext } from "./index.js";
 
 export function renderLayout(

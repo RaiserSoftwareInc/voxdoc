@@ -1,4 +1,4 @@
-import type { DiagramBlock } from "@vox/schema";
+import type { DiagramBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderDiagram(block: DiagramBlock): string {

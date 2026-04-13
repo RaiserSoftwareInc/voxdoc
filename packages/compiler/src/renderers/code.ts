@@ -1,4 +1,4 @@
-import type { CodeBlock } from "@vox/schema";
+import type { CodeBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderCode(block: CodeBlock): string {

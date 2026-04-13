@@ -1,4 +1,4 @@
-import type { VariableDefBlock } from "@vox/schema";
+import type { VariableDefBlock } from "@voxdoc/schema";
 
 export function renderVariableDef(_block: VariableDefBlock): string {
   return "";

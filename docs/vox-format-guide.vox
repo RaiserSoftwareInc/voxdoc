@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vox Format Guide — For AI Agents</title>
+<style>:root {
+  --vox-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --vox-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --vox-text: #1a1a2e;
+  --vox-bg: #ffffff;
+  --vox-bg-secondary: #f5f5f7;
+  --vox-border: #e0e0e0;
+  --vox-accent: #2563eb;
+  --vox-accent-light: #dbeafe;
+  --vox-link: #2563eb;
+  --vox-code-bg: #f8f9fa;
+  --vox-radius: 8px;
+  --vox-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vox-text: #e0e0e0;
+    --vox-bg: #1a1a2e;
+    --vox-bg-secondary: #16213e;
+    --vox-border: #333;
+    --vox-accent: #60a5fa;
+    --vox-accent-light: #1e3a5f;
+    --vox-link: #93bbfc;
+    --vox-code-bg: #0f1729;
+    --vox-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--vox-font);
+  color: var(--vox-text);
+  background: var(--vox-bg);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+}
+
+.vox-document {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.9rem; }
+
+p { margin: 1em 0; }
+
+a { color: var(--vox-link); text-decoration: underline; }
+a:hover { text-decoration: none; }
+
+code {
+  font-family: var(--vox-font-mono);
+  background: var(--vox-code-bg);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--vox-code-bg);
+  padding: 1rem;
+  border-radius: var(--vox-radius);
+  overflow-x: auto;
+  border: 1px solid var(--vox-border);
+}
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Callouts */
+.vox-callout {
+  border-left: 4px solid var(--vox-border);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 var(--vox-radius) var(--vox-radius) 0;
+  background: var(--vox-bg-secondary);
+}
+.vox-callout-info { border-left-color: #2563eb; }
+.vox-callout-warning { border-left-color: #f59e0b; }
+.vox-callout-danger { border-left-color: #ef4444; }
+.vox-callout-tip { border-left-color: #10b981; }
+.vox-callout-note { border-left-color: #8b5cf6; }
+
+/* Tables */
+.vox-table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vox-border);
+  text-align: left;
+}
+th {
+  background: var(--vox-bg-secondary);
+  font-weight: 600;
+}
+
+/* Tabs */
+.vox-tabs {
+  margin: 1.5rem 0;
+}
+.vox-tabs [role="tablist"] {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--vox-border);
+  margin-bottom: 0;
+}
+.vox-tabs [role="tab"] {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--vox-text);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+.vox-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--vox-accent);
+  color: var(--vox-accent);
+  font-weight: 600;
+}
+.vox-tabs [role="tabpanel"] {
+  padding: 1rem 0;
+}
+
+/* Layout grid */
+.vox-layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.vox-layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Steps */
+.vox-steps {
+  counter-reset: vox-step;
+  list-style: none;
+  padding: 0;
+}
+.vox-step {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+.vox-step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--vox-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Accordion */
+.vox-accordion {
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  margin: 1rem 0;
+}
+.vox-accordion summary {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: var(--vox-bg-secondary);
+  border-radius: var(--vox-radius);
+}
+.vox-accordion[open] summary {
+  border-radius: var(--vox-radius) var(--vox-radius) 0 0;
+  border-bottom: 1px solid var(--vox-border);
+}
+.vox-accordion .vox-accordion-content {
+  padding: 1rem;
+}
+
+/* Code filename header */
+.vox-code-filename {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-bottom: none;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--vox-font-mono);
+  font-size: 0.8rem;
+  border-radius: var(--vox-radius) var(--vox-radius) 0 0;
+  color: var(--vox-text);
+}
+.vox-code-filename + pre {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+}
+
+/* Table of Contents */
+.vox-toc {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.vox-toc nav ul {
+  list-style: none;
+  padding-left: 1.25rem;
+}
+.vox-toc nav > ul {
+  padding-left: 0;
+}
+
+/* Skip navigation link */
+.vox-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--vox-accent);
+  color: #fff;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 0 0 var(--vox-radius) 0;
+}
+.vox-skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.vox-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Responsive: 640px */
+@media (max-width: 640px) {
+  .vox-layout-2col,
+  .vox-layout-3col {
+    grid-template-columns: 1fr;
+  }
+  .vox-tabs [role="tablist"] {
+    flex-wrap: wrap;
+  }
+}
+
+/* Responsive: 400px */
+@media (max-width: 400px) {
+  .vox-document {
+    padding: 1rem 0.75rem;
+  }
+  .vox-callout {
+    padding: 0.75rem 1rem;
+  }
+}</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+</head>
+<body>
+<a href="#vox-main" class="vox-skip-link">Skip to content</a>
+<main id="vox-main" class="vox-document">
+<h1 id="blk_intro_h1">Vox Format Guide</h1>
+<p id="blk_intro_p1">Vox is an <strong>AI-first, accessible, open document format</strong>. Documents are JSON files composed of typed blocks. AI authors them via MCP tools. Humans review by exception. The compiler produces self-contained, responsive, WCAG 2.1 AA compliant HTML.</p>
+<div id="blk_intro_callout" class="vox-callout vox-callout-info" role="note" aria-label="info"><div class="vox-callout-title">ℹ️ Who is this for?</div><div class="vox-callout-content">This document is written for AI agents that will author Vox documents. If you&#39;re an AI reading this — this is your reference.</div></div>
+<h2 id="blk_overview_h2">How It Works</h2>
+<figure id="blk_overview_diagram" class="vox-diagram" aria-label="Vox workflow: AI agent authors the document via MCP tools. The compiler produces self-contained HTML. The viewer enables human review. If zero blocks are flagged, the document compiles automatically without human review."><pre class="mermaid">flowchart LR
+  A[AI Agent] --&gt;|MCP tools| B[.vox Document]
+  B --&gt;|Compiler| C[Self-contained HTML]
+  B --&gt;|Viewer| D[Human Review]
+  D --&gt;|Approve/Flag| B
+  B --&gt;|Zero flags| C</pre><figcaption class="vox-sr-only">Vox workflow: AI agent authors the document via MCP tools. The compiler produces self-contained HTML. The viewer enables human review. If zero blocks are flagged, the document compiles automatically without human review.</figcaption></figure>
+<ol id="blk_overview_steps" class="vox-steps"><li class="vox-step"><div class="vox-step-number">1</div><div class="vox-step-title">AI connects via MCP</div><div class="vox-step-content"><p id="blk_step1_p">Run <code>vox mcp serve document.vox</code> to start the MCP server. AI connects and sees 21 tools for reading, writing, reviewing, and compiling the document.</p></div></li><li class="vox-step"><div class="vox-step-number">2</div><div class="vox-step-title">AI builds the document block by block</div><div class="vox-step-content"><p id="blk_step2_p">Call <code>add_block()</code> with a type and content fields. Each block gets a unique <code>blk_</code> prefixed ID. Build the document sequentially — headings, paragraphs, callouts, tables, diagrams, code blocks.</p></div></li><li class="vox-step"><div class="vox-step-number">3</div><div class="vox-step-title">AI self-reviews and flags uncertain blocks</div><div class="vox-step-content"><p id="blk_step3_p">Assign a <code>review.confidence</code> score (0-1) to each block. Blocks ≥0.90 are pre-approved. Blocks &lt;0.70 are flagged with a reason explaining the uncertainty. Set document status to <code>pending_review</code>.</p></div></li><li class="vox-step"><div class="vox-step-number">4</div><div class="vox-step-title">Human reviews only flagged blocks</div><div class="vox-step-content"><p id="blk_step4_p">The viewer shows only flagged/pending blocks. Humans approve, flag with a comment, or pass. They never edit content directly — they instruct AI via comments.</p></div></li><li class="vox-step"><div class="vox-step-number">5</div><div class="vox-step-title">Compile and ship</div><div class="vox-step-content"><p id="blk_step5_p">Call <code>compile(&#39;html&#39;)</code> to produce a single self-contained HTML file. If zero blocks were flagged, this happens automatically — no human intervention needed.</p></div></li></ol>
+<h2 id="blk_structure_h2">Document Structure</h2>
+<p id="blk_structure_p1">A <code>.vox</code> file is JSON with two top-level keys: <code>meta</code> (document metadata) and <code>blocks</code> (content array). Every block has a unique <code>id</code> and a <code>type</code>.</p>
+<div class="vox-code-block"><div class="vox-code-filename">example.vox</div><pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://voxformat.dev/schema/v1.json&quot;,
+  &quot;meta&quot;: {
+    &quot;id&quot;: &quot;uuid&quot;,
+    &quot;title&quot;: &quot;Document Title&quot;,
+    &quot;status&quot;: &quot;draft&quot;,
+    &quot;variables&quot;: { &quot;version&quot;: &quot;2.0&quot; },
+    &quot;accessibility&quot;: { &quot;language&quot;: &quot;en&quot;, &quot;reading_level&quot;: &quot;technical&quot; }
+  },
+  &quot;blocks&quot;: [
+    { &quot;id&quot;: &quot;blk_001&quot;, &quot;type&quot;: &quot;heading&quot;, &quot;level&quot;: 1, &quot;content&quot;: &quot;Hello&quot; },
+    { &quot;id&quot;: &quot;blk_002&quot;, &quot;type&quot;: &quot;paragraph&quot;, &quot;content&quot;: &quot;Version {{version}}&quot; }
+  ]
+}</code></pre></div>
+<h2 id="blk_blocks_h2">Block Types Reference</h2>
+<p id="blk_blocks_p1">Vox has 18 block types. Each serves a specific purpose. Accessibility fields marked with ⚠️ are <strong>required</strong> — the compiler refuses to compile without them.</p>
+<h3 id="blk_core_h3">Core Blocks</h3>
+<p id="blk_core_table-summary" class="vox-sr-only">Six core block types with their required fields and accessibility requirements. Image blocks require non-empty alt text.</p><div class="vox-table-wrapper" id="blk_core_table"><table aria-describedby="blk_core_table-summary"><caption>Core block types</caption><thead><tr><th scope="col">Type</th><th scope="col">Required Fields</th><th scope="col">Accessibility</th></tr></thead><tbody><tr><td>heading</td><td>level (1-6), content</td><td>—</td></tr><tr><td>paragraph</td><td>content (inline Markdown)</td><td>—</td></tr><tr><td>code</td><td>language, content</td><td>—</td></tr><tr><td>image</td><td>src, alt</td><td>⚠️ alt must be non-empty</td></tr><tr><td>list</td><td>ordered (bool), items[]</td><td>—</td></tr><tr><td>toc</td><td>(none, optional max_depth)</td><td>—</td></tr></tbody></table></div>
+<h3 id="blk_enhanced_h3">Enhanced Blocks</h3>
+<p id="blk_enhanced_table-summary" class="vox-sr-only">Twelve enhanced block types. Diagram, table, math, and handwriting blocks have mandatory accessibility fields that must be non-empty for compilation to succeed.</p><div class="vox-table-wrapper" id="blk_enhanced_table"><table aria-describedby="blk_enhanced_table-summary"><caption>Enhanced block types</caption><thead><tr><th scope="col">Type</th><th scope="col">Required Fields</th><th scope="col">Accessibility</th></tr></thead><tbody><tr><td>callout</td><td>variant (info/warning/danger/tip/note), content</td><td>—</td></tr><tr><td>diagram</td><td>syntax (mermaid/graphviz/d2), content</td><td>⚠️ description required</td></tr><tr><td>table</td><td>headers[], rows[][]</td><td>⚠️ summary required</td></tr><tr><td>math</td><td>expression, display (inline/block)</td><td>⚠️ spoken required (MathSpeak)</td></tr><tr><td>tabs</td><td>panels[] (label + content or blocks)</td><td>—</td></tr><tr><td>accordion</td><td>title, blocks[]</td><td>—</td></tr><tr><td>steps</td><td>steps[] (title + blocks)</td><td>—</td></tr><tr><td>layout</td><td>columns (2 or 3), blocks[][]</td><td>—</td></tr><tr><td>handwriting</td><td>image, alt, transcription</td><td>⚠️ transcription verified if confidence &lt; 0.70</td></tr><tr><td>include</td><td>src (file path)</td><td>— (v1: renders as link)</td></tr><tr><td>variable_def</td><td>key, value</td><td>— (not rendered)</td></tr><tr><td>xref</td><td>target (block id)</td><td>—</td></tr></tbody></table></div>
+<h2 id="blk_a11y_h2">Accessibility Requirements</h2>
+<div id="blk_a11y_callout" class="vox-callout vox-callout-danger" role="note" aria-label="danger"><div class="vox-callout-title">🚨 Compilation will fail without these</div><div class="vox-callout-content">Every <code>image</code> needs <code>alt</code>. Every <code>diagram</code> needs <code>description</code>. Every <code>table</code> needs <code>summary</code>. Every <code>math</code> needs <code>spoken</code>. Every <code>handwriting</code> with confidence &lt; 0.70 needs verified transcription. These are not optional — the compiler enforces them.</div></div>
+<p id="blk_a11y_p1">When authoring as an AI agent, <strong>always generate accessibility fields at creation time</strong>. Don&#39;t add blocks without them and fix later — add them in the same <code>add_block()</code> call. The <code>description</code> field on diagrams should describe what the diagram shows in plain language, not repeat the diagram syntax.</p>
+<h2 id="blk_variables_h2">Variables</h2>
+<p id="blk_variables_p1">Define variables in <code>meta.variables</code> or via <code>variable_def</code> blocks. Reference them as <code>{{variable_name}}</code> in any block content. Variables are resolved at compile time. Use them for version numbers, URLs, product names — anything that appears in multiple places.</p>
+<div class="vox-code-block"><pre><code class="language-json">&quot;variables&quot;: {
+  &quot;api_version&quot;: &quot;v2&quot;,
+  &quot;base_url&quot;: &quot;https://api.example.com&quot;
+}
+
+// In block content:
+&quot;content&quot;: &quot;Send requests to {{base_url}}/{{api_version}}/users&quot;</code></pre></div>
+<h2 id="blk_review_h2">Review Workflow</h2>
+<p id="blk_review_p1">After generating all blocks, assign a confidence score to each. This tells the human reviewer which blocks to focus on.</p>
+<p id="blk_review_table-summary" class="vox-sr-only">How confidence scores map to review statuses and whether the human reviewer sees the block by default</p><div class="vox-table-wrapper" id="blk_review_table"><table aria-describedby="blk_review_table-summary"><thead><tr><th scope="col">Confidence</th><th scope="col">Status</th><th scope="col">Human sees it?</th></tr></thead><tbody><tr><td>≥ 0.90</td><td>pre_approved</td><td>No (unless full review mode)</td></tr><tr><td>0.70 – 0.89</td><td>pending</td><td>Yes, can approve quickly</td></tr><tr><td>&lt; 0.70</td><td>flagged</td><td>Yes, with AI's reasoning shown</td></tr></tbody></table></div>
+<div class="vox-code-block"><pre><code class="language-json">{
+  &quot;id&quot;: &quot;blk_042&quot;,
+  &quot;type&quot;: &quot;diagram&quot;,
+  &quot;content&quot;: &quot;...&quot;,
+  &quot;description&quot;: &quot;...&quot;,
+  &quot;review&quot;: {
+    &quot;confidence&quot;: 0.65,
+    &quot;reason&quot;: &quot;Inferred from code comments — not explicitly documented&quot;,
+    &quot;status&quot;: &quot;flagged&quot;
+  }
+}</code></pre></div>
+<h2 id="blk_mcp_h2">MCP Tools Reference</h2>
+<p id="blk_mcp_p1">When connected via <code>vox mcp serve</code>, the following tools are available. Call <code>get_schema()</code> first to learn the full block type schema.</p>
+<div id="blk_mcp_tabs" class="vox-tabs"><div role="tablist"><button role="tab" id="blk_mcp_tabs-tab-0" aria-controls="blk_mcp_tabs-panel-0" aria-selected="true" tabindex="0">Read</button><button role="tab" id="blk_mcp_tabs-tab-1" aria-controls="blk_mcp_tabs-panel-1" aria-selected="false" tabindex="-1">Write</button><button role="tab" id="blk_mcp_tabs-tab-2" aria-controls="blk_mcp_tabs-panel-2" aria-selected="false" tabindex="-1">Review</button><button role="tab" id="blk_mcp_tabs-tab-3" aria-controls="blk_mcp_tabs-panel-3" aria-selected="false" tabindex="-1">Output</button></div><div role="tabpanel" id="blk_mcp_tabs-panel-0" aria-labelledby="blk_mcp_tabs-tab-0"><pre><code class="language-text">get_document()         → full document JSON
+list_blocks()          → block summaries (id, type, preview, status)
+get_block(id)          → single block
+get_schema()           → full JSONSchema
+search_blocks(query)   → blocks matching query</code></pre></div><div role="tabpanel" id="blk_mcp_tabs-panel-1" aria-labelledby="blk_mcp_tabs-tab-1" hidden="true"><pre><code class="language-text">add_block(type, content, after?)  → insert block, returns id
+edit_block(id, content)           → update block fields
+delete_block(id)                  → remove block
+move_block(id, after?)            → reorder
+set_metadata(key, value)          → update meta fields
+set_variable(key, value)          → add/update variable</code></pre></div><div role="tabpanel" id="blk_mcp_tabs-panel-2" aria-labelledby="blk_mcp_tabs-tab-2" hidden="true"><pre><code class="language-text">add_comment(block_id, comment)    → attach feedback
+list_comments()                   → pending comments
+resolve_comment(comment_id)       → mark addressed
+set_block_status(id, status)      → set review status
+set_status(status)                → set document status</code></pre></div><div role="tabpanel" id="blk_mcp_tabs-panel-3" aria-labelledby="blk_mcp_tabs-tab-3" hidden="true"><pre><code class="language-text">validate()        → check against schema + accessibility
+compile(format)   → compile to HTML</code></pre></div></div>
+<h2 id="blk_example_h2">Example: AI Authoring Workflow</h2>
+<div class="vox-code-block"><pre><code class="language-text">1. get_schema()                    → learn available block types
+2. add_block(&quot;heading&quot;, { level: 1, content: &quot;API Docs&quot; })
+3. add_block(&quot;paragraph&quot;, { content: &quot;Authentication reference...&quot; })
+4. add_block(&quot;table&quot;, {
+     headers: [&quot;Method&quot;, &quot;Path&quot;],
+     rows: [[&quot;GET&quot;, &quot;/users&quot;]],
+     summary: &quot;API endpoint listing&quot;
+   })
+5. add_block(&quot;diagram&quot;, {
+     syntax: &quot;mermaid&quot;,
+     content: &quot;flowchart LR\n  A--&gt;B&quot;,
+     description: &quot;Request flow from client to server&quot;
+   })
+6. set_variable(&quot;api_version&quot;, &quot;v2&quot;)
+7. set_block_status(&quot;blk_...&quot;, &quot;pre_approved&quot;)  // high confidence
+8. set_block_status(&quot;blk_...&quot;, &quot;flagged&quot;)       // low confidence
+9. set_status(&quot;pending_review&quot;)
+10. compile(&quot;html&quot;)                              // if zero flags</code></pre></div>
+<h2 id="blk_principles_h2">Principles for AI Authors</h2>
+<ol id="blk_principles_list"><li><strong>Always include accessibility fields</strong> — alt, description, summary, spoken — at block creation time, not as an afterthought.</li><li><strong>Use variables</strong> for anything repeated — version numbers, URLs, product names. One source of truth.</li><li><strong>Be honest about confidence</strong> — flag blocks you inferred rather than directly observed. Humans trust AI more when it admits uncertainty.</li><li><strong>Description fields describe meaning, not syntax</strong> — &quot;Authentication flow showing token exchange between client and server&quot; not &quot;Mermaid diagram with arrows from A to B.&quot;</li><li><strong>One concept per block</strong> — don&#39;t cram a paragraph, a table, and a callout into a single block. Use multiple blocks.</li><li><strong>Use the right block type</strong> — a warning is a callout, not a bold paragraph. Steps are a steps block, not a numbered list. The type carries semantic meaning.</li></ol>
+<p id="blk_closing_p">This document was authored in Vox format and compiled to the HTML you&#39;re reading now. The format is MIT licensed, open source, and designed for AI agents like you.</p>
+</main>
+<script type="application/vox+json">
+{
+  "$schema": "https://voxformat.dev/schema/v1.json",
+  "meta": {
+    "id": "vox-format-guide-v1",
+    "title": "Vox Format Guide — For AI Agents",
+    "description": "Complete reference for AI agents authoring Vox documents. Covers the block type system, accessibility requirements, review workflow, and MCP integration.",
+    "version": "1.0.0",
+    "authors": [
+      "Vox Team"
+    ],
+    "tags": [
+      "documentation",
+      "format-guide",
+      "ai-agents"
+    ],
+    "status": "approved",
+    "created": "2026-04-13T00:00:00Z",
+    "updated": "2026-04-13T00:00:00Z",
+    "variables": {
+      "format_name": "Vox",
+      "schema_url": "https://voxformat.dev/schema/v1.json",
+      "cli_command": "vox"
+    },
+    "provenance": {
+      "generated_by": "claude-opus-4-6",
+      "reviewed_by": "human",
+      "approved_blocks": [],
+      "flagged_blocks": []
+    },
+    "accessibility": {
+      "language": "en",
+      "reading_level": "technical"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_intro_h1",
+      "type": "heading",
+      "level": 1,
+      "content": "{{format_name}} Format Guide"
+    },
+    {
+      "id": "blk_intro_p1",
+      "type": "paragraph",
+      "content": "{{format_name}} is an **AI-first, accessible, open document format**. Documents are JSON files composed of typed blocks. AI authors them via MCP tools. Humans review by exception. The compiler produces self-contained, responsive, WCAG 2.1 AA compliant HTML."
+    },
+    {
+      "id": "blk_intro_callout",
+      "type": "callout",
+      "variant": "info",
+      "title": "Who is this for?",
+      "content": "This document is written for AI agents that will author {{format_name}} documents. If you're an AI reading this — this is your reference."
+    },
+    {
+      "id": "blk_overview_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "How It Works"
+    },
+    {
+      "id": "blk_overview_diagram",
+      "type": "diagram",
+      "syntax": "mermaid",
+      "content": "flowchart LR\n  A[AI Agent] -->|MCP tools| B[.vox Document]\n  B -->|Compiler| C[Self-contained HTML]\n  B -->|Viewer| D[Human Review]\n  D -->|Approve/Flag| B\n  B -->|Zero flags| C",
+      "description": "Vox workflow: AI agent authors the document via MCP tools. The compiler produces self-contained HTML. The viewer enables human review. If zero blocks are flagged, the document compiles automatically without human review."
+    },
+    {
+      "id": "blk_overview_steps",
+      "type": "steps",
+      "steps": [
+        {
+          "title": "AI connects via MCP",
+          "blocks": [
+            {
+              "id": "blk_step1_p",
+              "type": "paragraph",
+              "content": "Run `{{cli_command}} mcp serve document.vox` to start the MCP server. AI connects and sees 21 tools for reading, writing, reviewing, and compiling the document."
+            }
+          ]
+        },
+        {
+          "title": "AI builds the document block by block",
+          "blocks": [
+            {
+              "id": "blk_step2_p",
+              "type": "paragraph",
+              "content": "Call `add_block()` with a type and content fields. Each block gets a unique `blk_` prefixed ID. Build the document sequentially — headings, paragraphs, callouts, tables, diagrams, code blocks."
+            }
+          ]
+        },
+        {
+          "title": "AI self-reviews and flags uncertain blocks",
+          "blocks": [
+            {
+              "id": "blk_step3_p",
+              "type": "paragraph",
+              "content": "Assign a `review.confidence` score (0-1) to each block. Blocks ≥0.90 are pre-approved. Blocks <0.70 are flagged with a reason explaining the uncertainty. Set document status to `pending_review`."
+            }
+          ]
+        },
+        {
+          "title": "Human reviews only flagged blocks",
+          "blocks": [
+            {
+              "id": "blk_step4_p",
+              "type": "paragraph",
+              "content": "The viewer shows only flagged/pending blocks. Humans approve, flag with a comment, or pass. They never edit content directly — they instruct AI via comments."
+            }
+          ]
+        },
+        {
+          "title": "Compile and ship",
+          "blocks": [
+            {
+              "id": "blk_step5_p",
+              "type": "paragraph",
+              "content": "Call `compile('html')` to produce a single self-contained HTML file. If zero blocks were flagged, this happens automatically — no human intervention needed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blk_structure_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Document Structure"
+    },
+    {
+      "id": "blk_structure_p1",
+      "type": "paragraph",
+      "content": "A `.vox` file is JSON with two top-level keys: `meta` (document metadata) and `blocks` (content array). Every block has a unique `id` and a `type`."
+    },
+    {
+      "id": "blk_structure_code",
+      "type": "code",
+      "language": "json",
+      "filename": "example.vox",
+      "content": "{\n  \"$schema\": \"https://voxformat.dev/schema/v1.json\",\n  \"meta\": {\n    \"id\": \"uuid\",\n    \"title\": \"Document Title\",\n    \"status\": \"draft\",\n    \"variables\": { \"version\": \"2.0\" },\n    \"accessibility\": { \"language\": \"en\", \"reading_level\": \"technical\" }\n  },\n  \"blocks\": [\n    { \"id\": \"blk_001\", \"type\": \"heading\", \"level\": 1, \"content\": \"Hello\" },\n    { \"id\": \"blk_002\", \"type\": \"paragraph\", \"content\": \"Version {{version}}\" }\n  ]\n}"
+    },
+    {
+      "id": "blk_blocks_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Block Types Reference"
+    },
+    {
+      "id": "blk_blocks_p1",
+      "type": "paragraph",
+      "content": "{{format_name}} has 18 block types. Each serves a specific purpose. Accessibility fields marked with ⚠️ are **required** — the compiler refuses to compile without them."
+    },
+    {
+      "id": "blk_core_h3",
+      "type": "heading",
+      "level": 3,
+      "content": "Core Blocks"
+    },
+    {
+      "id": "blk_core_table",
+      "type": "table",
+      "headers": [
+        "Type",
+        "Required Fields",
+        "Accessibility"
+      ],
+      "rows": [
+        [
+          "heading",
+          "level (1-6), content",
+          "—"
+        ],
+        [
+          "paragraph",
+          "content (inline Markdown)",
+          "—"
+        ],
+        [
+          "code",
+          "language, content",
+          "—"
+        ],
+        [
+          "image",
+          "src, alt",
+          "⚠️ alt must be non-empty"
+        ],
+        [
+          "list",
+          "ordered (bool), items[]",
+          "—"
+        ],
+        [
+          "toc",
+          "(none, optional max_depth)",
+          "—"
+        ]
+      ],
+      "caption": "Core block types",
+      "summary": "Six core block types with their required fields and accessibility requirements. Image blocks require non-empty alt text."
+    },
+    {
+      "id": "blk_enhanced_h3",
+      "type": "heading",
+      "level": 3,
+      "content": "Enhanced Blocks"
+    },
+    {
+      "id": "blk_enhanced_table",
+      "type": "table",
+      "headers": [
+        "Type",
+        "Required Fields",
+        "Accessibility"
+      ],
+      "rows": [
+        [
+          "callout",
+          "variant (info/warning/danger/tip/note), content",
+          "—"
+        ],
+        [
+          "diagram",
+          "syntax (mermaid/graphviz/d2), content",
+          "⚠️ description required"
+        ],
+        [
+          "table",
+          "headers[], rows[][]",
+          "⚠️ summary required"
+        ],
+        [
+          "math",
+          "expression, display (inline/block)",
+          "⚠️ spoken required (MathSpeak)"
+        ],
+        [
+          "tabs",
+          "panels[] (label + content or blocks)",
+          "—"
+        ],
+        [
+          "accordion",
+          "title, blocks[]",
+          "—"
+        ],
+        [
+          "steps",
+          "steps[] (title + blocks)",
+          "—"
+        ],
+        [
+          "layout",
+          "columns (2 or 3), blocks[][]",
+          "—"
+        ],
+        [
+          "handwriting",
+          "image, alt, transcription",
+          "⚠️ transcription verified if confidence < 0.70"
+        ],
+        [
+          "include",
+          "src (file path)",
+          "— (v1: renders as link)"
+        ],
+        [
+          "variable_def",
+          "key, value",
+          "— (not rendered)"
+        ],
+        [
+          "xref",
+          "target (block id)",
+          "—"
+        ]
+      ],
+      "caption": "Enhanced block types",
+      "summary": "Twelve enhanced block types. Diagram, table, math, and handwriting blocks have mandatory accessibility fields that must be non-empty for compilation to succeed."
+    },
+    {
+      "id": "blk_a11y_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Accessibility Requirements"
+    },
+    {
+      "id": "blk_a11y_callout",
+      "type": "callout",
+      "variant": "danger",
+      "title": "Compilation will fail without these",
+      "content": "Every `image` needs `alt`. Every `diagram` needs `description`. Every `table` needs `summary`. Every `math` needs `spoken`. Every `handwriting` with confidence < 0.70 needs verified transcription. These are not optional — the compiler enforces them."
+    },
+    {
+      "id": "blk_a11y_p1",
+      "type": "paragraph",
+      "content": "When authoring as an AI agent, **always generate accessibility fields at creation time**. Don't add blocks without them and fix later — add them in the same `add_block()` call. The `description` field on diagrams should describe what the diagram shows in plain language, not repeat the diagram syntax."
+    },
+    {
+      "id": "blk_variables_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Variables"
+    },
+    {
+      "id": "blk_variables_p1",
+      "type": "paragraph",
+      "content": "Define variables in `meta.variables` or via `variable_def` blocks. Reference them as `{{variable_name}}` in any block content. Variables are resolved at compile time. Use them for version numbers, URLs, product names — anything that appears in multiple places."
+    },
+    {
+      "id": "blk_variables_code",
+      "type": "code",
+      "language": "json",
+      "content": "\"variables\": {\n  \"api_version\": \"v2\",\n  \"base_url\": \"https://api.example.com\"\n}\n\n// In block content:\n\"content\": \"Send requests to {{base_url}}/{{api_version}}/users\""
+    },
+    {
+      "id": "blk_review_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Review Workflow"
+    },
+    {
+      "id": "blk_review_p1",
+      "type": "paragraph",
+      "content": "After generating all blocks, assign a confidence score to each. This tells the human reviewer which blocks to focus on."
+    },
+    {
+      "id": "blk_review_table",
+      "type": "table",
+      "headers": [
+        "Confidence",
+        "Status",
+        "Human sees it?"
+      ],
+      "rows": [
+        [
+          "≥ 0.90",
+          "pre_approved",
+          "No (unless full review mode)"
+        ],
+        [
+          "0.70 – 0.89",
+          "pending",
+          "Yes, can approve quickly"
+        ],
+        [
+          "< 0.70",
+          "flagged",
+          "Yes, with AI's reasoning shown"
+        ]
+      ],
+      "summary": "How confidence scores map to review statuses and whether the human reviewer sees the block by default"
+    },
+    {
+      "id": "blk_review_code",
+      "type": "code",
+      "language": "json",
+      "content": "{\n  \"id\": \"blk_042\",\n  \"type\": \"diagram\",\n  \"content\": \"...\",\n  \"description\": \"...\",\n  \"review\": {\n    \"confidence\": 0.65,\n    \"reason\": \"Inferred from code comments — not explicitly documented\",\n    \"status\": \"flagged\"\n  }\n}"
+    },
+    {
+      "id": "blk_mcp_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "MCP Tools Reference"
+    },
+    {
+      "id": "blk_mcp_p1",
+      "type": "paragraph",
+      "content": "When connected via `{{cli_command}} mcp serve`, the following tools are available. Call `get_schema()` first to learn the full block type schema."
+    },
+    {
+      "id": "blk_mcp_tabs",
+      "type": "tabs",
+      "panels": [
+        {
+          "label": "Read",
+          "type": "code",
+          "language": "text",
+          "content": "get_document()         → full document JSON\nlist_blocks()          → block summaries (id, type, preview, status)\nget_block(id)          → single block\nget_schema()           → full JSONSchema\nsearch_blocks(query)   → blocks matching query"
+        },
+        {
+          "label": "Write",
+          "type": "code",
+          "language": "text",
+          "content": "add_block(type, content, after?)  → insert block, returns id\nedit_block(id, content)           → update block fields\ndelete_block(id)                  → remove block\nmove_block(id, after?)            → reorder\nset_metadata(key, value)          → update meta fields\nset_variable(key, value)          → add/update variable"
+        },
+        {
+          "label": "Review",
+          "type": "code",
+          "language": "text",
+          "content": "add_comment(block_id, comment)    → attach feedback\nlist_comments()                   → pending comments\nresolve_comment(comment_id)       → mark addressed\nset_block_status(id, status)      → set review status\nset_status(status)                → set document status"
+        },
+        {
+          "label": "Output",
+          "type": "code",
+          "language": "text",
+          "content": "validate()        → check against schema + accessibility\ncompile(format)   → compile to HTML"
+        }
+      ]
+    },
+    {
+      "id": "blk_example_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Example: AI Authoring Workflow"
+    },
+    {
+      "id": "blk_example_code",
+      "type": "code",
+      "language": "text",
+      "content": "1. get_schema()                    → learn available block types\n2. add_block(\"heading\", { level: 1, content: \"API Docs\" })\n3. add_block(\"paragraph\", { content: \"Authentication reference...\" })\n4. add_block(\"table\", {\n     headers: [\"Method\", \"Path\"],\n     rows: [[\"GET\", \"/users\"]],\n     summary: \"API endpoint listing\"\n   })\n5. add_block(\"diagram\", {\n     syntax: \"mermaid\",\n     content: \"flowchart LR\\n  A-->B\",\n     description: \"Request flow from client to server\"\n   })\n6. set_variable(\"api_version\", \"v2\")\n7. set_block_status(\"blk_...\", \"pre_approved\")  // high confidence\n8. set_block_status(\"blk_...\", \"flagged\")       // low confidence\n9. set_status(\"pending_review\")\n10. compile(\"html\")                              // if zero flags"
+    },
+    {
+      "id": "blk_principles_h2",
+      "type": "heading",
+      "level": 2,
+      "content": "Principles for AI Authors"
+    },
+    {
+      "id": "blk_principles_list",
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Always include accessibility fields** — alt, description, summary, spoken — at block creation time, not as an afterthought.",
+        "**Use variables** for anything repeated — version numbers, URLs, product names. One source of truth.",
+        "**Be honest about confidence** — flag blocks you inferred rather than directly observed. Humans trust AI more when it admits uncertainty.",
+        "**Description fields describe meaning, not syntax** — \"Authentication flow showing token exchange between client and server\" not \"Mermaid diagram with arrows from A to B.\"",
+        "**One concept per block** — don't cram a paragraph, a table, and a callout into a single block. Use multiple blocks.",
+        "**Use the right block type** — a warning is a callout, not a bold paragraph. Steps are a steps block, not a numbered list. The type carries semantic meaning."
+      ]
+    },
+    {
+      "id": "blk_closing_p",
+      "type": "paragraph",
+      "content": "This document was authored in {{format_name}} format and compiled to the HTML you're reading now. The format is MIT licensed, open source, and designed for AI agents like you."
+    }
+  ]
+}
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'default' });
+</script>
+<script>
+// Tab switching
+document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+  tablist.querySelectorAll('[role="tab"]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabs = tablist.querySelectorAll('[role="tab"]');
+      tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); t.tabIndex = -1; });
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      const panelId = tab.getAttribute('aria-controls');
+      tablist.closest('.vox-tabs').querySelectorAll('[role="tabpanel"]').forEach(p => p.hidden = true);
+      document.getElementById(panelId).hidden = false;
+    });
+  });
+});
+</script>
+</body>
+</html>

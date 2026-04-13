@@ -1,4 +1,4 @@
-import type { HandwritingBlock } from "@vox/schema";
+import type { HandwritingBlock } from "@voxdoc/schema";
 
 export function Handwriting({ block }: { block: HandwritingBlock }) {
   return (

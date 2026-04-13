@@ -20,13 +20,13 @@ importers:
 
   packages/cli:
     dependencies:
-      '@vox/compiler':
+      '@voxdoc/compiler':
         specifier: workspace:*
         version: link:../compiler
-      '@vox/mcp':
+      '@voxdoc/mcp':
         specifier: workspace:*
         version: link:../mcp
-      '@vox/schema':
+      '@voxdoc/schema':
         specifier: workspace:*
         version: link:../schema
       chalk:
@@ -51,7 +51,7 @@ importers:
 
   packages/compiler:
     dependencies:
-      '@vox/schema':
+      '@voxdoc/schema':
         specifier: workspace:*
         version: link:../schema
       katex:
@@ -79,10 +79,10 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.0
         version: 1.29.0(zod@4.3.6)
-      '@vox/compiler':
+      '@voxdoc/compiler':
         specifier: workspace:*
         version: link:../compiler
-      '@vox/schema':
+      '@voxdoc/schema':
         specifier: workspace:*
         version: link:../schema
       zod:
@@ -117,7 +117,7 @@ importers:
 
   packages/viewer:
     dependencies:
-      '@vox/schema':
+      '@voxdoc/schema':
         specifier: workspace:*
         version: link:../schema
       next:

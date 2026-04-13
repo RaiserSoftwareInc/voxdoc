@@ -1,4 +1,4 @@
-import type { VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
 
 export interface AccessibilityResult {
   valid: boolean;

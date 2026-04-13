@@ -1,4 +1,4 @@
-import type { AccordionBlock, VoxBlock } from "@vox/schema";
+import type { AccordionBlock, VoxBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 import type { RenderContext } from "./index.js";
 

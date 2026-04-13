@@ -1,30 +1,32 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { voxDocumentSchema } from "@vox/schema";
+import { voxDocumentSchema } from "@voxdoc/schema";
 import type { DocumentStore } from "../document-store.js";
 
 export function registerReadTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.tool("get_document", "Get the full Vox document", {}, async () => {
+  server.registerTool("get_document", { description: "Get the full Vox document" }, async () => {
     const doc = getStore().getDocument();
     return {
       content: [{ type: "text", text: JSON.stringify(doc, null, 2) }],
     };
   });
 
-  server.tool("list_blocks", "List all blocks with summaries", {}, async () => {
+  server.registerTool("list_blocks", { description: "List all blocks with summaries" }, async () => {
     const blocks = getStore().listBlocks();
     return {
       content: [{ type: "text", text: JSON.stringify(blocks, null, 2) }],
     };
   });
 
-  server.tool(
+  server.registerTool(
     "get_block",
-    "Get a single block by ID",
-    { id: z.string() },
+    {
+      description: "Get a single block by ID",
+      inputSchema: { id: z.string() },
+    },
     async ({ id }) => {
       const block = getStore().getBlock(id);
       if (!block) {
@@ -39,16 +41,18 @@ export function registerReadTools(
     },
   );
 
-  server.tool("get_schema", "Get the Vox document JSON schema", {}, async () => {
+  server.registerTool("get_schema", { description: "Get the Vox document JSON schema" }, async () => {
     return {
       content: [{ type: "text", text: JSON.stringify(voxDocumentSchema, null, 2) }],
     };
   });
 
-  server.tool(
+  server.registerTool(
     "search_blocks",
-    "Search blocks by content",
-    { query: z.string() },
+    {
+      description: "Search blocks by content",
+      inputSchema: { query: z.string() },
+    },
     async ({ query }) => {
       const results = getStore().searchBlocks(query);
       return {

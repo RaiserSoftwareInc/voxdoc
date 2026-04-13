@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { VoxDocument, VoxBlock } from "@vox/schema";
+import type { VoxDocument, VoxBlock } from "@voxdoc/schema";
 
 interface DocumentState {
   document: VoxDocument | null;

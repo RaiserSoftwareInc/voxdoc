@@ -43,7 +43,7 @@ export default function Home() {
             { id: "block-1", type: "heading", level: 1, content: "Getting Started with Vox", review: { confidence: 0.95, reason: null, status: "pending" } },
             { id: "block-2", type: "paragraph", content: "Vox is a document generation and review system that transforms structured content into accessible PDF documents.", review: { confidence: 0.92, reason: null, status: "pending" } },
             { id: "block-3", type: "callout", variant: "warning", title: "Beta Software", content: "This software is in beta. Features may change without notice.", review: { confidence: 0.6, reason: "Low confidence — may need human review", status: "flagged" } },
-            { id: "block-4", type: "code", language: "typescript", content: "import { compile } from '@vox/compiler';\n\nconst html = await compile(document);", review: { confidence: 0.88, reason: null, status: "pending" } },
+            { id: "block-4", type: "code", language: "typescript", content: "import { compile } from '@voxdoc/compiler';\n\nconst html = await compile(document);", review: { confidence: 0.88, reason: null, status: "pending" } },
             { id: "block-5", type: "list", ordered: true, items: ["Install dependencies", "Create a .vox document", "Run the compiler", "Review output"], review: { confidence: 0.9, reason: null, status: "approved" } },
             { id: "block-6", type: "table", headers: ["Feature", "Status"], rows: [["PDF Generation", "Stable"], ["Review UI", "Beta"], ["MCP Server", "Alpha"]], summary: "Feature status table", review: { confidence: 0.85, reason: null, status: "pending" } },
           ],

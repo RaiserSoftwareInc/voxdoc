@@ -1,4 +1,4 @@
-import type { ListBlock } from "@vox/schema";
+import type { ListBlock } from "@voxdoc/schema";
 
 export function List({ block }: { block: ListBlock }) {
   const Tag = block.ordered ? "ol" : "ul";

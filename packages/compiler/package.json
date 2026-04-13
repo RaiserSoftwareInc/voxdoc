@@ -1,6 +1,7 @@
 {
-  "name": "@vox/compiler",
+  "name": "@voxdoc/compiler",
   "version": "0.1.0",
+  "description": "Compiles Vox documents to self-contained, accessible, responsive HTML",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,12 +11,21 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "test": "vitest run"
   },
+  "keywords": ["vox", "document", "compiler", "html", "accessible", "wcag"],
+  "author": "Raiser Software Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RaiserSoftwareInc/voxdoc",
+    "directory": "packages/compiler"
+  },
   "dependencies": {
-    "@vox/schema": "workspace:*",
+    "@voxdoc/schema": "workspace:*",
     "katex": "^0.16.0",
     "marked": "^15.0.0",
     "shiki": "^3.0.0"

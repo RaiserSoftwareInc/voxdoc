@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderCallout } from "../../src/renderers/callout.js";
-import type { CalloutBlock } from "@vox/schema";
+import type { CalloutBlock } from "@voxdoc/schema";
 
 describe("renderCallout", () => {
   it("renders with role=note and variant class", () => {

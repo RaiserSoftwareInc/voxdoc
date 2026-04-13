@@ -1,4 +1,4 @@
-import { startServer } from "@vox/mcp";
+import { startServer } from "@voxdoc/mcp";
 import path from "node:path";
 
 export async function mcpServeCommand(filePath: string): Promise<void> {

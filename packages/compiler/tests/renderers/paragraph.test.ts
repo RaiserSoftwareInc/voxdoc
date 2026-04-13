@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderParagraph } from "../../src/renderers/paragraph.js";
-import type { ParagraphBlock } from "@vox/schema";
+import type { ParagraphBlock } from "@voxdoc/schema";
 
 describe("renderParagraph", () => {
   it("renders plain text in <p>", () => {

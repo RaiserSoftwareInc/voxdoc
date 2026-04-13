@@ -1,4 +1,4 @@
-import type { ImageBlock } from "@vox/schema";
+import type { ImageBlock } from "@voxdoc/schema";
 
 export function Image({ block }: { block: ImageBlock }) {
   return (

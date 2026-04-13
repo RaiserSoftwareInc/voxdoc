@@ -1,4 +1,4 @@
-import type { HeadingBlock, TocBlock, VoxBlock } from "@vox/schema";
+import type { HeadingBlock, TocBlock, VoxBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderToc(block: TocBlock, allBlocks: VoxBlock[]): string {

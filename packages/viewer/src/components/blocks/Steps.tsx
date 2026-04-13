@@ -1,4 +1,4 @@
-import type { StepsBlock } from "@vox/schema";
+import type { StepsBlock } from "@voxdoc/schema";
 
 export function Steps({ block }: { block: StepsBlock }) {
   return (

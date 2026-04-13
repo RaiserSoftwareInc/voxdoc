@@ -1,4 +1,4 @@
-import type { VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 import { Code } from "./Code";

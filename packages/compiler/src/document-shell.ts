@@ -4,9 +4,10 @@ export interface DocumentShellOptions {
   title: string;
   language: string;
   bodyHtml: string;
+  sourceJson: string;
 }
 
-export function wrapInDocument({ title, language, bodyHtml }: DocumentShellOptions): string {
+export function wrapInDocument({ title, language, bodyHtml, sourceJson }: DocumentShellOptions): string {
   return `<!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -21,6 +22,9 @@ export function wrapInDocument({ title, language, bodyHtml }: DocumentShellOptio
 <main id="vox-main" class="vox-document">
 ${bodyHtml}
 </main>
+<script type="application/vox+json">
+${sourceJson}
+</script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 mermaid.initialize({ startOnLoad: true, theme: 'default' });

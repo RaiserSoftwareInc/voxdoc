@@ -1,4 +1,4 @@
-import type { IncludeBlock } from "@vox/schema";
+import type { IncludeBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderInclude(block: IncludeBlock): string {

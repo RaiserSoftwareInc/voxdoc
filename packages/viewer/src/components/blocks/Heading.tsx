@@ -1,4 +1,4 @@
-import type { HeadingBlock } from "@vox/schema";
+import type { HeadingBlock } from "@voxdoc/schema";
 
 const sizeClasses: Record<number, string> = {
   1: "text-3xl font-bold mt-8 mb-4",

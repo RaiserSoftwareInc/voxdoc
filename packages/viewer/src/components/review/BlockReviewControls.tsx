@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
 
 interface BlockReviewControlsProps {
   block: VoxBlock;

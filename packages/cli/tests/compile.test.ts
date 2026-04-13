@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createDocument } from "../src/commands/init.js";
-import { compile } from "@vox/compiler";
-import type { VoxDocument, HeadingBlock, ParagraphBlock } from "@vox/schema";
+import { compile } from "@voxdoc/compiler";
+import type { VoxDocument, HeadingBlock, ParagraphBlock } from "@voxdoc/schema";
 
 describe("compile integration", () => {
   it("compiles an init'd document with blocks to HTML", () => {

@@ -1,4 +1,4 @@
-import type { LayoutBlock } from "@vox/schema";
+import type { LayoutBlock } from "@voxdoc/schema";
 
 export function Layout({ block }: { block: LayoutBlock }) {
   const gridClass = block.columns === 3 ? "grid-cols-3" : "grid-cols-2";

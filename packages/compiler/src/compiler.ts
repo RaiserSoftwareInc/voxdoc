@@ -1,4 +1,4 @@
-import type { VoxDocument } from "@vox/schema";
+import type { VoxDocument } from "@voxdoc/schema";
 import { renderBlock, type RenderContext } from "./renderers/index.js";
 import { checkAccessibility } from "./accessibility.js";
 import { wrapInDocument } from "./document-shell.js";
@@ -31,11 +31,12 @@ export function compile(doc: VoxDocument): CompileResult {
     .filter(Boolean)
     .join("\n");
 
-  // 4. Wrap in document shell
+  // 4. Wrap in document shell with embedded source JSON
   const html = wrapInDocument({
     title: doc.meta.title,
     language: doc.meta.accessibility.language,
     bodyHtml,
+    sourceJson: JSON.stringify(doc, null, 2),
   });
 
   return { success: true, html };

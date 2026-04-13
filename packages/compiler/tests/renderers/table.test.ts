@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderTable } from "../../src/renderers/table.js";
-import type { TableBlock } from "@vox/schema";
+import type { TableBlock } from "@voxdoc/schema";
 
 describe("renderTable", () => {
   it("renders with caption and summary", () => {

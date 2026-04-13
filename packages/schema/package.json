@@ -1,6 +1,7 @@
 {
-  "name": "@vox/schema",
+  "name": "@voxdoc/schema",
   "version": "0.1.0",
+  "description": "TypeScript types, JSONSchema, and validation for the Vox document format",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,9 +11,18 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "test": "vitest run"
+  },
+  "keywords": ["vox", "document", "format", "schema", "jsonschema", "validation"],
+  "author": "Raiser Software Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RaiserSoftwareInc/voxdoc",
+    "directory": "packages/schema"
   },
   "dependencies": {
     "ajv": "^8.17.0",

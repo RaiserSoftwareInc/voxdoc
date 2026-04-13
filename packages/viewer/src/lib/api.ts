@@ -1,4 +1,4 @@
-import type { VoxDocument } from "@vox/schema";
+import type { VoxDocument } from "@voxdoc/schema";
 
 const API_BASE =
   typeof window !== "undefined"

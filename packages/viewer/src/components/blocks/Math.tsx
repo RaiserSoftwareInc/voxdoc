@@ -1,4 +1,4 @@
-import type { MathBlock } from "@vox/schema";
+import type { MathBlock } from "@voxdoc/schema";
 
 export function Math({ block }: { block: MathBlock }) {
   return (

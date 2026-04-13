@@ -1,31 +1,28 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { validateDocument } from "@vox/schema";
-import { compile } from "@vox/compiler";
+import { validateDocument } from "@voxdoc/schema";
+import { compile } from "@voxdoc/compiler";
 import type { DocumentStore } from "../document-store.js";
 
 export function registerOutputTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.tool(
-    "validate",
-    "Validate the document against the Vox schema",
-    {},
-    async () => {
-      const doc = getStore().getDocument();
-      const result = validateDocument(doc);
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    },
-  );
+  server.registerTool("validate", { description: "Validate the document against the Vox schema" }, async () => {
+    const doc = getStore().getDocument();
+    const result = validateDocument(doc);
+    return {
+      content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+    };
+  });
 
-  server.tool(
+  server.registerTool(
     "compile",
-    "Compile the document to an output format",
     {
-      format: z.enum(["html"]),
+      description: "Compile the document to an output format",
+      inputSchema: {
+        format: z.enum(["html"]),
+      },
     },
     async ({ format: _format }) => {
       const doc = getStore().getDocument();

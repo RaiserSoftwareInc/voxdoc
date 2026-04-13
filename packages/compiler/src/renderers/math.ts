@@ -1,4 +1,4 @@
-import type { MathBlock } from "@vox/schema";
+import type { MathBlock } from "@voxdoc/schema";
 import katex from "katex";
 
 export function renderMath(block: MathBlock): string {

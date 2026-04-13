@@ -1,6 +1,7 @@
 {
-  "name": "@vox/mcp",
+  "name": "@voxdoc/mcp",
   "version": "0.1.0",
+  "description": "MCP server for AI-first authoring of Vox documents",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,14 +11,23 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "test": "vitest run"
   },
+  "keywords": ["vox", "document", "mcp", "model-context-protocol", "ai", "authoring"],
+  "author": "Raiser Software Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RaiserSoftwareInc/voxdoc",
+    "directory": "packages/mcp"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
-    "@vox/compiler": "workspace:*",
-    "@vox/schema": "workspace:*",
+    "@voxdoc/compiler": "workspace:*",
+    "@voxdoc/schema": "workspace:*",
     "zod": "^4.3.0"
   },
   "devDependencies": {

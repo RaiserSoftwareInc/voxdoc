@@ -1,4 +1,4 @@
-import type { HandwritingBlock } from "@vox/schema";
+import type { HandwritingBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderHandwriting(block: HandwritingBlock): string {

@@ -1,4 +1,4 @@
-import type { DiagramBlock } from "@vox/schema";
+import type { DiagramBlock } from "@voxdoc/schema";
 
 export function Diagram({ block }: { block: DiagramBlock }) {
   return (

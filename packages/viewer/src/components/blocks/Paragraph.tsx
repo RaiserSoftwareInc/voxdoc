@@ -1,4 +1,4 @@
-import type { ParagraphBlock } from "@vox/schema";
+import type { ParagraphBlock } from "@voxdoc/schema";
 
 export function Paragraph({ block }: { block: ParagraphBlock }) {
   return (

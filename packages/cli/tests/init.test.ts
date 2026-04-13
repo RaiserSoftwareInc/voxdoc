@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createDocument } from "../src/commands/init.js";
-import { validateDocument } from "@vox/schema";
+import { validateDocument } from "@voxdoc/schema";
 
 describe("createDocument", () => {
   it("creates a valid VoxDocument that passes schema validation", () => {

@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { validateDocument } from "@vox/schema";
-import { compile } from "@vox/compiler";
+import { validateDocument } from "@voxdoc/schema";
+import { compile } from "@voxdoc/compiler";
 
 const ROOT = path.resolve(import.meta.dirname, "..", "..");
 

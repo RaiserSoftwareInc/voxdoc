@@ -1,4 +1,4 @@
-import type { TableBlock } from "@vox/schema";
+import type { TableBlock } from "@voxdoc/schema";
 import { escapeHtml, resolveVariables } from "../utils.js";
 
 export function renderTable(

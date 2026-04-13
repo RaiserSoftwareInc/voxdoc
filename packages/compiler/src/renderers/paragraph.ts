@@ -1,4 +1,4 @@
-import type { ParagraphBlock } from "@vox/schema";
+import type { ParagraphBlock } from "@voxdoc/schema";
 import { marked } from "marked";
 import { resolveVariables } from "../utils.js";
 

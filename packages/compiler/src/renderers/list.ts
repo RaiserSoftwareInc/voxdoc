@@ -1,4 +1,4 @@
-import type { ListBlock } from "@vox/schema";
+import type { ListBlock } from "@voxdoc/schema";
 import { marked } from "marked";
 import { resolveVariables } from "../utils.js";
 

@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
-import type { VoxDocument, VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
+import { readVoxSource } from "@voxdoc/compiler";
 
 function getContentPreview(block: VoxBlock): string {
   if ("content" in block && typeof block.content === "string") {
@@ -23,7 +24,7 @@ function getReviewInfo(block: VoxBlock): string {
 
 export function blocksCommand(filePath: string): void {
   const raw = readFileSync(filePath, "utf-8");
-  const doc: VoxDocument = JSON.parse(raw);
+  const doc = readVoxSource(raw);
 
   console.log(
     `${"ID".padEnd(12)} | ${"Type".padEnd(14)} | ${"Review".padEnd(20)} | Content`,

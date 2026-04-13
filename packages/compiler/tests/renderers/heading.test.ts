@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderHeading } from "../../src/renderers/heading.js";
-import type { HeadingBlock } from "@vox/schema";
+import type { HeadingBlock } from "@voxdoc/schema";
 
 describe("renderHeading", () => {
   it("renders h1 with id attribute", () => {

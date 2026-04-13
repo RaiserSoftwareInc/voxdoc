@@ -1,4 +1,4 @@
-import type { ImageBlock } from "@vox/schema";
+import type { ImageBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 
 export function renderImage(block: ImageBlock): string {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ReviewComment } from "@vox/schema";
+import type { ReviewComment } from "@voxdoc/schema";
 
 interface CommentThreadProps {
   comments: ReviewComment[];

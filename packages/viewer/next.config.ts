@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
 const config: NextConfig = {
-  transpilePackages: ["@vox/schema"],
+  transpilePackages: ["@voxdoc/schema"],
 };
 export default config;

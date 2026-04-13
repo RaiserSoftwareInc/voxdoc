@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
-import type { VoxDocument } from "@vox/schema";
+import { readVoxSource } from "@voxdoc/compiler";
 
 export function infoCommand(filePath: string): void {
   const raw = readFileSync(filePath, "utf-8");
-  const doc: VoxDocument = JSON.parse(raw);
+  const doc = readVoxSource(raw);
 
   console.log(`Title:    ${doc.meta.title}`);
   console.log(`Version:  ${doc.meta.version}`);

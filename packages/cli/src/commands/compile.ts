@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import type { VoxDocument } from "@vox/schema";
-import { compile } from "@vox/compiler";
+import { compile, readVoxSource } from "@voxdoc/compiler";
 
 export interface CompileOptions {
   format: "html" | "pdf";
@@ -12,7 +11,7 @@ export function compileCommand(
   options: CompileOptions,
 ): void {
   const raw = readFileSync(filePath, "utf-8");
-  const doc: VoxDocument = JSON.parse(raw);
+  const doc = readVoxSource(raw);
 
   if (options.format === "pdf") {
     console.error("PDF export not yet implemented");
@@ -28,8 +27,8 @@ export function compileCommand(
     process.exit(1);
   }
 
-  const outPath =
-    options.out ?? filePath.replace(/\.(json|vox)$/, ".html");
+  // Default: write back to the same .vox file (re-render in place)
+  const outPath = options.out ?? filePath;
   writeFileSync(outPath, result.html!, "utf-8");
   console.log(`Compiled to ${outPath}`);
 }

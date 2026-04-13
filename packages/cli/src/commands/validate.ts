@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
-import { validateDocument } from "@vox/schema";
-import { checkAccessibility } from "@vox/compiler";
+import { validateDocument } from "@voxdoc/schema";
+import { checkAccessibility, readVoxSource } from "@voxdoc/compiler";
 
 export function validateCommand(filePath: string): void {
   const raw = readFileSync(filePath, "utf-8");
-  const doc = JSON.parse(raw);
+  const doc = readVoxSource(raw);
 
   const result = validateDocument(doc);
   if (!result.valid) {

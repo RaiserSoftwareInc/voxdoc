@@ -1,4 +1,4 @@
-import type { VoxBlock } from "@vox/schema";
+import type { VoxBlock } from "@voxdoc/schema";
 import { renderHeading } from "./heading.js";
 import { renderParagraph } from "./paragraph.js";
 import { renderCode } from "./code.js";

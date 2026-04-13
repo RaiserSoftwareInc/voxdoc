@@ -1,4 +1,4 @@
-import type { TabsBlock, VoxBlock } from "@vox/schema";
+import type { TabsBlock, VoxBlock } from "@voxdoc/schema";
 import { escapeHtml } from "../utils.js";
 import type { RenderContext } from "./index.js";
 
