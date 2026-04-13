@@ -10,6 +10,7 @@ export function registerReviewTools(
     "add_comment",
     {
       description: "Add a review comment to a block",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         block_id: z.string(),
         comment: z.string(),
@@ -23,7 +24,7 @@ export function registerReviewTools(
     },
   );
 
-  server.registerTool("list_comments", { description: "List all unresolved review comments" }, async () => {
+  server.registerTool("list_comments", { description: "List all unresolved review comments", annotations: { readOnlyHint: false, destructiveHint: false } }, async () => {
     const comments = getStore().listComments();
     return {
       content: [{ type: "text", text: JSON.stringify(comments, null, 2) }],
@@ -34,6 +35,7 @@ export function registerReviewTools(
     "resolve_comment",
     {
       description: "Resolve a review comment",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: { comment_id: z.string() },
     },
     async ({ comment_id }) => {
@@ -48,6 +50,7 @@ export function registerReviewTools(
     "set_block_status",
     {
       description: "Set the review status of a block",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         id: z.string(),
         status: z.enum(["pre_approved", "pending", "flagged", "approved"]),
@@ -72,6 +75,7 @@ export function registerReviewTools(
     "set_status",
     {
       description: "Set the document review status",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         status: z.enum(["draft", "pending_review", "approved", "published"]),
       },

@@ -8,7 +8,7 @@ export function registerOutputTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.registerTool("validate", { description: "Validate the document against the Vox schema" }, async () => {
+  server.registerTool("validate", { description: "Validate the document against the Vox schema", annotations: { readOnlyHint: true, destructiveHint: false } }, async () => {
     const doc = getStore().getDocument();
     const result = validateDocument(doc);
     return {
@@ -20,6 +20,7 @@ export function registerOutputTools(
     "compile",
     {
       description: "Compile the document to an output format",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       inputSchema: {
         format: z.enum(["html"]),
       },

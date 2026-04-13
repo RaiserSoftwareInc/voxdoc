@@ -10,6 +10,7 @@ export function registerWriteTools(
     "add_block",
     {
       description: "Add a new block to the document",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         type: z.string(),
         content: z.record(z.string(), z.any()),
@@ -29,6 +30,7 @@ export function registerWriteTools(
     "edit_block",
     {
       description: "Edit an existing block",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         id: z.string(),
         content: z.record(z.string(), z.any()),
@@ -53,6 +55,7 @@ export function registerWriteTools(
     "delete_block",
     {
       description: "Delete a block from the document",
+      annotations: { readOnlyHint: false, destructiveHint: true },
       inputSchema: { id: z.string() },
     },
     async ({ id }) => {
@@ -74,6 +77,7 @@ export function registerWriteTools(
     "move_block",
     {
       description: "Move a block to a new position",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         id: z.string(),
         after: z.string().optional(),
@@ -98,6 +102,7 @@ export function registerWriteTools(
     "set_metadata",
     {
       description: "Set a metadata field",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         key: z.string(),
         value: z.any(),
@@ -115,6 +120,7 @@ export function registerWriteTools(
     "set_variable",
     {
       description: "Set a template variable",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         key: z.string(),
         value: z.string(),

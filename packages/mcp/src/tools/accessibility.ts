@@ -12,6 +12,7 @@ export function registerAccessibilityTools(
     "set_description",
     {
       description: "Set a description on a block for accessibility",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         block_id: z.string(),
         text: z.string(),
@@ -36,6 +37,7 @@ export function registerAccessibilityTools(
     "set_transcription",
     {
       description: "Verify and set transcription text on a handwriting block",
+      annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         block_id: z.string(),
         text: z.string(),
@@ -68,7 +70,7 @@ export function registerAccessibilityTools(
     },
   );
 
-  server.registerTool("get_accessibility_report", { description: "Get an accessibility report for the document" }, async () => {
+  server.registerTool("get_accessibility_report", { description: "Get an accessibility report for the document", annotations: { readOnlyHint: true, destructiveHint: false } }, async () => {
     const doc = getStore().getDocument();
     const report = checkAccessibility(doc.blocks);
     return {
