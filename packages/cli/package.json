@@ -10,14 +10,15 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@vox/schema": "workspace:*",
     "@vox/compiler": "workspace:*",
     "@vox/mcp": "workspace:*",
-    "commander": "^13.0.0",
+    "@vox/schema": "workspace:*",
     "chalk": "^5.4.0",
+    "commander": "^13.0.0",
     "open": "^10.0.0"
   },
   "devDependencies": {
+    "@types/node": "^25.6.0",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   }

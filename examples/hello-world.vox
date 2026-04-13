@@ -1,0 +1,27 @@
+{
+  "$schema": "https://voxformat.dev/schema/v1.json",
+  "meta": {
+    "id": "450d57b4-f196-493e-98b9-0e4a2e1e057f",
+    "title": "Hello Vox",
+    "description": "",
+    "version": "1.0.0",
+    "authors": [],
+    "tags": [],
+    "status": "draft",
+    "created": "2026-04-13T03:01:48.054Z",
+    "updated": "2026-04-13T03:01:48.054Z",
+    "variables": {},
+    "provenance": {
+      "generated_by": "vox-cli",
+      "reviewed_by": "",
+      "approved_blocks": [],
+      "flagged_blocks": []
+    },
+    "accessibility": {
+      "language": "en",
+      "reading_level": "general"
+    }
+  },
+  "blocks": [],
+  "comments": []
+}
