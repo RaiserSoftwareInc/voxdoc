@@ -3,6 +3,9 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { DocumentStore } from "./document-store.js";
 import { registerReadTools } from "./tools/document-reads.js";
 import { registerWriteTools } from "./tools/document-writes.js";
+import { registerReviewTools } from "./tools/review.js";
+import { registerAccessibilityTools } from "./tools/accessibility.js";
+import { registerOutputTools } from "./tools/output.js";
 
 export function createVoxMcpServer(filePath: string): McpServer {
   const store = DocumentStore.fromFile(filePath);
@@ -10,6 +13,9 @@ export function createVoxMcpServer(filePath: string): McpServer {
   const server = new McpServer({ name: "vox-document", version: "0.1.0" });
   registerReadTools(server, getStore);
   registerWriteTools(server, getStore);
+  registerReviewTools(server, getStore);
+  registerAccessibilityTools(server, getStore);
+  registerOutputTools(server, getStore);
   return server;
 }
 
