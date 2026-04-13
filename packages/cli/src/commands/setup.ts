@@ -1,5 +1,10 @@
-import { platform } from "node:os";
+import { platform, homedir } from "node:os";
 import { execSync } from "node:child_process";
+import { existsSync, writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+
+const MARKER_DIR = path.join(homedir(), ".vox");
+const MARKER_FILE = path.join(MARKER_DIR, ".setup-done");
 
 function registerWindows(): boolean {
   try {
@@ -7,20 +12,7 @@ function registerWindows(): boolean {
     execSync('reg add "HKCU\\Software\\Classes\\.vox" /v "Content Type" /d "text/html" /f', { stdio: "pipe" });
     execSync('reg add "HKCU\\Software\\Classes\\.vox" /v "PerceivedType" /d "text" /f', { stdio: "pipe" });
     execSync('reg add "HKCU\\Software\\Classes\\VoxDocument" /ve /d "Vox Document" /f', { stdio: "pipe" });
-    // Use the system's default browser via shell open
     execSync('reg add "HKCU\\Software\\Classes\\VoxDocument\\shell\\open\\command" /ve /d "\\"rundll32.exe\\" url.dll,FileProtocolHandler \\"%1\\"" /f', { stdio: "pipe" });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function registerMac(): boolean {
-  try {
-    // Create a minimal handler plist for .vox files
-    execSync(`defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType = "public.html"; LSHandlerRoleAll = "com.apple.Safari";}'`, { stdio: "pipe" });
-    // Associate .vox UTI with html content type
-    execSync(`/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -lint -r -f -domain local -domain system -domain user 2>/dev/null || true`, { stdio: "pipe" });
     return true;
   } catch {
     return false;
@@ -29,9 +21,6 @@ function registerMac(): boolean {
 
 function registerLinux(): boolean {
   try {
-    // Register MIME type
-    execSync('xdg-mime default "$(xdg-settings get default-web-browser)" text/html', { stdio: "pipe" });
-    // Associate .vox extension with text/html
     const mimeXml = `<?xml version="1.0"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/x-vox">
@@ -40,9 +29,6 @@ function registerLinux(): boolean {
     <sub-class-of type="text/html"/>
   </mime-type>
 </mime-info>`;
-    const { writeFileSync, mkdirSync } = require("node:fs");
-    const { homedir } = require("node:os");
-    const path = require("node:path");
     const mimeDir = path.join(homedir(), ".local", "share", "mime", "packages");
     mkdirSync(mimeDir, { recursive: true });
     writeFileSync(path.join(mimeDir, "vox.xml"), mimeXml);
@@ -53,66 +39,62 @@ function registerLinux(): boolean {
   }
 }
 
-export function setupCommand(): void {
-  const os = platform();
-  console.log("Registering .vox file type...\n");
-
-  let success = false;
-
-  switch (os) {
-    case "win32":
-      success = registerWindows();
-      break;
-    case "darwin":
-      success = registerMac();
-      break;
-    case "linux":
-      success = registerLinux();
-      break;
-    default:
-      console.log(`Unsupported platform: ${os}`);
-      console.log("Manually associate .vox files with your browser as text/html.");
-      return;
-  }
-
-  if (success) {
-    console.log("Done! .vox files will now open in your browser.");
-    console.log("Try: vox init test.vox --title \"Hello\" && open test.vox");
-  } else {
-    console.log("Registration failed. Try running with elevated permissions:");
-    if (os === "win32") {
-      console.log("  Run your terminal as Administrator, then: vox setup");
-    } else {
-      console.log("  sudo vox setup");
-    }
+function markSetupDone(): void {
+  try {
+    mkdirSync(MARKER_DIR, { recursive: true });
+    writeFileSync(MARKER_FILE, new Date().toISOString());
+  } catch {
+    // Non-critical — don't fail setup over a marker file
   }
 }
 
+export function setupCommand(): void {
+  const os = platform();
+  console.log("Setting up Vox...\n");
+
+  if (os === "win32") {
+    const success = registerWindows();
+    if (success) {
+      console.log("Registered .vox file type on Windows.");
+      console.log("Double-click any .vox file to open in your browser.\n");
+    } else {
+      console.log("Registration failed. Try running your terminal as Administrator.\n");
+    }
+  } else if (os === "darwin") {
+    console.log("macOS requires a one-time manual step to associate .vox files:\n");
+    console.log("  1. Right-click any .vox file in Finder");
+    console.log("  2. Click 'Get Info'");
+    console.log("  3. Under 'Open with:', select your browser (Chrome, Safari, etc.)");
+    console.log("  4. Click 'Change All...'\n");
+    console.log("After that, all .vox files will open in your browser.\n");
+    console.log("Or open directly from terminal:");
+    console.log("  open -a 'Google Chrome' my-doc.vox\n");
+  } else if (os === "linux") {
+    const success = registerLinux();
+    if (success) {
+      console.log("Registered .vox MIME type on Linux.");
+      console.log("Double-click any .vox file to open in your browser.\n");
+    } else {
+      console.log("Registration failed. Try: sudo vox setup\n");
+    }
+  } else {
+    console.log(`Unsupported platform: ${os}`);
+    console.log("Manually associate .vox files with your browser as text/html.\n");
+  }
+
+  console.log("You can always open .vox files with:");
+  console.log("  vox view my-doc.vox\n");
+
+  markSetupDone();
+}
+
 /**
- * Check if .vox is registered and prompt if not.
- * Call this from `vox init` on first run.
+ * Check if setup has been run. Prompt once if not.
  */
 export function checkRegistration(): void {
-  const os = platform();
-  let registered = false;
-
-  try {
-    if (os === "win32") {
-      const result = execSync('reg query "HKCU\\Software\\Classes\\.vox" /ve 2>nul', { stdio: "pipe" }).toString();
-      registered = result.includes("VoxDocument");
-    } else if (os === "darwin") {
-      // Check if .vox has a handler via mdls or file association
-      registered = false; // Conservative — prompt on first run
-    } else if (os === "linux") {
-      const result = execSync("xdg-mime query filetype /dev/null 2>/dev/null || echo ''", { stdio: "pipe" }).toString();
-      registered = false; // Conservative
-    }
-  } catch {
-    registered = false;
+  if (existsSync(MARKER_FILE)) {
+    return; // Already set up — don't nag
   }
 
-  if (!registered) {
-    console.log("\n.vox files aren't registered on your system.");
-    console.log("Run 'vox setup' to open .vox files directly in your browser.\n");
-  }
+  console.log("\nTip: Run 'vox setup' to configure .vox files to open in your browser.\n");
 }

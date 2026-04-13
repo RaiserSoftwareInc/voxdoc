@@ -1,22 +1,31 @@
 {
   "name": "@voxdoc/cli",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "CLI for creating, validating, compiling, and serving Vox documents",
   "type": "module",
   "bin": {
-    "vox": "./dist/index.js"
+    "vox": "dist/index.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run"
   },
-  "keywords": ["vox", "document", "cli", "compiler", "mcp", "accessible"],
+  "keywords": [
+    "vox",
+    "document",
+    "cli",
+    "compiler",
+    "mcp",
+    "accessible"
+  ],
   "author": "Raiser Software Inc.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RaiserSoftwareInc/voxdoc",
+    "url": "git+https://github.com/RaiserSoftwareInc/voxdoc.git",
     "directory": "packages/cli"
   },
   "dependencies": {
