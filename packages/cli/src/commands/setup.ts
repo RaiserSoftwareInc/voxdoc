@@ -61,14 +61,11 @@ export function setupCommand(): void {
       console.log("Registration failed. Try running your terminal as Administrator.\n");
     }
   } else if (os === "darwin") {
-    console.log("macOS requires a one-time manual step to associate .vox files:\n");
-    console.log("  1. Right-click any .vox file in Finder");
-    console.log("  2. Click 'Get Info'");
-    console.log("  3. Under 'Open with:', select your browser (Chrome, Safari, etc.)");
-    console.log("  4. Click 'Change All...'\n");
-    console.log("After that, all .vox files will open in your browser.\n");
-    console.log("Or open directly from terminal:");
-    console.log("  open -a 'Google Chrome' my-doc.vox\n");
+    console.log("To view .vox files on macOS, use:\n");
+    console.log("  vox view my-doc.vox\n");
+    console.log("This opens a local server and renders the document in your browser.");
+    console.log("Direct double-click in Finder won't render correctly yet —");
+    console.log("a browser extension is needed for that (coming soon).\n");
   } else if (os === "linux") {
     const success = registerLinux();
     if (success) {
