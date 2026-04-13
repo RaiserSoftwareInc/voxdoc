@@ -1,0 +1,24 @@
+{
+  "name": "@vox/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "vox": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vox/schema": "workspace:*",
+    "@vox/compiler": "workspace:*",
+    "@vox/mcp": "workspace:*",
+    "commander": "^13.0.0",
+    "chalk": "^5.4.0",
+    "open": "^10.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  }
+}
