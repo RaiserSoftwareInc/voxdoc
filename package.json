@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "test": "turbo test",
+    "test:integration": "vitest run --config vitest.config.ts",
     "lint": "turbo lint"
   },
   "devDependencies": {
