@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { writeFileSync } from "node:fs";
 import type { VoxDocument } from "@voxdoc/schema";
 import { compile } from "@voxdoc/compiler";
+import { checkRegistration } from "./setup.js";
 
 export function createDocument(options: { title?: string } = {}): VoxDocument {
   const now = new Date().toISOString();
@@ -47,4 +48,5 @@ export function initCommand(
     writeFileSync(outputPath, JSON.stringify(doc, null, 2) + "\n", "utf-8");
   }
   console.log(`Created ${outputPath}`);
+  checkRegistration();
 }

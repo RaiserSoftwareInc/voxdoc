@@ -7,14 +7,14 @@ export function registerReadTools(
   server: McpServer,
   getStore: () => DocumentStore,
 ): void {
-  server.registerTool("get_document", { description: "Get the full Vox document" }, async () => {
+  server.registerTool("get_document", { description: "Get the full Vox document", annotations: { readOnlyHint: true, destructiveHint: false } }, async () => {
     const doc = getStore().getDocument();
     return {
       content: [{ type: "text", text: JSON.stringify(doc, null, 2) }],
     };
   });
 
-  server.registerTool("list_blocks", { description: "List all blocks with summaries" }, async () => {
+  server.registerTool("list_blocks", { description: "List all blocks with summaries", annotations: { readOnlyHint: true, destructiveHint: false } }, async () => {
     const blocks = getStore().listBlocks();
     return {
       content: [{ type: "text", text: JSON.stringify(blocks, null, 2) }],
@@ -26,6 +26,7 @@ export function registerReadTools(
     {
       description: "Get a single block by ID",
       inputSchema: { id: z.string() },
+      annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async ({ id }) => {
       const block = getStore().getBlock(id);
@@ -41,7 +42,7 @@ export function registerReadTools(
     },
   );
 
-  server.registerTool("get_schema", { description: "Get the Vox document JSON schema" }, async () => {
+  server.registerTool("get_schema", { description: "Get the Vox document JSON schema", annotations: { readOnlyHint: true, destructiveHint: false } }, async () => {
     return {
       content: [{ type: "text", text: JSON.stringify(voxDocumentSchema, null, 2) }],
     };
@@ -52,6 +53,7 @@ export function registerReadTools(
     {
       description: "Search blocks by content",
       inputSchema: { query: z.string() },
+      annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async ({ query }) => {
       const results = getStore().searchBlocks(query);
