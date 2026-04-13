@@ -14,6 +14,9 @@ npm install -g @voxdoc/cli
 # Create a new document
 vox init my-doc.vox --title "My Document"
 
+# Register .vox files with your OS (first time only)
+vox setup
+
 # Validate against schema + accessibility rules
 vox validate my-doc.vox
 
@@ -29,8 +32,9 @@ vox blocks my-doc.vox
 # Open in browser
 vox view my-doc.vox
 
-# Start MCP server for AI authoring
+# Start MCP server for AI authoring (file or directory)
 vox mcp serve my-doc.vox
+vox mcp serve ./docs/
 ```
 
 ## How it works

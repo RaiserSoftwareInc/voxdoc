@@ -16,6 +16,9 @@ npm install -g @voxdoc/cli
 # Create a document
 vox init my-doc.vox --title "My Document"
 
+# Register .vox files with your OS (first time only)
+vox setup
+
 # Open it — it's already viewable in your browser
 # Add blocks, then recompile
 vox compile my-doc.vox
@@ -23,8 +26,9 @@ vox compile my-doc.vox
 # Validate against schema + accessibility rules
 vox validate my-doc.vox
 
-# Start MCP server for AI authoring
+# Start MCP server for AI authoring (single file or directory)
 vox mcp serve my-doc.vox
+vox mcp serve ./docs/
 ```
 
 ## How It Works
@@ -36,7 +40,7 @@ AI Agent ──MCP──▶ .vox file ──Compiler──▶ Self-contained HTM
                      └──── Human Review ◀── Browser
 ```
 
-1. **AI connects via MCP** — 21 tools for reading, writing, reviewing, and compiling documents
+1. **AI connects via MCP** — 24 tools for reading, writing, reviewing, and compiling documents
 2. **AI builds the document** block by block — headings, paragraphs, tables, diagrams, code, callouts
 3. **AI self-reviews** — flags blocks it's uncertain about, auto-approves the rest
 4. **Human reviews only flagged blocks** — approve, flag with a comment, or skip
@@ -75,10 +79,14 @@ Compilation fails if accessibility fields are missing. This is not optional.
 
 ## MCP Server
 
-Connect any MCP-compatible AI agent to author Vox documents:
+Connect any MCP-compatible AI agent to author Vox documents. Serve a single file or a whole directory:
 
 ```bash
+# Single document
 vox mcp serve my-doc.vox
+
+# Workspace — AI can list, open, and create documents in the directory
+vox mcp serve ./docs/
 ```
 
 ```json
@@ -86,13 +94,22 @@ vox mcp serve my-doc.vox
   "mcpServers": {
     "vox-document": {
       "command": "vox",
-      "args": ["mcp", "serve", "path/to/document.vox"]
+      "args": ["mcp", "serve", "path/to/docs/"]
     }
   }
 }
 ```
 
-**21 tools:** get_document, list_blocks, get_block, get_schema, search_blocks, add_block, edit_block, delete_block, move_block, set_metadata, set_variable, add_comment, list_comments, resolve_comment, set_block_status, set_status, set_description, set_transcription, get_accessibility_report, validate, compile
+**24 tools:**
+
+| Category | Tools |
+|----------|-------|
+| Workspace | list_documents, open_document, create_document |
+| Read | get_document, list_blocks, get_block, get_schema, search_blocks |
+| Write | add_block, edit_block, delete_block, move_block, set_metadata, set_variable |
+| Review | add_comment, list_comments, resolve_comment, set_block_status, set_status |
+| Accessibility | set_description, set_transcription, get_accessibility_report |
+| Output | validate, compile |
 
 ## Development
 
@@ -101,7 +118,7 @@ git clone https://github.com/RaiserSoftwareInc/voxdoc.git
 cd voxdoc
 pnpm install
 pnpm -r build
-pnpm -r test    # 95 tests
+pnpm -r test    # 102 tests
 ```
 
 ## License

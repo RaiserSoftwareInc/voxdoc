@@ -20,10 +20,16 @@ await startServer("document.vox");
 Or use the CLI:
 
 ```bash
+# Single file
 vox mcp serve document.vox
+
+# Workspace — serve a directory of .vox files
+vox mcp serve ./docs/
 ```
 
-## MCP Tools (21 total)
+## MCP Tools (24 total)
+
+**Workspace:** `list_documents`, `open_document`, `create_document`
 
 **Reads:** `get_document`, `list_blocks`, `get_block`, `get_schema`, `search_blocks`
 
@@ -42,7 +48,7 @@ vox mcp serve document.vox
   "mcpServers": {
     "vox-document": {
       "command": "vox",
-      "args": ["mcp", "serve", "/path/to/document.vox"]
+      "args": ["mcp", "serve", "/path/to/docs/"]
     }
   }
 }
