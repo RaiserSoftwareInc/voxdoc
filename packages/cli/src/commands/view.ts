@@ -6,12 +6,8 @@ import { readVoxSource } from "@voxdoc/compiler";
 
 export async function viewCommand(filePath: string): Promise<void> {
   const absPath = path.resolve(filePath);
-  const raw = fs.readFileSync(absPath, "utf-8");
 
-  // Check if the file is already self-rendering HTML
-  const isHtml = raw.trimStart().startsWith("<!DOCTYPE") || raw.trimStart().startsWith("<html");
-
-  const server = http.createServer((req, res) => {
+  const server = http.createServer(async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -23,25 +19,20 @@ export async function viewCommand(filePath: string): Promise<void> {
     }
 
     if (req.url === "/api/document") {
-      const doc = readVoxSource(fs.readFileSync(absPath, "utf-8"));
+      const docContent = fs.readFileSync(absPath, "utf-8");
+      const docData = readVoxSource(docContent);
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(doc));
+      res.end(JSON.stringify(docData));
       return;
     }
 
-    if (isHtml) {
-      // Self-rendering .vox — serve the file directly
-      const content = fs.readFileSync(absPath, "utf-8");
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(content);
-    } else {
-      // Legacy JSON .vox — compile on the fly
-      const { compile } = require("@voxdoc/compiler");
-      const doc = readVoxSource(raw);
-      const result = compile(doc);
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(result.success ? result.html : `<pre>Compile error: ${result.errors?.join("\n")}</pre>`);
-    }
+    // Read fresh content on each request (file may have been edited)
+    const content = fs.readFileSync(absPath, "utf-8");
+    const doc = readVoxSource(content);
+    const { compile } = await import("@voxdoc/compiler");
+    const result = compile(doc);
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(result.success ? result.html : `<pre>Compile error: ${result.errors?.join("\n")}</pre>`);
   });
 
   const port = 4400;
