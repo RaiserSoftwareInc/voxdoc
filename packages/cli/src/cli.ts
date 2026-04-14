@@ -54,7 +54,7 @@ export function createCli(): Command {
 
   program
     .command("setup")
-    .description("Register .vox files with your OS to open in browser")
+    .description("Register legacy .vox files with your OS (optional — .vox.html files work natively)")
     .action(() => setupCommand());
 
   const mcpCmd = program.command("mcp").description("MCP server commands");

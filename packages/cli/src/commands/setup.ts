@@ -55,22 +55,22 @@ export function setupCommand(): void {
   if (os === "win32") {
     const success = registerWindows();
     if (success) {
-      console.log("Registered .vox file type on Windows.");
-      console.log("Double-click any .vox file to open in your browser.\n");
+      console.log("Registered .vox file type on Windows. This is optional — .vox.html files already open natively.");
+      console.log("Use this if you have legacy .vox files that need browser association.\n");
     } else {
       console.log("Registration failed. Try running your terminal as Administrator.\n");
     }
   } else if (os === "darwin") {
     console.log("To view .vox files on macOS, use:\n");
-    console.log("  vox view my-doc.vox\n");
+    console.log("  vox view my-doc.vox.html\n");
     console.log("This opens a local server and renders the document in your browser.");
     console.log("Direct double-click in Finder won't render correctly yet —");
     console.log("a browser extension is needed for that (coming soon).\n");
   } else if (os === "linux") {
     const success = registerLinux();
     if (success) {
-      console.log("Registered .vox MIME type on Linux.");
-      console.log("Double-click any .vox file to open in your browser.\n");
+      console.log("Registered .vox MIME type on Linux. This is optional — .vox.html files already open natively.");
+      console.log("Use this if you have legacy .vox files that need browser association.\n");
     } else {
       console.log("Registration failed. Try: sudo vox setup\n");
     }
@@ -79,8 +79,8 @@ export function setupCommand(): void {
     console.log("Manually associate .vox files with your browser as text/html.\n");
   }
 
-  console.log("You can always open .vox files with:");
-  console.log("  vox view my-doc.vox\n");
+  console.log("You can always view documents with:");
+  console.log("  vox view my-doc.vox.html\n");
 
   markSetupDone();
 }
@@ -93,5 +93,5 @@ export function checkRegistration(): void {
     return; // Already set up — don't nag
   }
 
-  console.log("\nTip: Run 'vox setup' to configure .vox files to open in your browser.\n");
+  console.log("Tip: Vox documents use the .vox.html extension and open directly in your browser.\n");
 }

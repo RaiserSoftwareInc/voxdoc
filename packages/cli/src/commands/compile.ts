@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { compile, readVoxSource } from "@voxdoc/compiler";
+import { ensureVoxHtmlExtension } from "@voxdoc/schema";
 
 export interface CompileOptions {
   format: "html" | "pdf";
@@ -27,8 +28,8 @@ export function compileCommand(
     process.exit(1);
   }
 
-  // Default: write back to the same .vox file (re-render in place)
-  const outPath = options.out ?? filePath;
+  // Default: compile to .vox.html (converts .vox input to .vox.html output)
+  const outPath = options.out ?? ensureVoxHtmlExtension(filePath);
   writeFileSync(outPath, result.html!, "utf-8");
   console.log(`Compiled to ${outPath}`);
 }
