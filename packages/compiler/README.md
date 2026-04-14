@@ -14,14 +14,14 @@ npm install @voxdoc/compiler
 import { compile, readVoxSource } from "@voxdoc/compiler";
 import fs from "node:fs";
 
-// Read a .vox file (handles both self-rendering HTML and legacy JSON)
-const content = fs.readFileSync("document.vox", "utf-8");
+// Read a .vox.html file (handles both self-rendering HTML and legacy JSON)
+const content = fs.readFileSync("document.vox.html", "utf-8");
 const doc = readVoxSource(content);
 
 // Compile to HTML
 const result = compile(doc);
 if (result.success) {
-  fs.writeFileSync("document.vox", result.html);
+  fs.writeFileSync("document.vox.html", result.html);
 }
 ```
 

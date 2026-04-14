@@ -12,7 +12,7 @@ export class WorkspaceStore {
     const stat = statSync(pathArg);
     if (stat.isDirectory()) {
       this.dir = pathArg;
-      // Auto-open the first .vox file if there's only one
+      // Auto-open the first Vox file if there's only one
       const files = this.listFiles();
       if (files.length === 1) {
         this.activeFile = files[0];
