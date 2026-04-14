@@ -1,5 +1,6 @@
 import { readdirSync, statSync } from "node:fs";
 import path from "node:path";
+import { isVoxFile, ensureVoxHtmlExtension } from "@voxdoc/schema";
 import { DocumentStore } from "./document-store.js";
 
 export class WorkspaceStore {
@@ -26,7 +27,7 @@ export class WorkspaceStore {
   listFiles(): string[] {
     try {
       return readdirSync(this.dir)
-        .filter((f) => f.endsWith(".vox"))
+        .filter((f) => isVoxFile(f))
         .sort();
     } catch {
       return [];
@@ -62,9 +63,7 @@ export class WorkspaceStore {
   }
 
   createDocument(filename: string, title: string): DocumentStore {
-    if (!filename.endsWith(".vox")) {
-      filename = filename + ".vox";
-    }
+    filename = ensureVoxHtmlExtension(filename);
     const filePath = path.join(this.dir, filename);
     const store = DocumentStore.createEmpty(title);
     // Set file path and save
