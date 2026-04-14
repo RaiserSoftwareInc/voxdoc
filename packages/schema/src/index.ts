@@ -41,3 +41,6 @@ export type { ValidationResult } from "./validate.js";
 
 // Block ID
 export { generateBlockId } from "./block-id.js";
+
+// Extensions
+export { isVoxFile, ensureVoxHtmlExtension, VOX_GLOB_PATTERNS } from "./extensions.js";
