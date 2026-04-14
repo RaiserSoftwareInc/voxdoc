@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { ensureVoxHtmlExtension } from "@voxdoc/schema";
 import type { WorkspaceStore } from "../workspace-store.js";
 
 export function registerWorkspaceTools(
@@ -10,7 +11,7 @@ export function registerWorkspaceTools(
     "list_documents",
     {
       description:
-        "List all .vox documents in the workspace directory. Shows filename, title, status, block count, and which is active.",
+        "List all Vox documents (.vox.html and .vox) in the workspace directory. Shows filename, title, status, block count, and which is active.",
       annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async () => {
@@ -25,12 +26,12 @@ export function registerWorkspaceTools(
     "open_document",
     {
       description:
-        "Open a .vox document from the workspace and set it as the active document. All block/review/compile tools operate on the active document.",
+        "Open a Vox document from the workspace and set it as the active document. All block/review/compile tools operate on the active document.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         filename: z
           .string()
-          .describe("Filename of the .vox document to open (e.g. api-docs.vox)"),
+          .describe("Filename of the document to open (e.g. api-docs.vox.html)"),
       },
     },
     async ({ filename }) => {
@@ -65,12 +66,12 @@ export function registerWorkspaceTools(
     "create_document",
     {
       description:
-        "Create a new .vox document in the workspace directory and set it as active.",
+        "Create a new Vox document in the workspace directory and set it as active.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         filename: z
           .string()
-          .describe("Filename for the new document (e.g. getting-started.vox)"),
+          .describe("Filename for the new document (e.g. getting-started.vox.html)"),
         title: z.string().describe("Document title"),
       },
     },
@@ -83,7 +84,7 @@ export function registerWorkspaceTools(
             {
               type: "text",
               text: JSON.stringify({
-                created: filename.endsWith(".vox") ? filename : filename + ".vox",
+                created: ensureVoxHtmlExtension(filename),
                 title: doc.meta.title,
                 active: true,
               }),
