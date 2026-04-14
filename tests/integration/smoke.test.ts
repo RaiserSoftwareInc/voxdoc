@@ -7,7 +7,7 @@ import { compile } from "@voxdoc/compiler";
 const ROOT = path.resolve(import.meta.dirname, "..", "..");
 
 describe("Integration smoke test", () => {
-  const examples = ["examples/hello-world.vox", "examples/api-reference.vox"];
+  const examples = ["examples/hello-world.vox.html", "examples/api-reference.vox.html"];
 
   for (const file of examples) {
     describe(file, () => {
