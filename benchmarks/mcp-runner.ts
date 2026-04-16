@@ -84,6 +84,10 @@ export async function runIndividual(blocks: BlockDef[]): Promise<StrategyResult>
       const args = { blocks: [block] };
       const req = buildRequest("add_block", args);
       const result = await client.callTool({ name: "add_block", arguments: args });
+      if (result.isError) {
+        const text = (result.content[0] as { text?: string })?.text ?? "unknown error";
+        throw new Error(`add_block failed: ${text}`);
+      }
       const res = buildResponse(result);
       inputTokens += countTokens(req);
       outputTokens += countTokens(res);
@@ -104,6 +108,10 @@ export async function runBatch(blocks: BlockDef[]): Promise<StrategyResult> {
     const args = { blocks };
     const req = buildRequest("add_block", args);
     const result = await client.callTool({ name: "add_block", arguments: args });
+    if (result.isError) {
+      const text = (result.content[0] as { text?: string })?.text ?? "unknown error";
+      throw new Error(`add_block failed: ${text}`);
+    }
     const res = buildResponse(result);
 
     const inputTokens = countTokens(req);
