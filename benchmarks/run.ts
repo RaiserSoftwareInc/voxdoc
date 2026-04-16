@@ -15,9 +15,14 @@ function fmt(n: number): string {
 }
 
 function pct(n: number, baseline: number): string {
+  if (baseline === 0) return "N/A";
   const diff = ((n - baseline) / baseline) * 100;
   const sign = diff >= 0 ? "+" : "";
   return `${sign}${diff.toFixed(0)}%`;
+}
+
+function calls(n: number): string {
+  return `${n} ${n === 1 ? "call" : "calls"}`;
 }
 
 async function main(): Promise<void> {
@@ -38,8 +43,8 @@ async function main(): Promise<void> {
     const mdTokens = markdown.totalTokens;
 
     console.log(`  Markdown baseline ${fmt(mdTokens)} tokens`);
-    console.log(`  Voxdoc individual ${fmt(individual.totalTokens)} tokens  (${pct(individual.totalTokens, mdTokens)} vs markdown, ${individual.callCount} calls)`);
-    console.log(`  Voxdoc batch      ${fmt(batch.totalTokens)} tokens  (${pct(batch.totalTokens, mdTokens)} vs markdown, ${batch.callCount} call) ✓`);
+    console.log(`  Voxdoc individual ${fmt(individual.totalTokens)} tokens  (${pct(individual.totalTokens, mdTokens)} vs markdown, ${calls(individual.callCount)})`);
+    console.log(`  Voxdoc batch      ${fmt(batch.totalTokens)} tokens  (${pct(batch.totalTokens, mdTokens)} vs markdown, ${calls(batch.callCount)}) ✓`);
     console.log();
 
     scenarioResults.push({
