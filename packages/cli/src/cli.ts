@@ -1,4 +1,7 @@
 import { Command } from "commander";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { initCommand } from "./commands/init.js";
 import { validateCommand } from "./commands/validate.js";
 import { compileCommand } from "./commands/compile.js";
@@ -7,12 +10,15 @@ import { blocksCommand } from "./commands/blocks.js";
 import { mcpServeCommand } from "./commands/mcp-serve.js";
 import { mcpInstallCommand } from "./commands/mcp-install.js";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
+
 export function createCli(): Command {
   const program = new Command();
   program
     .name("vox")
     .description("Vox — Documents with a voice")
-    .version("0.1.0");
+    .version(pkg.version);
 
   program
     .command("init <output>")
