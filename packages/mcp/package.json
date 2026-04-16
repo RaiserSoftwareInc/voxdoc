@@ -1,6 +1,6 @@
 {
   "name": "@voxdoc/mcp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "MCP server for AI-first authoring of Vox documents",
   "type": "module",
   "main": "./dist/index.js",
