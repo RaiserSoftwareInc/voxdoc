@@ -37,7 +37,10 @@ ${sourceJson}
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+// Store original source before Mermaid replaces it with SVG
+document.querySelectorAll('.mermaid').forEach(el => el.setAttribute('data-source', el.textContent));
 mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+window.__voxMermaid = mermaid;
 </script>
 <script>
 // Theme toggle
@@ -50,6 +53,15 @@ mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
     document.documentElement.setAttribute('data-theme', t);
     localStorage.setItem('vox-theme', t);
     update();
+    // Re-render Mermaid diagrams with new theme
+    if (window.__voxMermaid) {
+      window.__voxMermaid.initialize({ startOnLoad: false, theme: t === 'dark' ? 'dark' : 'default' });
+      document.querySelectorAll('.mermaid').forEach(function(el) {
+        var src = el.getAttribute('data-source');
+        if (src) { el.removeAttribute('data-processed'); el.innerHTML = src; }
+      });
+      window.__voxMermaid.run();
+    }
   });
 })();
 

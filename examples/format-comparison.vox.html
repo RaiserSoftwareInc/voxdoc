@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Vox? A Format Comparison</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<style>:root {
+  --vox-font: "Charter", "Iowan Old Style", "Sitka Text", "Palatino Linotype", "Georgia", serif;
+  --vox-font-heading: "Bahnschrift", "Avenir Next", "Avenir", "Cantarell", sans-serif;
+  --vox-font-mono: "Cascadia Code", "SF Mono", "Menlo", "Consolas", monospace;
+  --vox-text: #1C1917;
+  --vox-text-secondary: #57534E;
+  --vox-bg: #FAFAF7;
+  --vox-bg-secondary: #F0EFE9;
+  --vox-border: #D6D3CC;
+  --vox-accent: #0D7377;
+  --vox-accent-light: #CCFBF1;
+  --vox-accent-hover: #0A5C5F;
+  --vox-link: #0D7377;
+  --vox-code-bg: #F0EDE5;
+  --vox-code-border: #D6D3CC;
+  --vox-radius: 6px;
+  --vox-shadow: 0 1px 2px rgba(28,25,23,0.06), 0 1px 3px rgba(28,25,23,0.08);
+  --vox-shadow-lg: 0 4px 12px rgba(28,25,23,0.08), 0 1px 3px rgba(28,25,23,0.06);
+  --vox-callout-info: #0C4A6E;
+  --vox-callout-info-bg: #E0F2FE;
+  --vox-callout-info-border: #7DD3FC;
+  --vox-callout-warning: #854D0E;
+  --vox-callout-warning-bg: #FEF9C3;
+  --vox-callout-warning-border: #FDE047;
+  --vox-callout-danger: #991B1B;
+  --vox-callout-danger-bg: #FEE2E2;
+  --vox-callout-danger-border: #FCA5A5;
+  --vox-callout-tip: #065F46;
+  --vox-callout-tip-bg: #D1FAE5;
+  --vox-callout-tip-border: #6EE7B7;
+  --vox-callout-note: #5B21B6;
+  --vox-callout-note-bg: #EDE9FE;
+  --vox-callout-note-border: #C4B5FD;
+}
+
+[data-theme="dark"] {
+    --vox-text: #E7E5DF;
+    --vox-text-secondary: #A8A29E;
+    --vox-bg: #1A1915;
+    --vox-bg-secondary: #262520;
+    --vox-border: #3D3B35;
+    --vox-accent: #2DD4BF;
+    --vox-accent-light: #134E4A;
+    --vox-accent-hover: #5EEAD4;
+    --vox-link: #5EEAD4;
+    --vox-code-bg: #22201B;
+    --vox-code-border: #3D3B35;
+    --vox-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --vox-shadow-lg: 0 4px 12px rgba(0,0,0,0.3);
+    --vox-callout-info: #BAE6FD;
+    --vox-callout-info-bg: #0C2D48;
+    --vox-callout-info-border: #0C4A6E;
+    --vox-callout-warning: #FDE68A;
+    --vox-callout-warning-bg: #3D2E06;
+    --vox-callout-warning-border: #854D0E;
+    --vox-callout-danger: #FECACA;
+    --vox-callout-danger-bg: #3B1111;
+    --vox-callout-danger-border: #991B1B;
+    --vox-callout-tip: #A7F3D0;
+    --vox-callout-tip-bg: #052E22;
+    --vox-callout-tip-border: #065F46;
+    --vox-callout-note: #DDD6FE;
+    --vox-callout-note-bg: #2E1A5E;
+    --vox-callout-note-border: #5B21B6;
+}
+
+/* Theme toggle */
+.vox-theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--vox-text);
+  box-shadow: var(--vox-shadow);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.vox-theme-toggle:hover {
+  background: var(--vox-border);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--vox-font);
+  color: var(--vox-text);
+  background: var(--vox-bg);
+  line-height: 1.75;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.vox-document {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Headings — geometric sans, tight tracking */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vox-font-heading);
+  margin-top: 2.5em;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--vox-text);
+}
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid var(--vox-border);
+}
+h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin-top: 3em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--vox-border);
+}
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vox-text-secondary);
+}
+h6 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vox-text-secondary);
+}
+
+p {
+  margin: 1.15em 0;
+}
+
+a {
+  color: var(--vox-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--vox-accent-hover);
+}
+
+/* Inline code */
+code {
+  font-family: var(--vox-font-mono);
+  background: var(--vox-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--vox-code-border);
+  font-weight: 500;
+}
+
+/* Code blocks */
+pre {
+  background: var(--vox-code-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--vox-radius);
+  overflow-x: auto;
+  border: 1px solid var(--vox-code-border);
+  line-height: 1.6;
+  font-size: 0.875rem;
+  box-shadow: var(--vox-shadow);
+}
+pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* Callouts — full tinted background */
+.vox-callout {
+  border-left: 4px solid var(--vox-border);
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  border-radius: 0 var(--vox-radius) var(--vox-radius) 0;
+  background: var(--vox-bg-secondary);
+}
+.vox-callout .vox-callout-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+.vox-callout-info {
+  border-left-color: var(--vox-callout-info-border);
+  background: var(--vox-callout-info-bg);
+  color: var(--vox-callout-info);
+}
+.vox-callout-warning {
+  border-left-color: var(--vox-callout-warning-border);
+  background: var(--vox-callout-warning-bg);
+  color: var(--vox-callout-warning);
+}
+.vox-callout-danger {
+  border-left-color: var(--vox-callout-danger-border);
+  background: var(--vox-callout-danger-bg);
+  color: var(--vox-callout-danger);
+}
+.vox-callout-tip {
+  border-left-color: var(--vox-callout-tip-border);
+  background: var(--vox-callout-tip-bg);
+  color: var(--vox-callout-tip);
+}
+.vox-callout-note {
+  border-left-color: var(--vox-callout-note-border);
+  background: var(--vox-callout-note-bg);
+  color: var(--vox-callout-note);
+}
+
+/* Tables — striped rows, refined borders */
+.vox-table-wrapper {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-radius: var(--vox-radius);
+  border: 1px solid var(--vox-border);
+  box-shadow: var(--vox-shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+th, td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--vox-border);
+}
+th {
+  background: var(--vox-bg-secondary);
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vox-text-secondary);
+}
+tbody tr:nth-child(even) {
+  background: var(--vox-bg-secondary);
+}
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Tabs — accent underline */
+.vox-tabs {
+  margin: 1.75rem 0;
+}
+.vox-tabs [role="tablist"] {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--vox-border);
+  margin-bottom: 0;
+}
+.vox-tabs [role="tab"] {
+  font-family: var(--vox-font-heading);
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vox-text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.vox-tabs [role="tab"]:hover {
+  color: var(--vox-text);
+}
+.vox-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--vox-accent);
+  color: var(--vox-accent);
+}
+.vox-tabs [role="tabpanel"] {
+  padding: 1.25rem 0;
+}
+
+/* Layout grid */
+.vox-layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.vox-layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Steps — connecting vertical line */
+.vox-steps {
+  counter-reset: vox-step;
+  list-style: none;
+  padding: 0;
+  position: relative;
+}
+.vox-steps::before {
+  content: '';
+  position: absolute;
+  left: 0.95rem;
+  top: 2rem;
+  bottom: 1rem;
+  width: 2px;
+  background: var(--vox-border);
+  border-radius: 1px;
+}
+.vox-step {
+  position: relative;
+  padding-left: 3.5rem;
+  margin-bottom: 2rem;
+}
+.vox-step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--vox-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 3px var(--vox-bg);
+  z-index: 1;
+}
+.vox-step-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Accordion */
+.vox-accordion {
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  margin: 1rem 0;
+  box-shadow: var(--vox-shadow);
+  overflow: hidden;
+}
+.vox-accordion summary {
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--vox-bg-secondary);
+  transition: background 0.15s ease;
+}
+.vox-accordion summary:hover {
+  background: var(--vox-border);
+}
+.vox-accordion[open] summary {
+  border-bottom: 1px solid var(--vox-border);
+}
+.vox-accordion .vox-accordion-content {
+  padding: 1.25rem;
+}
+
+/* Code filename header */
+.vox-code-filename {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-code-border);
+  border-bottom: none;
+  padding: 0.45rem 1rem;
+  font-family: var(--vox-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--vox-radius) var(--vox-radius) 0 0;
+  color: var(--vox-text-secondary);
+  letter-spacing: 0.02em;
+}
+.vox-code-filename + pre {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+}
+
+/* Table of Contents */
+.vox-toc {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem 1.75rem;
+  margin: 2rem 0;
+  box-shadow: var(--vox-shadow);
+}
+.vox-toc nav ul {
+  list-style: none;
+  padding-left: 1.25rem;
+}
+.vox-toc nav > ul {
+  padding-left: 0;
+}
+.vox-toc a {
+  text-decoration: none;
+  color: var(--vox-text-secondary);
+  font-size: 0.925rem;
+  transition: color 0.15s ease;
+}
+.vox-toc a:hover {
+  color: var(--vox-accent);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5rem;
+}
+li {
+  margin-bottom: 0.35em;
+}
+li::marker {
+  color: var(--vox-accent);
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--vox-border);
+  margin: 3rem 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--vox-radius);
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--vox-accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  color: var(--vox-text-secondary);
+  font-style: italic;
+}
+
+/* Skip navigation link */
+.vox-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--vox-accent);
+  color: #fff;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 0 0 var(--vox-radius) 0;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.vox-skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.vox-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Diagram */
+.vox-diagram {
+  margin: 1.75rem 0;
+  text-align: center;
+}
+.vox-diagram figcaption {
+  font-size: 0.85rem;
+  color: var(--vox-text-secondary);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Math */
+.vox-math {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Handwriting */
+.vox-handwriting {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+/* Unsupported block fallback */
+.vox-unsupported {
+  background: var(--vox-callout-warning-bg);
+  border: 1px dashed var(--vox-callout-warning-border);
+  border-radius: var(--vox-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--vox-callout-warning);
+  font-size: 0.875rem;
+}
+
+/* Selection */
+::selection {
+  background: var(--vox-accent-light);
+  color: var(--vox-text);
+}
+
+/* Strong / emphasis */
+strong {
+  font-weight: 600;
+}
+
+/* Responsive: 640px */
+@media (max-width: 640px) {
+  .vox-layout-2col,
+  .vox-layout-3col {
+    grid-template-columns: 1fr;
+  }
+  .vox-tabs [role="tablist"] {
+    flex-wrap: wrap;
+  }
+  .vox-document {
+    padding: 2rem 1.25rem;
+  }
+}
+
+/* Responsive: 400px */
+@media (max-width: 400px) {
+  .vox-document {
+    padding: 1.5rem 1rem;
+  }
+  .vox-callout {
+    padding: 0.75rem 1rem;
+  }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.375rem; }
+}</style>
+</head>
+<body>
+<script>
+// Theme: restore saved preference or detect OS default
+(function() {
+  var saved = localStorage.getItem('vox-theme');
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+<button class="vox-theme-toggle" id="vox-theme-btn" aria-label="Toggle theme" title="Toggle light/dark theme">&#9790;</button>
+<a href="#vox-main" class="vox-skip-link">Skip to content</a>
+<main id="vox-main" class="vox-document">
+<h1 id="blk_title">Why Vox? A Format Comparison</h1>
+<p id="blk_intro">Every documentation tool makes trade-offs. Markdown is simple but unstructured. PDF is portable but locked. DOCX is editable but opaque. Plain HTML is flexible but has no semantic layer for tooling. <strong>Vox</strong> combines the best of each — structured JSON for machines, self-rendering HTML for humans, and enforced accessibility for everyone.</p>
+<nav id="blk_toc" aria-label="Table of contents"><ol><li><a href="#blk_title">Why {{format_name}}? A Format Comparison</a></li><li><a href="#blk_overview_heading">Format Overview</a></li><li><a href="#blk_structure_heading">The Structure Problem</a></li><li><a href="#blk_a11y_heading">Accessibility Is Not Optional</a></li><li><a href="#blk_ai_heading">AI-First Authoring</a></li><li><a href="#blk_selfrender_heading">Self-Rendering: No Tools Required</a></li><li><a href="#blk_faq_heading">Frequently Asked Questions</a></li></ol></nav>
+<h2 id="blk_overview_heading">Format Overview</h2>
+<p id="blk_overview_table-summary" class="vox-sr-only">A comparison table showing how Vox, Markdown, PDF, DOCX, and HTML stack up across eight key features: structured data, self-rendering, round-tripping, accessibility, AI authoring, review, version control, and distribution.</p><div class="vox-table-wrapper" id="blk_overview_table"><table aria-describedby="blk_overview_table-summary"><caption>Feature comparison across document formats</caption><thead><tr><th scope="col">Feature</th><th scope="col">Markdown</th><th scope="col">PDF</th><th scope="col">DOCX</th><th scope="col">HTML</th><th scope="col">Vox</th></tr></thead><tbody><tr><td>Structured data</td><td>No</td><td>No</td><td>Partial (XML)</td><td>No</td><td>Yes (JSON)</td></tr><tr><td>Self-rendering</td><td>No (needs renderer)</td><td>Yes</td><td>No (needs Office)</td><td>Yes</td><td>Yes</td></tr><tr><td>Round-trippable</td><td>Yes</td><td>No</td><td>Partial</td><td>No</td><td>Yes</td></tr><tr><td>Enforced accessibility</td><td>No</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>AI-authorable</td><td>Partial</td><td>No</td><td>No</td><td>Partial</td><td>Yes (MCP)</td></tr><tr><td>Block-level review</td><td>No</td><td>Comments only</td><td>Comments only</td><td>No</td><td>Yes</td></tr><tr><td>Version control friendly</td><td>Yes</td><td>No (binary)</td><td>No (binary)</td><td>Partial</td><td>Yes</td></tr><tr><td>Single file distribution</td><td>No (assets)</td><td>Yes</td><td>No (zip)</td><td>No (assets)</td><td>Yes</td></tr></tbody></table></div>
+<h2 id="blk_structure_heading">The Structure Problem</h2>
+<div id="blk_structure_layout" class="vox-layout vox-layout-2col"><div class="vox-layout-column"><div id="blk_structure_md" class="vox-callout vox-callout-warning" role="note" aria-label="warning"><div class="vox-callout-title">⚠️ Markdown</div><div class="vox-callout-content">Flat text with formatting hints. No semantic meaning — a heading is just a line starting with <code>#</code>. Tools must guess intent from syntax. No schema, no validation, no guaranteed structure.</div></div></div><div class="vox-layout-column"><div id="blk_structure_vox" class="vox-callout vox-callout-tip" role="note" aria-label="tip"><div class="vox-callout-title">💡 {{format_name}}</div><div class="vox-callout-content">Every block has a type, unique ID, and validated schema. A heading is a <code>heading</code> block with a <code>level</code> and <code>content</code>. Tools know exactly what they are working with — no guessing.</div></div></div></div>
+<div id="blk_structure_example" class="vox-tabs"><div role="tablist"><button role="tab" id="blk_structure_example-tab-0" aria-controls="blk_structure_example-panel-0" aria-selected="true" tabindex="0">Markdown</button><button role="tab" id="blk_structure_example-tab-1" aria-controls="blk_structure_example-panel-1" aria-selected="false" tabindex="-1">Vox JSON</button></div><div role="tabpanel" id="blk_structure_example-panel-0" aria-labelledby="blk_structure_example-tab-0"><pre><code class="language-markdown"># My Document
+
+Some paragraph text.
+
+&gt; **Warning:** Be careful here.
+
+| Col A | Col B |
+|-------|-------|
+| 1     | 2     |
+
+No schema. No validation. No IDs.
+Is the blockquote a callout? A note? A warning?
+Tools can't tell.</code></pre></div><div role="tabpanel" id="blk_structure_example-panel-1" aria-labelledby="blk_structure_example-tab-1" hidden="true"><pre><code class="language-json">{
+  &quot;type&quot;: &quot;callout&quot;,
+  &quot;variant&quot;: &quot;warning&quot;,
+  &quot;title&quot;: &quot;Be careful here&quot;,
+  &quot;content&quot;: &quot;This is explicitly a warning.&quot;
+}
+
+Every block has: type, id, schema.
+Machines read it. Humans review it.
+No ambiguity.</code></pre></div></div>
+<h2 id="blk_a11y_heading">Accessibility Is Not Optional</h2>
+<p id="blk_a11y_para">Most formats treat accessibility as an afterthought. Authors forget alt text, skip table summaries, and ship inaccessible math. Vox makes this impossible — the compiler <strong>rejects</strong> documents that fail accessibility checks.</p>
+<div id="blk_a11y_callout" class="vox-callout vox-callout-danger" role="note" aria-label="danger"><div class="vox-callout-title">🚨 Compilation fails without these</div><div class="vox-callout-content">Every <code>image</code> must have <code>alt</code> text. Every <code>diagram</code> must have a <code>description</code>. Every <code>table</code> must have a <code>summary</code>. Every <code>math</code> block must have <code>spoken</code> text (MathSpeak). No exceptions — the compiler enforces this at build time.</div></div>
+<ol id="blk_a11y_steps" class="vox-steps"><li class="vox-step"><div class="vox-step-number">1</div><div class="vox-step-title">Author writes a document</div><div class="vox-step-content"><p id="blk_step1">Using the CLI or an AI agent via MCP, the author creates blocks and fills in content. The schema guides what fields are required.</p></div></li><li class="vox-step"><div class="vox-step-number">2</div><div class="vox-step-title">Compiler checks accessibility</div><div class="vox-step-content"><p id="blk_step2">At compile time, every block is validated against accessibility rules. Missing alt text, empty descriptions, or absent summaries cause a build failure — not a warning.</p></div></li><li class="vox-step"><div class="vox-step-number">3</div><div class="vox-step-title">Output is WCAG 2.1 AA compliant</div><div class="vox-step-content"><p id="blk_step3">The compiled HTML includes ARIA attributes, skip navigation, semantic elements, and responsive CSS. Screen readers, keyboard navigation, and assistive technology work out of the box.</p></div></li></ol>
+<h2 id="blk_ai_heading">AI-First Authoring</h2>
+<p id="blk_ai_para">Vox is designed for AI agents to author documents through the Model Context Protocol (MCP). 24 tools cover the full document lifecycle — from creating blocks to reviewing content to compiling output.</p>
+<figure id="blk_ai_diagram" class="vox-diagram" aria-label="Flow diagram showing the Vox authoring cycle: an AI agent creates a document via MCP, the compiler produces self-rendering HTML, a human reviews it in a browser, and feedback flows back to the document."><pre class="mermaid">graph LR
+    A[AI Agent] --&gt;|MCP| B[Vox Document]
+    B --&gt;|Compiler| C[Self-Rendering HTML]
+    C --&gt;|Browser| D[Human Review]
+    D --&gt;|Approve/Flag| B</pre><figcaption class="vox-sr-only">Flow diagram showing the Vox authoring cycle: an AI agent creates a document via MCP, the compiler produces self-rendering HTML, a human reviews it in a browser, and feedback flows back to the document.</figcaption></figure>
+<p id="blk_ai_review">The review model is built into the format. Each block carries a confidence score — high-confidence blocks are auto-approved, uncertain blocks are flagged for human review. When every block passes, the document ships without human intervention.</p>
+<h2 id="blk_selfrender_heading">Self-Rendering: No Tools Required</h2>
+<p id="blk_selfrender_para">A .vox.html file is valid HTML. Double-click it, and your browser renders a fully styled document — no CLI, no plugins, no build step. The full Vox JSON source is embedded inside the HTML, so the same file is both human-readable and machine-round-trippable.</p>
+<div class="vox-code-block"><div class="vox-code-filename">example.vox.html</div><pre><code class="language-html">&lt;!-- A .vox.html file IS valid HTML --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;style&gt;/* Vox CSS embedded inline */&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;vox-document&quot;&gt;
+    &lt;!-- Compiled blocks rendered here --&gt;
+  &lt;/main&gt;
+  &lt;!-- Vox JSON source embedded in a --&gt;
+  &lt;!-- special tag for round-tripping --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<h2 id="blk_faq_heading">Frequently Asked Questions</h2>
+<details id="blk_faq1" class="vox-accordion" open><summary>Why not just use Markdown?</summary><div class="vox-accordion-content"><p id="blk_faq1_answer">Markdown is great for simple text but has no schema, no block IDs, no accessibility enforcement, and no structured data layer. You cannot programmatically query or modify a Markdown document without parsing ambiguous syntax. Vox gives you structured JSON with typed blocks — tools always know what they are working with.</p></div></details>
+<details id="blk_faq2" class="vox-accordion"><summary>Can I convert Markdown to Vox?</summary><div class="vox-accordion-content"><p id="blk_faq2_answer">Yes. The MCP server can assist with converting existing documents by extracting structure, generating block content, and flagging areas that need human review. The conversion process preserves as much semantic meaning as possible and marks low-confidence sections for verification.</p></div></details>
+<details id="blk_faq3" class="vox-accordion"><summary>Is Vox only for AI-generated content?</summary><div class="vox-accordion-content"><p id="blk_faq3_answer">No. Vox works equally well for human-authored documents. The CLI provides commands for creating, validating, and compiling documents without any AI involvement. The MCP integration is an option, not a requirement.</p></div></details>
+</main>
+<script type="application/vox+json">
+{
+  "$schema": "https://voxformat.dev/schema/v1.json",
+  "meta": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Why Vox? A Format Comparison",
+    "description": "Compares the Vox document format against Markdown, PDF, DOCX, and plain HTML.",
+    "version": "1.0.0",
+    "authors": [
+      "Vox Team"
+    ],
+    "tags": [
+      "comparison",
+      "formats",
+      "documentation"
+    ],
+    "status": "published",
+    "created": "2026-04-16T00:00:00.000Z",
+    "updated": "2026-04-16T00:00:00.000Z",
+    "variables": {
+      "format_name": "Vox",
+      "extension": ".vox.html"
+    },
+    "provenance": {
+      "generated_by": "vox-cli",
+      "reviewed_by": "human",
+      "approved_blocks": [],
+      "flagged_blocks": []
+    },
+    "accessibility": {
+      "language": "en",
+      "reading_level": "technical"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_title",
+      "type": "heading",
+      "level": 1,
+      "content": "Why {{format_name}}? A Format Comparison"
+    },
+    {
+      "id": "blk_intro",
+      "type": "paragraph",
+      "content": "Every documentation tool makes trade-offs. Markdown is simple but unstructured. PDF is portable but locked. DOCX is editable but opaque. Plain HTML is flexible but has no semantic layer for tooling. **{{format_name}}** combines the best of each — structured JSON for machines, self-rendering HTML for humans, and enforced accessibility for everyone."
+    },
+    {
+      "id": "blk_toc",
+      "type": "toc",
+      "max_depth": 2
+    },
+    {
+      "id": "blk_overview_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Format Overview"
+    },
+    {
+      "id": "blk_overview_table",
+      "type": "table",
+      "headers": [
+        "Feature",
+        "Markdown",
+        "PDF",
+        "DOCX",
+        "HTML",
+        "{{format_name}}"
+      ],
+      "rows": [
+        [
+          "Structured data",
+          "No",
+          "No",
+          "Partial (XML)",
+          "No",
+          "Yes (JSON)"
+        ],
+        [
+          "Self-rendering",
+          "No (needs renderer)",
+          "Yes",
+          "No (needs Office)",
+          "Yes",
+          "Yes"
+        ],
+        [
+          "Round-trippable",
+          "Yes",
+          "No",
+          "Partial",
+          "No",
+          "Yes"
+        ],
+        [
+          "Enforced accessibility",
+          "No",
+          "No",
+          "No",
+          "No",
+          "Yes"
+        ],
+        [
+          "AI-authorable",
+          "Partial",
+          "No",
+          "No",
+          "Partial",
+          "Yes (MCP)"
+        ],
+        [
+          "Block-level review",
+          "No",
+          "Comments only",
+          "Comments only",
+          "No",
+          "Yes"
+        ],
+        [
+          "Version control friendly",
+          "Yes",
+          "No (binary)",
+          "No (binary)",
+          "Partial",
+          "Yes"
+        ],
+        [
+          "Single file distribution",
+          "No (assets)",
+          "Yes",
+          "No (zip)",
+          "No (assets)",
+          "Yes"
+        ]
+      ],
+      "caption": "Feature comparison across document formats",
+      "summary": "A comparison table showing how Vox, Markdown, PDF, DOCX, and HTML stack up across eight key features: structured data, self-rendering, round-tripping, accessibility, AI authoring, review, version control, and distribution."
+    },
+    {
+      "id": "blk_structure_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "The Structure Problem"
+    },
+    {
+      "id": "blk_structure_layout",
+      "type": "layout",
+      "columns": 2,
+      "blocks": [
+        [
+          {
+            "id": "blk_structure_md",
+            "type": "callout",
+            "variant": "warning",
+            "title": "Markdown",
+            "content": "Flat text with formatting hints. No semantic meaning — a heading is just a line starting with `#`. Tools must guess intent from syntax. No schema, no validation, no guaranteed structure."
+          }
+        ],
+        [
+          {
+            "id": "blk_structure_vox",
+            "type": "callout",
+            "variant": "tip",
+            "title": "{{format_name}}",
+            "content": "Every block has a type, unique ID, and validated schema. A heading is a `heading` block with a `level` and `content`. Tools know exactly what they are working with — no guessing."
+          }
+        ]
+      ]
+    },
+    {
+      "id": "blk_structure_example",
+      "type": "tabs",
+      "panels": [
+        {
+          "label": "Markdown",
+          "language": "markdown",
+          "content": "# My Document\n\nSome paragraph text.\n\n> **Warning:** Be careful here.\n\n| Col A | Col B |\n|-------|-------|\n| 1     | 2     |\n\nNo schema. No validation. No IDs.\nIs the blockquote a callout? A note? A warning?\nTools can't tell."
+        },
+        {
+          "label": "Vox JSON",
+          "language": "json",
+          "content": "{\n  \"type\": \"callout\",\n  \"variant\": \"warning\",\n  \"title\": \"Be careful here\",\n  \"content\": \"This is explicitly a warning.\"\n}\n\nEvery block has: type, id, schema.\nMachines read it. Humans review it.\nNo ambiguity."
+        }
+      ]
+    },
+    {
+      "id": "blk_a11y_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Accessibility Is Not Optional"
+    },
+    {
+      "id": "blk_a11y_para",
+      "type": "paragraph",
+      "content": "Most formats treat accessibility as an afterthought. Authors forget alt text, skip table summaries, and ship inaccessible math. {{format_name}} makes this impossible — the compiler **rejects** documents that fail accessibility checks."
+    },
+    {
+      "id": "blk_a11y_callout",
+      "type": "callout",
+      "variant": "danger",
+      "title": "Compilation fails without these",
+      "content": "Every `image` must have `alt` text. Every `diagram` must have a `description`. Every `table` must have a `summary`. Every `math` block must have `spoken` text (MathSpeak). No exceptions — the compiler enforces this at build time."
+    },
+    {
+      "id": "blk_a11y_steps",
+      "type": "steps",
+      "steps": [
+        {
+          "title": "Author writes a document",
+          "blocks": [
+            {
+              "id": "blk_step1",
+              "type": "paragraph",
+              "content": "Using the CLI or an AI agent via MCP, the author creates blocks and fills in content. The schema guides what fields are required."
+            }
+          ]
+        },
+        {
+          "title": "Compiler checks accessibility",
+          "blocks": [
+            {
+              "id": "blk_step2",
+              "type": "paragraph",
+              "content": "At compile time, every block is validated against accessibility rules. Missing alt text, empty descriptions, or absent summaries cause a build failure — not a warning."
+            }
+          ]
+        },
+        {
+          "title": "Output is WCAG 2.1 AA compliant",
+          "blocks": [
+            {
+              "id": "blk_step3",
+              "type": "paragraph",
+              "content": "The compiled HTML includes ARIA attributes, skip navigation, semantic elements, and responsive CSS. Screen readers, keyboard navigation, and assistive technology work out of the box."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blk_ai_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "AI-First Authoring"
+    },
+    {
+      "id": "blk_ai_para",
+      "type": "paragraph",
+      "content": "{{format_name}} is designed for AI agents to author documents through the Model Context Protocol (MCP). 24 tools cover the full document lifecycle — from creating blocks to reviewing content to compiling output."
+    },
+    {
+      "id": "blk_ai_diagram",
+      "type": "diagram",
+      "syntax": "mermaid",
+      "content": "graph LR\n    A[AI Agent] -->|MCP| B[Vox Document]\n    B -->|Compiler| C[Self-Rendering HTML]\n    C -->|Browser| D[Human Review]\n    D -->|Approve/Flag| B",
+      "description": "Flow diagram showing the Vox authoring cycle: an AI agent creates a document via MCP, the compiler produces self-rendering HTML, a human reviews it in a browser, and feedback flows back to the document."
+    },
+    {
+      "id": "blk_ai_review",
+      "type": "paragraph",
+      "content": "The review model is built into the format. Each block carries a confidence score — high-confidence blocks are auto-approved, uncertain blocks are flagged for human review. When every block passes, the document ships without human intervention."
+    },
+    {
+      "id": "blk_selfrender_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Self-Rendering: No Tools Required"
+    },
+    {
+      "id": "blk_selfrender_para",
+      "type": "paragraph",
+      "content": "A {{extension}} file is valid HTML. Double-click it, and your browser renders a fully styled document — no CLI, no plugins, no build step. The full Vox JSON source is embedded inside the HTML, so the same file is both human-readable and machine-round-trippable."
+    },
+    {
+      "id": "blk_selfrender_code",
+      "type": "code",
+      "language": "html",
+      "content": "<!-- A .vox.html file IS valid HTML -->\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <style>/* Vox CSS embedded inline */</style>\n</head>\n<body>\n  <main class=\"vox-document\">\n    <!-- Compiled blocks rendered here -->\n  </main>\n  <!-- Vox JSON source embedded in a -->\n  <!-- special tag for round-tripping -->\n</body>\n</html>",
+      "filename": "example.vox.html"
+    },
+    {
+      "id": "blk_faq_heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Frequently Asked Questions"
+    },
+    {
+      "id": "blk_faq1",
+      "type": "accordion",
+      "title": "Why not just use Markdown?",
+      "default_open": true,
+      "blocks": [
+        {
+          "id": "blk_faq1_answer",
+          "type": "paragraph",
+          "content": "Markdown is great for simple text but has no schema, no block IDs, no accessibility enforcement, and no structured data layer. You cannot programmatically query or modify a Markdown document without parsing ambiguous syntax. Vox gives you structured JSON with typed blocks — tools always know what they are working with."
+        }
+      ]
+    },
+    {
+      "id": "blk_faq2",
+      "type": "accordion",
+      "title": "Can I convert Markdown to Vox?",
+      "default_open": false,
+      "blocks": [
+        {
+          "id": "blk_faq2_answer",
+          "type": "paragraph",
+          "content": "Yes. The MCP server can assist with converting existing documents by extracting structure, generating block content, and flagging areas that need human review. The conversion process preserves as much semantic meaning as possible and marks low-confidence sections for verification."
+        }
+      ]
+    },
+    {
+      "id": "blk_faq3",
+      "type": "accordion",
+      "title": "Is Vox only for AI-generated content?",
+      "default_open": false,
+      "blocks": [
+        {
+          "id": "blk_faq3_answer",
+          "type": "paragraph",
+          "content": "No. Vox works equally well for human-authored documents. The CLI provides commands for creating, validating, and compiling documents without any AI involvement. The MCP integration is an option, not a requirement."
+        }
+      ]
+    },
+    {
+      "id": "var-format-name",
+      "type": "variable_def",
+      "key": "format_name",
+      "value": "Vox"
+    },
+    {
+      "id": "var-extension",
+      "type": "variable_def",
+      "key": "extension",
+      "value": ".vox.html"
+    }
+  ],
+  "comments": []
+}
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+// Store original source before Mermaid replaces it with SVG
+document.querySelectorAll('.mermaid').forEach(el => el.setAttribute('data-source', el.textContent));
+mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+window.__voxMermaid = mermaid;
+</script>
+<script>
+// Theme toggle
+(function() {
+  var btn = document.getElementById('vox-theme-btn');
+  var update = function() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀' : '☾'; };
+  update();
+  btn.addEventListener('click', function() {
+    var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('vox-theme', t);
+    update();
+    // Re-render Mermaid diagrams with new theme
+    if (window.__voxMermaid) {
+      window.__voxMermaid.initialize({ startOnLoad: false, theme: t === 'dark' ? 'dark' : 'default' });
+      document.querySelectorAll('.mermaid').forEach(function(el) {
+        var src = el.getAttribute('data-source');
+        if (src) { el.removeAttribute('data-processed'); el.innerHTML = src; }
+      });
+      window.__voxMermaid.run();
+    }
+  });
+})();
+
+// Tab switching
+document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+  tablist.querySelectorAll('[role="tab"]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabs = tablist.querySelectorAll('[role="tab"]');
+      tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); t.tabIndex = -1; });
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      const panelId = tab.getAttribute('aria-controls');
+      tablist.closest('.vox-tabs').querySelectorAll('[role="tabpanel"]').forEach(p => p.hidden = true);
+      document.getElementById(panelId).hidden = false;
+    });
+  });
+});
+</script>
+</body>
+</html>

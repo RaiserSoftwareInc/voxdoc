@@ -7,7 +7,7 @@ import { compile, readVoxSource } from "@voxdoc/compiler";
 const ROOT = path.resolve(import.meta.dirname, "..", "..");
 
 describe("Integration smoke test", () => {
-  const examples = ["examples/hello-world.vox.html", "examples/api-reference.vox.html"];
+  const examples = ["examples/hello-world.vox.html", "examples/format-comparison.vox.html"];
 
   for (const file of examples) {
     describe(file, () => {
@@ -72,10 +72,10 @@ describe("Integration smoke test", () => {
           expect(html).toContain("Welcome to Vox");
           expect(html).toContain("<strong>Vox</strong>");
         }
-        if (file.includes("api-reference")) {
-          // Paragraphs should have resolved variables
-          expect(html).toContain("https://api.voxformat.dev");
-          expect(html).toContain("/v1");
+        if (file.includes("format-comparison")) {
+          // Heading and paragraphs should have resolved {{format_name}} to "Vox"
+          expect(html).toContain("Why Vox?");
+          expect(html).toContain("<strong>Vox</strong>");
         }
       });
     });
