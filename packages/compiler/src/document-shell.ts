@@ -14,10 +14,19 @@ export function wrapInDocument({ title, language, bodyHtml, sourceJson }: Docume
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
-<style>${generateStyles()}</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<style>${generateStyles()}</style>
 </head>
 <body>
+<script>
+// Theme: restore saved preference or detect OS default
+(function() {
+  var saved = localStorage.getItem('vox-theme');
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+<button class="vox-theme-toggle" id="vox-theme-btn" aria-label="Toggle theme" title="Toggle light/dark theme">&#9790;</button>
 <a href="#vox-main" class="vox-skip-link">Skip to content</a>
 <main id="vox-main" class="vox-document">
 ${bodyHtml}
@@ -27,9 +36,23 @@ ${sourceJson}
 </script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-mermaid.initialize({ startOnLoad: true, theme: 'default' });
+const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
 </script>
 <script>
+// Theme toggle
+(function() {
+  var btn = document.getElementById('vox-theme-btn');
+  var update = function() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E'; };
+  update();
+  btn.addEventListener('click', function() {
+    var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('vox-theme', t);
+    update();
+  });
+})();
+
 // Tab switching
 document.querySelectorAll('[role="tablist"]').forEach(tablist => {
   tablist.querySelectorAll('[role="tab"]').forEach(tab => {

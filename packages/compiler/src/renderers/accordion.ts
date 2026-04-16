@@ -12,11 +12,12 @@ export function renderAccordion(
 
   let html = `<details id="${block.id}" class="vox-accordion"${openAttr}>`;
   html += `<summary>${escapeHtml(block.title)}</summary>`;
+  html += `<div class="vox-accordion-content">`;
 
   if (renderChild) {
     html += block.blocks.map((b) => renderChild(b, ctx)).join("");
   }
 
-  html += `</details>`;
+  html += `</div></details>`;
   return html;
 }

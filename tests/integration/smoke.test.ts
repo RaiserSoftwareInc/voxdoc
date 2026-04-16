@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { validateDocument } from "@voxdoc/schema";
-import { compile } from "@voxdoc/compiler";
+import { compile, readVoxSource } from "@voxdoc/compiler";
 
 const ROOT = path.resolve(import.meta.dirname, "..", "..");
 
@@ -15,7 +15,7 @@ describe("Integration smoke test", () => {
 
       it("validates successfully", () => {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const doc = JSON.parse(raw);
+        const doc = readVoxSource(raw);
         const result = validateDocument(doc);
         expect(result.valid).toBe(true);
         if (!result.valid) {
@@ -25,7 +25,7 @@ describe("Integration smoke test", () => {
 
       it("compiles to HTML successfully", () => {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const doc = JSON.parse(raw);
+        const doc = readVoxSource(raw);
         const result = compile(doc);
         expect(result.success).toBe(true);
         if (!result.success) {
@@ -36,7 +36,7 @@ describe("Integration smoke test", () => {
 
       it("compiled HTML has correct structure", () => {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const doc = JSON.parse(raw);
+        const doc = readVoxSource(raw);
         const result = compile(doc);
         const html = result.html!;
 
@@ -49,7 +49,7 @@ describe("Integration smoke test", () => {
 
       it("compiled HTML contains semantic elements", () => {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const doc = JSON.parse(raw);
+        const doc = readVoxSource(raw);
         const result = compile(doc);
         const html = result.html!;
 
@@ -61,7 +61,7 @@ describe("Integration smoke test", () => {
 
       it("compiled HTML resolves variables in text blocks", () => {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const doc = JSON.parse(raw);
+        const doc = readVoxSource(raw);
         const result = compile(doc);
         const html = result.html!;
 
