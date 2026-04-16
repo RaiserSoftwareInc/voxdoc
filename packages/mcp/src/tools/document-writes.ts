@@ -2,6 +2,48 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { DocumentStore } from "../document-store.js";
 
+type McpBlockInput = { type: string; content: Record<string, any> };
+
+export function flattenBlock(block: McpBlockInput): Record<string, any> {
+  const flat: Record<string, any> = { type: block.type, ...block.content };
+
+  switch (block.type) {
+    case "steps":
+      if (Array.isArray(flat.steps)) {
+        flat.steps = flat.steps.map((step: any) => ({
+          ...step,
+          blocks: Array.isArray(step.blocks)
+            ? step.blocks.map((b: any) => flattenBlock(b))
+            : step.blocks,
+        }));
+      }
+      break;
+    case "accordion":
+      if (Array.isArray(flat.blocks)) {
+        flat.blocks = flat.blocks.map((b: any) => flattenBlock(b));
+      }
+      break;
+    case "tabs":
+      if (Array.isArray(flat.panels)) {
+        flat.panels = flat.panels.map((panel: any) =>
+          Array.isArray(panel.blocks)
+            ? { ...panel, blocks: panel.blocks.map((b: any) => flattenBlock(b)) }
+            : panel,
+        );
+      }
+      break;
+    case "layout":
+      if (Array.isArray(flat.blocks)) {
+        flat.blocks = flat.blocks.map((col: any) =>
+          Array.isArray(col) ? col.map((b: any) => flattenBlock(b)) : col,
+        );
+      }
+      break;
+  }
+
+  return flat;
+}
+
 export function registerWriteTools(
   server: McpServer,
   getStore: () => DocumentStore,
@@ -23,7 +65,7 @@ export function registerWriteTools(
       const ids: string[] = [];
       let insertAfter = after;
       for (const block of blocks) {
-        const blockData = { type: block.type, ...block.content } as Parameters<DocumentStore["addBlock"]>[0];
+        const blockData = flattenBlock(block) as Parameters<DocumentStore["addBlock"]>[0];
         const id = getStore().addBlock(blockData, insertAfter);
         ids.push(id);
         insertAfter = id;
