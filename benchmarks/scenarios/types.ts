@@ -27,5 +27,6 @@ export interface BenchmarkReport {
   version: string;
   timestamp: string;
   note: string;
+  toolDefsTokens: number;
   scenarios: ScenarioResult[];
 }

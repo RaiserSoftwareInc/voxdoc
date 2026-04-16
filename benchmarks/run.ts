@@ -2,7 +2,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
-import { runIndividual, runBatch, runMarkdown } from "./mcp-runner.js";
+import { runIndividual, runBatch, runMarkdown, getToolDefsTokens } from "./mcp-runner.js";
 import { small } from "./scenarios/small.js";
 import { large } from "./scenarios/large.js";
 import type { BenchmarkReport, ScenarioResult } from "./scenarios/types.js";
@@ -28,6 +28,7 @@ function calls(n: number): string {
 async function main(): Promise<void> {
   const scenarios = [small, large];
   const scenarioResults: ScenarioResult[] = [];
+  const toolDefsTokens = await getToolDefsTokens();
 
   console.log("Voxdoc Token Benchmark");
   console.log(`voxdoc v${version} · ${new Date().toISOString().slice(0, 10)}`);
@@ -41,10 +42,14 @@ async function main(): Promise<void> {
     const batch = await runBatch(scenario.blocks);
 
     const mdTokens = markdown.totalTokens;
+    const indFullTurn = individual.totalTokens + individual.callCount * toolDefsTokens;
+    const batchFullTurn = batch.totalTokens + batch.callCount * toolDefsTokens;
 
     console.log(`  Markdown baseline ${fmt(mdTokens)} tokens`);
-    console.log(`  Voxdoc individual ${fmt(individual.totalTokens)} tokens  (${pct(individual.totalTokens, mdTokens)} vs markdown, ${calls(individual.callCount)})`);
-    console.log(`  Voxdoc batch      ${fmt(batch.totalTokens)} tokens  (${pct(batch.totalTokens, mdTokens)} vs markdown, ${calls(batch.callCount)}) ✓`);
+    console.log(`  Voxdoc individual ${fmt(individual.totalTokens)} tokens  payload  (${pct(individual.totalTokens, mdTokens)} vs markdown, ${calls(individual.callCount)})`);
+    console.log(`  Voxdoc individual ${fmt(indFullTurn)} tokens  est. full-turn`);
+    console.log(`  Voxdoc batch      ${fmt(batch.totalTokens)} tokens  payload  (${pct(batch.totalTokens, mdTokens)} vs markdown, ${calls(batch.callCount)}) ✓`);
+    console.log(`  Voxdoc batch      ${fmt(batchFullTurn)} tokens  est. full-turn  (${pct(batchFullTurn, indFullTurn)} vs individual full-turn) ✓`);
     console.log();
 
     scenarioResults.push({
@@ -57,6 +62,7 @@ async function main(): Promise<void> {
     version,
     timestamp: new Date().toISOString(),
     note: "Token counts use cl100k_base encoding (tiktoken). Ratios between strategies are accurate; absolute values may differ from Claude's actual counts by ~5%.",
+    toolDefsTokens,
     scenarios: scenarioResults,
   };
 

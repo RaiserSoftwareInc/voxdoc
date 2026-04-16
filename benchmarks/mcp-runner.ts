@@ -127,6 +127,13 @@ export async function runBatch(blocks: BlockDef[]): Promise<StrategyResult> {
   });
 }
 
+export async function getToolDefsTokens(): Promise<number> {
+  return withMcpServer(async (client) => {
+    const { tools } = await client.listTools();
+    return countTokens(tools);
+  });
+}
+
 export function runMarkdown(markdown: string): StrategyResult {
   const tokens = countTokens(markdown);
   return {
