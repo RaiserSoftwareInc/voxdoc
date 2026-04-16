@@ -47,9 +47,9 @@ export function createCli(): Command {
 
   const mcpCmd = program.command("mcp").description("MCP server commands");
   mcpCmd
-    .command("serve <file>")
-    .description("Start MCP server for a document")
-    .action((file: string) => mcpServeCommand(file));
+    .command("serve [path]")
+    .description("Start MCP server for a document or directory (omit path for dynamic workspace)")
+    .action((path?: string) => mcpServeCommand(path));
 
   return program;
 }
