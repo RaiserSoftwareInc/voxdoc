@@ -130,6 +130,26 @@ Manual config (any MCP client):
 | Accessibility | set_description, set_transcription, get_accessibility_report                |
 | Output        | validate, compile                                                           |
 
+### Token Efficiency
+
+All write tools support **batch operations** — pass arrays of blocks, edits, or IDs in a single call instead of one-per-call. This reduces token usage by ~80-90% for document creation workflows.
+
+```bash
+# Old: 36 MCP calls to create a 36-block document (~75K tokens)
+# New: 1 create_document call with initial blocks + 1 compile (~5K tokens)
+```
+
+| Tool | Batch Input |
+| ---- | ----------- |
+| create_document | Optional `blocks[]` array for single-call doc creation |
+| add_block | `blocks[]` array — add multiple blocks in one call |
+| edit_block | `edits[]` array — edit multiple blocks in one call |
+| delete_block | `ids[]` array — delete multiple blocks in one call |
+| set_metadata | `fields{}` object — set multiple fields at once |
+| set_variable | `variables{}` object — set multiple variables at once |
+| set_block_status | `statuses[]` array — approve/flag multiple blocks at once |
+| resolve_comment | `comment_ids[]` array — resolve multiple comments at once |
+
 ## Development
 
 ```bash
