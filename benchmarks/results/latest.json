@@ -1,6 +1,6 @@
 {
   "version": "0.2.2",
-  "timestamp": "2026-04-16T19:40:15.484Z",
+  "timestamp": "2026-04-16T19:44:40.343Z",
   "note": "Token counts use cl100k_base encoding (tiktoken). Ratios between strategies are accurate; absolute values may differ from Claude's actual counts by ~5%.",
   "scenarios": [
     {
@@ -16,15 +16,15 @@
         {
           "strategy": "individual",
           "inputTokens": 270,
-          "outputTokens": 207,
-          "totalTokens": 477,
+          "outputTokens": 213,
+          "totalTokens": 483,
           "callCount": 5
         },
         {
           "strategy": "batch",
           "inputTokens": 150,
-          "outputTokens": 86,
-          "totalTokens": 236,
+          "outputTokens": 87,
+          "totalTokens": 237,
           "callCount": 1
         }
       ]
@@ -42,15 +42,15 @@
         {
           "strategy": "individual",
           "inputTokens": 1486,
-          "outputTokens": 1039,
-          "totalTokens": 2525,
+          "outputTokens": 1055,
+          "totalTokens": 2541,
           "callCount": 25
         },
         {
           "strategy": "batch",
           "inputTokens": 765,
-          "outputTokens": 300,
-          "totalTokens": 1065,
+          "outputTokens": 306,
+          "totalTokens": 1071,
           "callCount": 1
         }
       ]
