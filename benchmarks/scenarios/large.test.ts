@@ -13,6 +13,7 @@ for (const required of ["heading", "paragraph", "code", "callout", "list"]) {
 for (const block of large.blocks) {
   assert(typeof block.type === "string", `block.type must be string`);
   assert(typeof block.content === "object" && block.content !== null, "block.content must be object");
+  assert(Object.keys(block.content).length > 0, `block.content must not be empty (type: ${block.type})`);
 }
 
 console.log("large scenario tests passed ✓");
