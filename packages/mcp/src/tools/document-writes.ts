@@ -113,17 +113,18 @@ export function registerWriteTools(
   server.registerTool(
     "set_metadata",
     {
-      description: "Set a metadata field",
+      description: "Set one or more metadata fields at once. Pass an object of key-value pairs.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
-        key: z.string(),
-        value: z.any(),
+        fields: z.record(z.string(), z.any()),
       },
     },
-    async ({ key, value }) => {
-      getStore().setMetadata(key, value);
+    async ({ fields }) => {
+      for (const [key, value] of Object.entries(fields)) {
+        getStore().setMetadata(key, value);
+      }
       return {
-        content: [{ type: "text", text: JSON.stringify({ success: true }) }],
+        content: [{ type: "text", text: JSON.stringify({ success: true, count: Object.keys(fields).length }) }],
       };
     },
   );
@@ -131,17 +132,18 @@ export function registerWriteTools(
   server.registerTool(
     "set_variable",
     {
-      description: "Set a template variable",
+      description: "Set one or more template variables at once. Pass an object of key-value pairs.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
-        key: z.string(),
-        value: z.string(),
+        variables: z.record(z.string(), z.string()),
       },
     },
-    async ({ key, value }) => {
-      getStore().setVariable(key, value);
+    async ({ variables }) => {
+      for (const [key, value] of Object.entries(variables)) {
+        getStore().setVariable(key, value);
+      }
       return {
-        content: [{ type: "text", text: JSON.stringify({ success: true }) }],
+        content: [{ type: "text", text: JSON.stringify({ success: true, count: Object.keys(variables).length }) }],
       };
     },
   );
