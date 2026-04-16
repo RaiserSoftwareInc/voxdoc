@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7th Grade Math: Fractions & Expressions</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<link id="prism-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.min.css">
+<link id="prism-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+<style>:root {
+  --vox-font: "Charter", "Iowan Old Style", "Sitka Text", "Palatino Linotype", "Georgia", serif;
+  --vox-font-heading: "Bahnschrift", "Avenir Next", "Avenir", "Cantarell", sans-serif;
+  --vox-font-mono: "Cascadia Code", "SF Mono", "Menlo", "Consolas", monospace;
+  --vox-text: #1C1917;
+  --vox-text-secondary: #57534E;
+  --vox-bg: #FAFAF7;
+  --vox-bg-secondary: #F0EFE9;
+  --vox-border: #D6D3CC;
+  --vox-accent: #0D7377;
+  --vox-accent-light: #CCFBF1;
+  --vox-accent-hover: #0A5C5F;
+  --vox-link: #0D7377;
+  --vox-code-bg: #F0EDE5;
+  --vox-code-border: #D6D3CC;
+  --vox-radius: 6px;
+  --vox-shadow: 0 1px 2px rgba(28,25,23,0.06), 0 1px 3px rgba(28,25,23,0.08);
+  --vox-shadow-lg: 0 4px 12px rgba(28,25,23,0.08), 0 1px 3px rgba(28,25,23,0.06);
+  --vox-callout-info: #0C4A6E;
+  --vox-callout-info-bg: #E0F2FE;
+  --vox-callout-info-border: #7DD3FC;
+  --vox-callout-warning: #854D0E;
+  --vox-callout-warning-bg: #FEF9C3;
+  --vox-callout-warning-border: #FDE047;
+  --vox-callout-danger: #991B1B;
+  --vox-callout-danger-bg: #FEE2E2;
+  --vox-callout-danger-border: #FCA5A5;
+  --vox-callout-tip: #065F46;
+  --vox-callout-tip-bg: #D1FAE5;
+  --vox-callout-tip-border: #6EE7B7;
+  --vox-callout-note: #5B21B6;
+  --vox-callout-note-bg: #EDE9FE;
+  --vox-callout-note-border: #C4B5FD;
+}
+
+[data-theme="dark"] {
+    --vox-text: #E7E5DF;
+    --vox-text-secondary: #A8A29E;
+    --vox-bg: #1A1915;
+    --vox-bg-secondary: #262520;
+    --vox-border: #3D3B35;
+    --vox-accent: #2DD4BF;
+    --vox-accent-light: #134E4A;
+    --vox-accent-hover: #5EEAD4;
+    --vox-link: #5EEAD4;
+    --vox-code-bg: #22201B;
+    --vox-code-border: #3D3B35;
+    --vox-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --vox-shadow-lg: 0 4px 12px rgba(0,0,0,0.3);
+    --vox-callout-info: #BAE6FD;
+    --vox-callout-info-bg: #0C2D48;
+    --vox-callout-info-border: #0C4A6E;
+    --vox-callout-warning: #FDE68A;
+    --vox-callout-warning-bg: #3D2E06;
+    --vox-callout-warning-border: #854D0E;
+    --vox-callout-danger: #FECACA;
+    --vox-callout-danger-bg: #3B1111;
+    --vox-callout-danger-border: #991B1B;
+    --vox-callout-tip: #A7F3D0;
+    --vox-callout-tip-bg: #052E22;
+    --vox-callout-tip-border: #065F46;
+    --vox-callout-note: #DDD6FE;
+    --vox-callout-note-bg: #2E1A5E;
+    --vox-callout-note-border: #5B21B6;
+}
+
+/* Toolbar */
+.vox-toolbar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  gap: 0.5rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.vox-theme-toggle,
+.vox-copy-btn {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--vox-text);
+  box-shadow: var(--vox-shadow);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.vox-theme-toggle:hover,
+.vox-copy-btn:hover {
+  background: var(--vox-border);
+}
+
+/* Copy dropdown */
+.vox-copy-menu {
+  position: relative;
+}
+.vox-copy-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.4rem;
+  background: var(--vox-bg);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  box-shadow: var(--vox-shadow-lg);
+  overflow: hidden;
+  min-width: 10rem;
+}
+.vox-copy-dropdown.open {
+  display: block;
+}
+.vox-copy-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--vox-font-heading);
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--vox-text);
+  transition: background 0.1s ease;
+}
+.vox-copy-dropdown button:hover {
+  background: var(--vox-bg-secondary);
+}
+.vox-copy-dropdown button + button {
+  border-top: 1px solid var(--vox-border);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--vox-font);
+  color: var(--vox-text);
+  background: var(--vox-bg);
+  line-height: 1.75;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.vox-document {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Headings — geometric sans, tight tracking */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vox-font-heading);
+  margin-top: 2.5em;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--vox-text);
+}
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid var(--vox-border);
+}
+h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin-top: 3em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--vox-border);
+}
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vox-text-secondary);
+}
+h6 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vox-text-secondary);
+}
+
+p {
+  margin: 1.15em 0;
+}
+
+a {
+  color: var(--vox-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--vox-accent-hover);
+}
+
+/* Inline code */
+code {
+  font-family: var(--vox-font-mono);
+  background: var(--vox-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--vox-code-border);
+  font-weight: 500;
+}
+
+/* Code blocks */
+pre {
+  background: var(--vox-code-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--vox-radius);
+  overflow-x: auto;
+  border: 1px solid var(--vox-code-border);
+  line-height: 1.6;
+  font-size: 0.875rem;
+  box-shadow: var(--vox-shadow);
+}
+pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* Callouts — full tinted background */
+.vox-callout {
+  border-left: 4px solid var(--vox-border);
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  border-radius: 0 var(--vox-radius) var(--vox-radius) 0;
+  background: var(--vox-bg-secondary);
+}
+.vox-callout .vox-callout-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+.vox-callout-info {
+  border-left-color: var(--vox-callout-info-border);
+  background: var(--vox-callout-info-bg);
+  color: var(--vox-callout-info);
+}
+.vox-callout-warning {
+  border-left-color: var(--vox-callout-warning-border);
+  background: var(--vox-callout-warning-bg);
+  color: var(--vox-callout-warning);
+}
+.vox-callout-danger {
+  border-left-color: var(--vox-callout-danger-border);
+  background: var(--vox-callout-danger-bg);
+  color: var(--vox-callout-danger);
+}
+.vox-callout-tip {
+  border-left-color: var(--vox-callout-tip-border);
+  background: var(--vox-callout-tip-bg);
+  color: var(--vox-callout-tip);
+}
+.vox-callout-note {
+  border-left-color: var(--vox-callout-note-border);
+  background: var(--vox-callout-note-bg);
+  color: var(--vox-callout-note);
+}
+
+/* Tables — striped rows, refined borders */
+.vox-table-wrapper {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-radius: var(--vox-radius);
+  border: 1px solid var(--vox-border);
+  box-shadow: var(--vox-shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+th, td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--vox-border);
+}
+th {
+  background: var(--vox-bg-secondary);
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vox-text-secondary);
+}
+tbody tr:nth-child(even) {
+  background: var(--vox-bg-secondary);
+}
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Tabs — accent underline */
+.vox-tabs {
+  margin: 1.75rem 0;
+}
+.vox-tabs [role="tablist"] {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--vox-border);
+  margin-bottom: 0;
+}
+.vox-tabs [role="tab"] {
+  font-family: var(--vox-font-heading);
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vox-text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.vox-tabs [role="tab"]:hover {
+  color: var(--vox-text);
+}
+.vox-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--vox-accent);
+  color: var(--vox-accent);
+}
+.vox-tabs [role="tabpanel"] {
+  padding: 1.25rem 0;
+}
+
+/* Layout grid */
+.vox-layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.vox-layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Steps — connecting vertical line */
+.vox-steps {
+  counter-reset: vox-step;
+  list-style: none;
+  padding: 0;
+  position: relative;
+}
+.vox-steps::before {
+  content: '';
+  position: absolute;
+  left: 0.95rem;
+  top: 2rem;
+  bottom: 1rem;
+  width: 2px;
+  background: var(--vox-border);
+  border-radius: 1px;
+}
+.vox-step {
+  position: relative;
+  padding-left: 3.5rem;
+  margin-bottom: 2rem;
+}
+.vox-step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--vox-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 3px var(--vox-bg);
+  z-index: 1;
+}
+.vox-step-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Accordion */
+.vox-accordion {
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  margin: 1rem 0;
+  box-shadow: var(--vox-shadow);
+  overflow: hidden;
+}
+.vox-accordion summary {
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--vox-bg-secondary);
+  transition: background 0.15s ease;
+}
+.vox-accordion summary:hover {
+  background: var(--vox-border);
+}
+.vox-accordion[open] summary {
+  border-bottom: 1px solid var(--vox-border);
+}
+.vox-accordion .vox-accordion-content {
+  padding: 1.25rem;
+}
+
+/* Code filename header */
+.vox-code-filename {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-code-border);
+  border-bottom: none;
+  padding: 0.45rem 1rem;
+  font-family: var(--vox-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--vox-radius) var(--vox-radius) 0 0;
+  color: var(--vox-text-secondary);
+  letter-spacing: 0.02em;
+}
+.vox-code-filename + pre {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+}
+
+/* Table of Contents */
+.vox-toc {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem 1.75rem;
+  margin: 2rem 0;
+  box-shadow: var(--vox-shadow);
+}
+.vox-toc nav ul {
+  list-style: none;
+  padding-left: 1.25rem;
+}
+.vox-toc nav > ul {
+  padding-left: 0;
+}
+.vox-toc a {
+  text-decoration: none;
+  color: var(--vox-text-secondary);
+  font-size: 0.925rem;
+  transition: color 0.15s ease;
+}
+.vox-toc a:hover {
+  color: var(--vox-accent);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5rem;
+}
+li {
+  margin-bottom: 0.35em;
+}
+li::marker {
+  color: var(--vox-accent);
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--vox-border);
+  margin: 3rem 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--vox-radius);
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--vox-accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  color: var(--vox-text-secondary);
+  font-style: italic;
+}
+
+/* Skip navigation link */
+.vox-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--vox-accent);
+  color: #fff;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 0 0 var(--vox-radius) 0;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.vox-skip-link:focus {
+  top: 0;
+}
+
+/* Hide non-rendered scripts from selection */
+script[type="application/vox+json"] {
+  display: none !important;
+}
+
+/* Screen reader only */
+.vox-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Diagram */
+.vox-diagram {
+  margin: 1.75rem 0;
+  text-align: center;
+}
+.vox-diagram figcaption {
+  font-size: 0.85rem;
+  color: var(--vox-text-secondary);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Math */
+.vox-math {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Handwriting */
+.vox-handwriting {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+/* Unsupported block fallback */
+.vox-unsupported {
+  background: var(--vox-callout-warning-bg);
+  border: 1px dashed var(--vox-callout-warning-border);
+  border-radius: var(--vox-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--vox-callout-warning);
+  font-size: 0.875rem;
+}
+
+/* Selection */
+::selection {
+  background: var(--vox-accent-light);
+  color: var(--vox-text);
+}
+
+/* Strong / emphasis */
+strong {
+  font-weight: 600;
+}
+
+/* Responsive: 640px */
+@media (max-width: 640px) {
+  .vox-layout-2col,
+  .vox-layout-3col {
+    grid-template-columns: 1fr;
+  }
+  .vox-tabs [role="tablist"] {
+    flex-wrap: wrap;
+  }
+  .vox-document {
+    padding: 2rem 1.25rem;
+  }
+}
+
+/* Responsive: 400px */
+@media (max-width: 400px) {
+  .vox-document {
+    padding: 1.5rem 1rem;
+  }
+  .vox-callout {
+    padding: 0.75rem 1rem;
+  }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.375rem; }
+}</style>
+</head>
+<body>
+<script>
+// Theme: restore saved preference or detect OS default
+(function() {
+  var saved = localStorage.getItem('vox-theme');
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('prism-' + (theme === 'dark' ? 'light' : 'dark')).disabled = true;
+})();
+</script>
+<div class="vox-toolbar">
+<button class="vox-theme-toggle" id="vox-theme-btn" aria-label="Toggle theme" title="Toggle light/dark theme">&#9790;</button>
+<div class="vox-copy-menu">
+<button class="vox-copy-btn" id="vox-copy-btn" aria-label="Copy document" title="Copy document" onclick="event.stopPropagation();document.getElementById('vox-copy-dropdown').classList.toggle('open')">&#128203;</button>
+<div class="vox-copy-dropdown" id="vox-copy-dropdown">
+<button data-format="markdown">Copy as Markdown</button>
+<button data-format="text">Copy as Plain Text</button>
+<button data-format="json">Copy as Vox JSON</button>
+</div>
+</div>
+</div>
+<a href="#vox-main" class="vox-skip-link">Skip to content</a>
+<main id="vox-main" class="vox-document">
+<h1 id="blk_ws01">7th Grade Math Worksheet</h1>
+<p id="blk_ws02">Name: _____________________________ &nbsp;&nbsp;&nbsp; Date: _________________ &nbsp;&nbsp;&nbsp; Period: _______</p>
+<h2 id="blk_ws03">Section 1: Adding &amp; Subtracting Fractions</h2>
+<p id="blk_ws04">Solve each problem. Show your work and simplify your answer.</p>
+<div id="blk_ws05" class="vox-math" role="math" aria-label="one half plus one third equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">\frac{1}{2} + \frac{1}{3} = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws06" class="vox-math" role="math" aria-label="three fourths minus one sixth equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>−</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">\frac{3}{4} - \frac{1}{6} = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws07" class="vox-math" role="math" aria-label="two fifths plus three tenths equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mn>2</mn><mn>5</mn></mfrac><mo>+</mo><mfrac><mn>3</mn><mn>10</mn></mfrac><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">\frac{2}{5} + \frac{3}{10} = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">10</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws08" class="vox-math" role="math" aria-label="five sixths minus one fourth equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>−</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">\frac{5}{6} - \frac{1}{4} = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws09" class="vox-callout vox-callout-tip" role="note" aria-label="tip"><div class="vox-callout-title">💡 Finding a Common Denominator</div><div class="vox-callout-content">To add or subtract fractions, find the Least Common Denominator (LCD). Multiply top and bottom of each fraction so both denominators match, then add or subtract the numerators.</div></div>
+<h2 id="blk_ws10">Section 2: Solving One-Step Equations</h2>
+<p id="blk_ws11">Solve for x. Show each step of your work in the space provided.</p>
+<div id="blk_ws12" class="vox-math" role="math" aria-label="2 x plus 5 equals 13"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>5</mn><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">2x + 5 = 13</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">13</span></span></span></span></span></div>
+<div id="blk_ws13" class="vox-math" role="math" aria-label="3 x minus 7 equals 14"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>3</mn><mi>x</mi><mo>−</mo><mn>7</mn><mo>=</mo><mn>14</mn></mrow><annotation encoding="application/x-tex">3x - 7 = 14</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">14</span></span></span></span></span></div>
+<div id="blk_ws14" class="vox-math" role="math" aria-label="x divided by 4 equals 6"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mi>x</mi><mn>4</mn></mfrac><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\frac{x}{4} = 6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.7936em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></span></div>
+<div id="blk_ws15" class="vox-math" role="math" aria-label="5 x plus 2 equals 27"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>5</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>=</mo><mn>27</mn></mrow><annotation encoding="application/x-tex">5x + 2 = 27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span></span></div>
+<ol id="blk_ws16" class="vox-steps"><li class="vox-step"><div class="vox-step-number">1</div><div class="vox-step-title">Example: Solving 2x + 5 = 13</div><div class="vox-step-content"><p id="blk_ws16a">Start with the equation:</p><div id="blk_ws16b" class="vox-math" role="math" aria-label="2 x plus 5 equals 13"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>5</mn><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">2x + 5 = 13</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">13</span></span></span></span></span></div></div></li><li class="vox-step"><div class="vox-step-number">2</div><div class="vox-step-title">Subtract 5 from both sides</div><div class="vox-step-content"><div id="blk_ws16c" class="vox-math" role="math" aria-label="2 x plus 5 minus 5 equals 13 minus 5, therefore 2 x equals 8"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>5</mn><mo>−</mo><mn>5</mn><mo>=</mo><mn>13</mn><mo>−</mo><mn>5</mn><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mn>2</mn><mi>x</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">2x + 5 - 5 = 13 - 5 \implies 2x = 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">13</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6684em;vertical-align:-0.024em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></span></div></div></li><li class="vox-step"><div class="vox-step-number">3</div><div class="vox-step-title">Divide both sides by 2</div><div class="vox-step-content"><div id="blk_ws16d" class="vox-math" role="math" aria-label="2 x divided by 2 equals 8 divided by 2, therefore x equals 4"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mn>2</mn><mi>x</mi></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mn>8</mn><mn>2</mn></mfrac><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mi>x</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\frac{2x}{2} = \frac{8}{2} \implies x = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">8</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></span></div></div></li><li class="vox-step"><div class="vox-step-number">4</div><div class="vox-step-title">Check your answer</div><div class="vox-step-content"><div id="blk_ws16e" class="vox-math" role="math" aria-label="2 times 4 plus 5 equals 8 plus 5 equals 13, correct"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>2</mn><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo><mo>+</mo><mn>5</mn><mo>=</mo><mn>8</mn><mo>+</mo><mn>5</mn><mo>=</mo><mn>13</mn><mi mathvariant="normal">✓</mi></mrow><annotation encoding="application/x-tex">2(4) + 5 = 8 + 5 = 13 \checkmark</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6922em;"></span><span class="mord">13</span><span class="mord amsrm">✓</span></span></span></span></span></div></div></li></ol>
+<h2 id="blk_ws17">Section 3: Order of Operations</h2>
+<div id="blk_ws18" class="vox-callout vox-callout-note" role="note" aria-label="note"><div class="vox-callout-title">📝 PEMDAS</div><div class="vox-callout-content">Always follow this order: Parentheses → Exponents → Multiplication &amp; Division (left to right) → Addition &amp; Subtraction (left to right)</div></div>
+<p id="blk_ws19">Evaluate each expression. Show each step.</p>
+<div id="blk_ws20" class="vox-math" role="math" aria-label="3 plus 4 times 2 minus 1 equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>3</mn><mo>+</mo><mn>4</mn><mo>×</mo><mn>2</mn><mo>−</mo><mn>1</mn><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">3 + 4 \times 2 - 1 = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws21" class="vox-math" role="math" aria-label="open paren 5 plus 3 close paren squared divided by 4 equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo>+</mo><mn>3</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>÷</mo><mn>4</mn><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">(5 + 3)^2 \div 4 = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws22" class="vox-math" role="math" aria-label="12 divided by 3 plus 2 cubed minus 5 equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>12</mn><mo>÷</mo><mn>3</mn><mo>+</mo><msup><mn>2</mn><mn>3</mn></msup><mo>−</mo><mn>5</mn><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">12 \div 3 + 2^3 - 5 = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">12</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+<div id="blk_ws23" class="vox-math" role="math" aria-label="open paren 8 minus 2 close paren times 3 divided by 2 squared minus 1 equals blank"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mo stretchy="false">(</mo><mn>8</mn><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>×</mo><mn>3</mn></mrow><mrow><msup><mn>2</mn><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow></mfrac><mo>=</mo><munder accentunder="true"><mspace width="8.5358em"/><mo stretchy="true">‾</mo></munder></mrow><annotation encoding="application/x-tex">\frac{(8-2) \times 3}{2^2 - 1} = \underline{\hspace{3cm}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.1963em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.2em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:8.5358em;"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span></span></div>
+</main>
+<script type="application/vox+json">
+{
+  "$schema": "https://voxformat.dev/schema/v1.json",
+  "meta": {
+    "id": "93d74a59-ff47-4c5a-8578-73b2156d3cb3",
+    "title": "7th Grade Math: Fractions & Expressions",
+    "description": "A 7th grade math worksheet covering fractions, algebraic expressions, and order of operations.",
+    "version": "1.0.0",
+    "authors": [],
+    "tags": [
+      "math",
+      "7th-grade",
+      "worksheet"
+    ],
+    "status": "draft",
+    "created": "2026-04-16T20:22:39.584Z",
+    "updated": "2026-04-16T20:22:39.584Z",
+    "variables": {},
+    "provenance": {
+      "generated_by": "vox-cli",
+      "reviewed_by": "",
+      "approved_blocks": [],
+      "flagged_blocks": []
+    },
+    "accessibility": {
+      "language": "en",
+      "reading_level": "general"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_ws01",
+      "type": "heading",
+      "level": 1,
+      "content": "7th Grade Math Worksheet"
+    },
+    {
+      "id": "blk_ws02",
+      "type": "paragraph",
+      "content": "Name: _____________________________ &nbsp;&nbsp;&nbsp; Date: _________________ &nbsp;&nbsp;&nbsp; Period: _______"
+    },
+    {
+      "id": "blk_ws03",
+      "type": "heading",
+      "level": 2,
+      "content": "Section 1: Adding & Subtracting Fractions"
+    },
+    {
+      "id": "blk_ws04",
+      "type": "paragraph",
+      "content": "Solve each problem. Show your work and simplify your answer."
+    },
+    {
+      "id": "blk_ws05",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{1}{2} + \\frac{1}{3} = \\underline{\\hspace{3cm}}",
+      "spoken": "one half plus one third equals blank"
+    },
+    {
+      "id": "blk_ws06",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{3}{4} - \\frac{1}{6} = \\underline{\\hspace{3cm}}",
+      "spoken": "three fourths minus one sixth equals blank"
+    },
+    {
+      "id": "blk_ws07",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{2}{5} + \\frac{3}{10} = \\underline{\\hspace{3cm}}",
+      "spoken": "two fifths plus three tenths equals blank"
+    },
+    {
+      "id": "blk_ws08",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{5}{6} - \\frac{1}{4} = \\underline{\\hspace{3cm}}",
+      "spoken": "five sixths minus one fourth equals blank"
+    },
+    {
+      "id": "blk_ws09",
+      "type": "callout",
+      "variant": "tip",
+      "title": "Finding a Common Denominator",
+      "content": "To add or subtract fractions, find the Least Common Denominator (LCD). Multiply top and bottom of each fraction so both denominators match, then add or subtract the numerators."
+    },
+    {
+      "id": "blk_ws10",
+      "type": "heading",
+      "level": 2,
+      "content": "Section 2: Solving One-Step Equations"
+    },
+    {
+      "id": "blk_ws11",
+      "type": "paragraph",
+      "content": "Solve for x. Show each step of your work in the space provided."
+    },
+    {
+      "id": "blk_ws12",
+      "type": "math",
+      "display": "block",
+      "expression": "2x + 5 = 13",
+      "spoken": "2 x plus 5 equals 13"
+    },
+    {
+      "id": "blk_ws13",
+      "type": "math",
+      "display": "block",
+      "expression": "3x - 7 = 14",
+      "spoken": "3 x minus 7 equals 14"
+    },
+    {
+      "id": "blk_ws14",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{x}{4} = 6",
+      "spoken": "x divided by 4 equals 6"
+    },
+    {
+      "id": "blk_ws15",
+      "type": "math",
+      "display": "block",
+      "expression": "5x + 2 = 27",
+      "spoken": "5 x plus 2 equals 27"
+    },
+    {
+      "id": "blk_ws16",
+      "type": "steps",
+      "steps": [
+        {
+          "title": "Example: Solving 2x + 5 = 13",
+          "blocks": [
+            {
+              "id": "blk_ws16a",
+              "type": "paragraph",
+              "content": "Start with the equation:"
+            },
+            {
+              "id": "blk_ws16b",
+              "type": "math",
+              "display": "block",
+              "expression": "2x + 5 = 13",
+              "spoken": "2 x plus 5 equals 13"
+            }
+          ]
+        },
+        {
+          "title": "Subtract 5 from both sides",
+          "blocks": [
+            {
+              "id": "blk_ws16c",
+              "type": "math",
+              "display": "block",
+              "expression": "2x + 5 - 5 = 13 - 5 \\implies 2x = 8",
+              "spoken": "2 x plus 5 minus 5 equals 13 minus 5, therefore 2 x equals 8"
+            }
+          ]
+        },
+        {
+          "title": "Divide both sides by 2",
+          "blocks": [
+            {
+              "id": "blk_ws16d",
+              "type": "math",
+              "display": "block",
+              "expression": "\\frac{2x}{2} = \\frac{8}{2} \\implies x = 4",
+              "spoken": "2 x divided by 2 equals 8 divided by 2, therefore x equals 4"
+            }
+          ]
+        },
+        {
+          "title": "Check your answer",
+          "blocks": [
+            {
+              "id": "blk_ws16e",
+              "type": "math",
+              "display": "block",
+              "expression": "2(4) + 5 = 8 + 5 = 13 \\checkmark",
+              "spoken": "2 times 4 plus 5 equals 8 plus 5 equals 13, correct"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blk_ws17",
+      "type": "heading",
+      "level": 2,
+      "content": "Section 3: Order of Operations"
+    },
+    {
+      "id": "blk_ws18",
+      "type": "callout",
+      "variant": "note",
+      "title": "PEMDAS",
+      "content": "Always follow this order: Parentheses → Exponents → Multiplication & Division (left to right) → Addition & Subtraction (left to right)"
+    },
+    {
+      "id": "blk_ws19",
+      "type": "paragraph",
+      "content": "Evaluate each expression. Show each step."
+    },
+    {
+      "id": "blk_ws20",
+      "type": "math",
+      "display": "block",
+      "expression": "3 + 4 \\times 2 - 1 = \\underline{\\hspace{3cm}}",
+      "spoken": "3 plus 4 times 2 minus 1 equals blank"
+    },
+    {
+      "id": "blk_ws21",
+      "type": "math",
+      "display": "block",
+      "expression": "(5 + 3)^2 \\div 4 = \\underline{\\hspace{3cm}}",
+      "spoken": "open paren 5 plus 3 close paren squared divided by 4 equals blank"
+    },
+    {
+      "id": "blk_ws22",
+      "type": "math",
+      "display": "block",
+      "expression": "12 \\div 3 + 2^3 - 5 = \\underline{\\hspace{3cm}}",
+      "spoken": "12 divided by 3 plus 2 cubed minus 5 equals blank"
+    },
+    {
+      "id": "blk_ws23",
+      "type": "math",
+      "display": "block",
+      "expression": "\\frac{(8-2) \\times 3}{2^2 - 1} = \\underline{\\hspace{3cm}}",
+      "spoken": "open paren 8 minus 2 close paren times 3 divided by 2 squared minus 1 equals blank"
+    }
+  ],
+  "comments": []
+}
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+document.querySelectorAll('.mermaid').forEach(el => el.setAttribute('data-source', el.textContent));
+mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+window.__voxMermaid = mermaid;
+</script>
+<script>
+// Theme toggle
+(function() {
+  var btn = document.getElementById('vox-theme-btn');
+  var update = function() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E'; };
+  update();
+  btn.addEventListener('click', function() {
+    var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('vox-theme', t);
+    update();
+    document.getElementById('prism-light').disabled = t === 'dark';
+    document.getElementById('prism-dark').disabled = t !== 'dark';
+    if (window.__voxMermaid) {
+      window.__voxMermaid.initialize({ startOnLoad: false, theme: t === 'dark' ? 'dark' : 'default' });
+      document.querySelectorAll('.mermaid').forEach(function(el) {
+        var src = el.getAttribute('data-source');
+        if (src) { el.removeAttribute('data-processed'); el.innerHTML = src; }
+      });
+      window.__voxMermaid.run();
+    }
+  });
+})();
+
+// Tab switching
+document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+  tablist.querySelectorAll('[role="tab"]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabs = tablist.querySelectorAll('[role="tab"]');
+      tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); t.tabIndex = -1; });
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      const panelId = tab.getAttribute('aria-controls');
+      tablist.closest('.vox-tabs').querySelectorAll('[role="tabpanel"]').forEach(p => p.hidden = true);
+      document.getElementById(panelId).hidden = false;
+    });
+  });
+});
+</script>
+<script>
+// Copy menu
+(function() {
+  var fence = String.fromCharCode(96,96,96);
+  var dropdown = document.getElementById('vox-copy-dropdown');
+  document.addEventListener('click', function() { dropdown.classList.remove('open'); });
+
+  function getVoxSource() {
+    var el = document.querySelector('script[type="application/vox+json"]');
+    return el ? JSON.parse(el.textContent) : null;
+  }
+
+  function blockToMarkdown(block) {
+    if (!block) return '';
+    switch (block.type) {
+      case 'heading': return '#'.repeat(block.level) + ' ' + block.content + '\n\n';
+      case 'paragraph': return block.content + '\n\n';
+      case 'code':
+        var hdr = block.filename ? '**' + block.filename + '**\n' : '';
+        return hdr + fence + (block.language || '') + '\n' + block.content + '\n' + fence + '\n\n';
+      case 'callout': return '> **' + (block.title || block.variant) + ':** ' + block.content + '\n\n';
+      case 'list': return (block.items || []).map(function(item) { return (block.ordered ? '1. ' : '- ') + item; }).join('\n') + '\n\n';
+      case 'table':
+        var rows = [block.headers.join(' | ')];
+        rows.push(block.headers.map(function() { return '---'; }).join(' | '));
+        (block.rows || []).forEach(function(r) { rows.push(r.join(' | ')); });
+        return rows.join('\n') + '\n\n';
+      case 'diagram': return fence + (block.syntax || 'mermaid') + '\n' + block.content + '\n' + fence + '\n\n';
+      case 'tabs': return (block.panels || []).map(function(p) {
+        return '**' + p.label + ':**\n' + fence + (p.language || '') + '\n' + (p.content || '') + '\n' + fence + '\n';
+      }).join('\n') + '\n';
+      case 'accordion': return '<details>\n<summary>' + block.title + '</summary>\n\n' + (block.blocks || []).map(blockToMarkdown).join('') + '</details>\n\n';
+      case 'steps': return (block.steps || []).map(function(s, i) {
+        return '**Step ' + (i+1) + ': ' + s.title + '**\n' + (s.blocks || []).map(blockToMarkdown).join('');
+      }).join('') + '\n';
+      case 'layout': return (block.blocks || []).map(function(col) {
+        return col.map(blockToMarkdown).join('');
+      }).join('---\n\n');
+      case 'toc': return '*Table of Contents*\n\n';
+      case 'variable_def': return '';
+      default: return (block.content || '') + '\n\n';
+    }
+  }
+
+  function blockToText(block) {
+    if (!block) return '';
+    switch (block.type) {
+      case 'heading': return block.content.toUpperCase() + '\n' + '='.repeat(block.content.length) + '\n\n';
+      case 'paragraph': return block.content + '\n\n';
+      case 'code': return (block.filename ? '[' + block.filename + ']\n' : '') + block.content + '\n\n';
+      case 'callout': return '[' + (block.variant || '').toUpperCase() + '] ' + (block.title || '') + '\n' + block.content + '\n\n';
+      case 'list': return (block.items || []).map(function(item, i) { return (block.ordered ? (i+1) + '. ' : String.fromCharCode(8226) + ' ') + item; }).join('\n') + '\n\n';
+      case 'table':
+        var rows = [block.headers.join('\t')];
+        (block.rows || []).forEach(function(r) { rows.push(r.join('\t')); });
+        return rows.join('\n') + '\n\n';
+      case 'tabs': return (block.panels || []).map(function(p) { return '[' + p.label + ']\n' + (p.content || '') + '\n'; }).join('\n') + '\n';
+      case 'accordion': return block.title + '\n' + (block.blocks || []).map(blockToText).join('');
+      case 'steps': return (block.steps || []).map(function(s, i) { return (i+1) + '. ' + s.title + '\n' + (s.blocks || []).map(blockToText).join(''); }).join('');
+      case 'layout': return (block.blocks || []).map(function(col) { return col.map(blockToText).join(''); }).join('\n');
+      case 'toc': return '';
+      case 'variable_def': return '';
+      default: return (block.content || '') + '\n\n';
+    }
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    var btn = document.getElementById('vox-copy-btn');
+    btn.textContent = String.fromCharCode(10003);
+    setTimeout(function() { btn.textContent = String.fromCharCode(128203); }, 1500);
+  }
+
+  dropdown.addEventListener('click', function(e) {
+    var format = e.target.getAttribute('data-format');
+    if (!format) return;
+    var doc = getVoxSource();
+    if (!doc) return;
+    var text = '';
+    if (format === 'json') {
+      text = JSON.stringify(doc, null, 2);
+    } else {
+      var fn = format === 'markdown' ? blockToMarkdown : blockToText;
+      var vars = (doc.meta && doc.meta.variables) || {};
+      text = doc.blocks.map(function(b) { return fn(b); }).join('');
+      Object.keys(vars).forEach(function(k) {
+        text = text.replace(new RegExp('\\{\\{' + k + '\\}\\}', 'g'), vars[k]);
+      });
+    }
+    copyToClipboard(text);
+    dropdown.classList.remove('open');
+  });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+<script>if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) { Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1/components/'; }</script>
+</body>
+</html>

@@ -15,6 +15,8 @@ export function wrapInDocument({ title, language, bodyHtml, sourceJson }: Docume
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<link id="prism-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.min.css">
+<link id="prism-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
 <style>${generateStyles()}</style>
 </head>
 <body>
@@ -24,6 +26,7 @@ export function wrapInDocument({ title, language, bodyHtml, sourceJson }: Docume
   var saved = localStorage.getItem('vox-theme');
   var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('prism-' + (theme === 'dark' ? 'light' : 'dark')).disabled = true;
 })();
 </script>
 <div class="vox-toolbar">
@@ -62,6 +65,8 @@ window.__voxMermaid = mermaid;
     document.documentElement.setAttribute('data-theme', t);
     localStorage.setItem('vox-theme', t);
     update();
+    document.getElementById('prism-light').disabled = t === 'dark';
+    document.getElementById('prism-dark').disabled = t !== 'dark';
     if (window.__voxMermaid) {
       window.__voxMermaid.initialize({ startOnLoad: false, theme: t === 'dark' ? 'dark' : 'default' });
       document.querySelectorAll('.mermaid').forEach(function(el) {
@@ -193,6 +198,9 @@ document.querySelectorAll('[role="tablist"]').forEach(tablist => {
   });
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+<script>if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) { Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1/components/'; }</script>
 </body>
 </html>`;
 }
