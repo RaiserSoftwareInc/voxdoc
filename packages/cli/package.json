@@ -1,6 +1,6 @@
 {
   "name": "@voxdoc/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CLI for creating, validating, compiling, and serving Vox documents",
   "type": "module",
   "bin": {
