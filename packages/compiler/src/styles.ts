@@ -66,12 +66,19 @@ export function generateStyles(): string {
     --vox-callout-note-border: #5B21B6;
 }
 
-/* Theme toggle */
-.vox-theme-toggle {
+/* Toolbar */
+.vox-toolbar {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 100;
+  display: flex;
+  gap: 0.5rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.vox-theme-toggle,
+.vox-copy-btn {
   background: var(--vox-bg-secondary);
   border: 1px solid var(--vox-border);
   border-radius: 999px;
@@ -87,8 +94,50 @@ export function generateStyles(): string {
   box-shadow: var(--vox-shadow);
   transition: background 0.2s ease, border-color 0.2s ease;
 }
-.vox-theme-toggle:hover {
+.vox-theme-toggle:hover,
+.vox-copy-btn:hover {
   background: var(--vox-border);
+}
+
+/* Copy dropdown */
+.vox-copy-menu {
+  position: relative;
+}
+.vox-copy-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.4rem;
+  background: var(--vox-bg);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  box-shadow: var(--vox-shadow-lg);
+  overflow: hidden;
+  min-width: 10rem;
+}
+.vox-copy-dropdown.open {
+  display: block;
+}
+.vox-copy-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--vox-font-heading);
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--vox-text);
+  transition: background 0.1s ease;
+}
+.vox-copy-dropdown button:hover {
+  background: var(--vox-bg-secondary);
+}
+.vox-copy-dropdown button + button {
+  border-top: 1px solid var(--vox-border);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -496,6 +545,11 @@ blockquote {
 }
 .vox-skip-link:focus {
   top: 0;
+}
+
+/* Hide non-rendered scripts from selection */
+script[type="application/vox+json"] {
+  display: none !important;
 }
 
 /* Screen reader only */
