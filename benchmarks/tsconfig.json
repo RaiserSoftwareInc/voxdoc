@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "."
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler"
   },
   "include": ["."]
 }
