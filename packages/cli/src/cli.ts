@@ -4,9 +4,7 @@ import { validateCommand } from "./commands/validate.js";
 import { compileCommand } from "./commands/compile.js";
 import { infoCommand } from "./commands/info.js";
 import { blocksCommand } from "./commands/blocks.js";
-import { viewCommand } from "./commands/view.js";
 import { mcpServeCommand } from "./commands/mcp-serve.js";
-import { setupCommand } from "./commands/setup.js";
 
 export function createCli(): Command {
   const program = new Command();
@@ -46,16 +44,6 @@ export function createCli(): Command {
     .command("blocks <file>")
     .description("List all blocks")
     .action((file: string) => blocksCommand(file));
-
-  program
-    .command("view <file>")
-    .description("Serve document viewer in browser")
-    .action((file: string) => viewCommand(file));
-
-  program
-    .command("setup")
-    .description("Register .vox files with your OS to open in browser")
-    .action(() => setupCommand());
 
   const mcpCmd = program.command("mcp").description("MCP server commands");
   mcpCmd

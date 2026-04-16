@@ -13,28 +13,31 @@ npm install -g @voxdoc/cli
 ## Quick Start
 
 ```bash
-# Create a document
-vox init my-doc.vox --title "My Document"
+# Create a document (creates my-doc.vox.html)
+vox init my-doc --title "My Document"
 
-# Register .vox files with your OS (first time only)
-vox setup
-
-# Open it — it's already viewable in your browser
+# Open it — double-click in any browser, no setup needed
 # Add blocks, then recompile
-vox compile my-doc.vox
+vox compile my-doc.vox.html
 
 # Validate against schema + accessibility rules
-vox validate my-doc.vox
+vox validate my-doc.vox.html
 
 # Start MCP server for AI authoring (single file or directory)
-vox mcp serve my-doc.vox
+vox mcp serve my-doc.vox.html
 vox mcp serve ./docs/
 ```
+
+> `.vox.html` files open directly in any browser — no setup required.
+
+### Why `.vox.html`?
+
+Vox uses the `.vox.html` extension so that documents are **instantly viewable** — double-click any `.vox.html` file and your OS opens it in a browser. No CLI tools, no plugins, no setup. The `.html` suffix tells the OS it's a web page; the `.vox` prefix tells tooling it's a structured Vox document. The compiled HTML embeds the full Vox JSON source inside a `<script type="application/vox+json">` tag, so a single file is both human-readable and machine-round-trippable.
 
 ## How It Works
 
 ```
-AI Agent ──MCP──▶ .vox file ──Compiler──▶ Self-contained HTML
+AI Agent ──MCP──▶ .vox.html ──Compiler──▶ Self-contained HTML
                      ▲                         │
                      │                         ▼
                      └──── Human Review ◀── Browser
@@ -48,15 +51,15 @@ AI Agent ──MCP──▶ .vox file ──Compiler──▶ Self-contained HTM
 
 ## Block Types (18)
 
-| Core | Enhanced |
-|------|----------|
-| heading | callout (info/warning/danger/tip/note) |
-| paragraph | diagram (Mermaid, Graphviz, D2) |
-| code | table (with screen reader summary) |
-| image | math (KaTeX with MathSpeak) |
-| list | tabs |
-| toc | accordion, steps, layout |
-|  | handwriting (with AI transcription) |
+| Core      | Enhanced                               |
+| --------- | -------------------------------------- |
+| heading   | callout (info/warning/danger/tip/note) |
+| paragraph | diagram (Mermaid, Graphviz, D2)        |
+| code      | table (with screen reader summary)     |
+| image     | math (KaTeX with MathSpeak)            |
+| list      | tabs                                   |
+| toc       | accordion, steps, layout               |
+|           | handwriting (with AI transcription)    |
 
 ## Accessibility
 
@@ -70,12 +73,12 @@ Compilation fails if accessibility fields are missing. This is not optional.
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| [@voxdoc/cli](packages/cli) | CLI — `vox init`, `validate`, `compile`, `view`, `mcp serve` |
-| [@voxdoc/schema](packages/schema) | TypeScript types, JSONSchema, validation |
-| [@voxdoc/compiler](packages/compiler) | Compiles Vox documents to self-contained HTML |
-| [@voxdoc/mcp](packages/mcp) | MCP server for AI-first document authoring |
+| Package                               | Description                                                  |
+| ------------------------------------- | ------------------------------------------------------------ |
+| [@voxdoc/cli](packages/cli)           | CLI — `vox init`, `validate`, `compile`, `mcp serve`         |
+| [@voxdoc/schema](packages/schema)     | TypeScript types, JSONSchema, validation                     |
+| [@voxdoc/compiler](packages/compiler) | Compiles Vox documents to self-contained HTML                |
+| [@voxdoc/mcp](packages/mcp)           | MCP server for AI-first document authoring                   |
 
 ## MCP Server
 
@@ -83,7 +86,7 @@ Connect any MCP-compatible AI agent to author Vox documents. Serve a single file
 
 ```bash
 # Single document
-vox mcp serve my-doc.vox
+vox mcp serve my-doc.vox.html
 
 # Workspace — AI can list, open, and create documents in the directory
 vox mcp serve ./docs/
@@ -102,14 +105,14 @@ vox mcp serve ./docs/
 
 **24 tools:**
 
-| Category | Tools |
-|----------|-------|
-| Workspace | list_documents, open_document, create_document |
-| Read | get_document, list_blocks, get_block, get_schema, search_blocks |
-| Write | add_block, edit_block, delete_block, move_block, set_metadata, set_variable |
-| Review | add_comment, list_comments, resolve_comment, set_block_status, set_status |
-| Accessibility | set_description, set_transcription, get_accessibility_report |
-| Output | validate, compile |
+| Category      | Tools                                                                       |
+| ------------- | --------------------------------------------------------------------------- |
+| Workspace     | list_documents, open_document, create_document                              |
+| Read          | get_document, list_blocks, get_block, get_schema, search_blocks             |
+| Write         | add_block, edit_block, delete_block, move_block, set_metadata, set_variable |
+| Review        | add_comment, list_comments, resolve_comment, set_block_status, set_status   |
+| Accessibility | set_description, set_transcription, get_accessibility_report                |
+| Output        | validate, compile                                                           |
 
 ## Development
 
@@ -118,7 +121,7 @@ git clone https://github.com/RaiserSoftwareInc/voxdoc.git
 cd voxdoc
 pnpm install
 pnpm -r build
-pnpm -r test    # 102 tests
+pnpm -r test    # 112 tests
 ```
 
 ## License

@@ -38,43 +38,43 @@ describe("WorkspaceStore", () => {
     rmSync(TEST_DIR, { recursive: true, force: true });
   });
 
-  it("lists .vox files in a directory", () => {
-    createTestVox("alpha.vox", "Alpha");
-    createTestVox("beta.vox", "Beta");
+  it("lists .vox.html files in a directory", () => {
+    createTestVox("alpha.vox.html", "Alpha");
+    createTestVox("beta.vox.html", "Beta");
     const ws = new WorkspaceStore(TEST_DIR);
     const files = ws.listFiles();
-    expect(files).toEqual(["alpha.vox", "beta.vox"]);
+    expect(files).toEqual(["alpha.vox.html", "beta.vox.html"]);
   });
 
   it("auto-activates single file in directory", () => {
-    createTestVox("only.vox", "Only Doc");
+    createTestVox("only.vox.html", "Only Doc");
     const ws = new WorkspaceStore(TEST_DIR);
-    expect(ws.getActiveFilename()).toBe("only.vox");
+    expect(ws.getActiveFilename()).toBe("only.vox.html");
   });
 
   it("has no active file with multiple docs until opened", () => {
-    createTestVox("a.vox", "A");
-    createTestVox("b.vox", "B");
+    createTestVox("a.vox.html", "A");
+    createTestVox("b.vox.html", "B");
     const ws = new WorkspaceStore(TEST_DIR);
     expect(ws.getActiveFilename()).toBeNull();
     expect(() => ws.getActiveStore()).toThrow("No active document");
   });
 
   it("opens a document and sets it active", () => {
-    createTestVox("a.vox", "A");
-    createTestVox("b.vox", "B");
+    createTestVox("a.vox.html", "A");
+    createTestVox("b.vox.html", "B");
     const ws = new WorkspaceStore(TEST_DIR);
-    ws.openDocument("b.vox");
-    expect(ws.getActiveFilename()).toBe("b.vox");
+    ws.openDocument("b.vox.html");
+    expect(ws.getActiveFilename()).toBe("b.vox.html");
     const doc = ws.getActiveStore().getDocument();
     expect(doc.meta.title).toBe("B");
   });
 
   it("lists documents with metadata", () => {
-    createTestVox("a.vox", "Alpha Doc");
-    createTestVox("b.vox", "Beta Doc");
+    createTestVox("a.vox.html", "Alpha Doc");
+    createTestVox("b.vox.html", "Beta Doc");
     const ws = new WorkspaceStore(TEST_DIR);
-    ws.openDocument("a.vox");
+    ws.openDocument("a.vox.html");
     const docs = ws.listDocuments();
     expect(docs).toHaveLength(2);
     expect(docs[0].title).toBe("Alpha Doc");
@@ -85,17 +85,27 @@ describe("WorkspaceStore", () => {
 
   it("creates a new document in the workspace", () => {
     const ws = new WorkspaceStore(TEST_DIR);
-    ws.createDocument("new-doc.vox", "New Document");
-    expect(ws.getActiveFilename()).toBe("new-doc.vox");
+    ws.createDocument("new-doc", "New Document");
+    expect(ws.getActiveFilename()).toBe("new-doc.vox.html");
     const doc = ws.getActiveStore().getDocument();
     expect(doc.meta.title).toBe("New Document");
-    expect(ws.listFiles()).toContain("new-doc.vox");
+    expect(ws.listFiles()).toContain("new-doc.vox.html");
   });
 
   it("handles single file path (backward compatible)", () => {
-    createTestVox("single.vox", "Single");
-    const ws = new WorkspaceStore(join(TEST_DIR, "single.vox"));
-    expect(ws.getActiveFilename()).toBe("single.vox");
+    createTestVox("single.vox.html", "Single");
+    const ws = new WorkspaceStore(join(TEST_DIR, "single.vox.html"));
+    expect(ws.getActiveFilename()).toBe("single.vox.html");
     expect(ws.getDir()).toBe(TEST_DIR);
+  });
+
+  it("lists both .vox and .vox.html files (backward compat)", () => {
+    createTestVox("old.vox", "Old Doc");
+    createTestVox("new.vox.html", "New Doc");
+    const ws = new WorkspaceStore(TEST_DIR);
+    const files = ws.listFiles();
+    expect(files).toContain("old.vox");
+    expect(files).toContain("new.vox.html");
+    expect(files).toHaveLength(2);
   });
 });

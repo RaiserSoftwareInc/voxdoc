@@ -33,7 +33,7 @@ export type {
 } from "./types.js";
 
 // Schema
-export { BLOCK_TYPES, blockSchemas, voxDocumentSchema } from "./schema.js";
+export { voxDocumentSchema } from "./schema.js";
 
 // Validation
 export { validateDocument } from "./validate.js";
@@ -41,3 +41,6 @@ export type { ValidationResult } from "./validate.js";
 
 // Block ID
 export { generateBlockId } from "./block-id.js";
+
+// Extensions
+export { isVoxFile, ensureVoxHtmlExtension, VOX_GLOB_PATTERNS } from "./extensions.js";

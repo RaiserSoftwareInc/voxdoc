@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vox API Reference</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<style>:root {
+  --vox-font: "Charter", "Iowan Old Style", "Sitka Text", "Palatino Linotype", "Georgia", serif;
+  --vox-font-heading: "Bahnschrift", "Avenir Next", "Avenir", "Cantarell", sans-serif;
+  --vox-font-mono: "Cascadia Code", "SF Mono", "Menlo", "Consolas", monospace;
+  --vox-text: #1C1917;
+  --vox-text-secondary: #57534E;
+  --vox-bg: #FAFAF7;
+  --vox-bg-secondary: #F0EFE9;
+  --vox-border: #D6D3CC;
+  --vox-accent: #0D7377;
+  --vox-accent-light: #CCFBF1;
+  --vox-accent-hover: #0A5C5F;
+  --vox-link: #0D7377;
+  --vox-code-bg: #F0EDE5;
+  --vox-code-border: #D6D3CC;
+  --vox-radius: 6px;
+  --vox-shadow: 0 1px 2px rgba(28,25,23,0.06), 0 1px 3px rgba(28,25,23,0.08);
+  --vox-shadow-lg: 0 4px 12px rgba(28,25,23,0.08), 0 1px 3px rgba(28,25,23,0.06);
+  --vox-callout-info: #0C4A6E;
+  --vox-callout-info-bg: #E0F2FE;
+  --vox-callout-info-border: #7DD3FC;
+  --vox-callout-warning: #854D0E;
+  --vox-callout-warning-bg: #FEF9C3;
+  --vox-callout-warning-border: #FDE047;
+  --vox-callout-danger: #991B1B;
+  --vox-callout-danger-bg: #FEE2E2;
+  --vox-callout-danger-border: #FCA5A5;
+  --vox-callout-tip: #065F46;
+  --vox-callout-tip-bg: #D1FAE5;
+  --vox-callout-tip-border: #6EE7B7;
+  --vox-callout-note: #5B21B6;
+  --vox-callout-note-bg: #EDE9FE;
+  --vox-callout-note-border: #C4B5FD;
+}
+
+[data-theme="dark"] {
+    --vox-text: #E7E5DF;
+    --vox-text-secondary: #A8A29E;
+    --vox-bg: #1A1915;
+    --vox-bg-secondary: #262520;
+    --vox-border: #3D3B35;
+    --vox-accent: #2DD4BF;
+    --vox-accent-light: #134E4A;
+    --vox-accent-hover: #5EEAD4;
+    --vox-link: #5EEAD4;
+    --vox-code-bg: #22201B;
+    --vox-code-border: #3D3B35;
+    --vox-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --vox-shadow-lg: 0 4px 12px rgba(0,0,0,0.3);
+    --vox-callout-info: #BAE6FD;
+    --vox-callout-info-bg: #0C2D48;
+    --vox-callout-info-border: #0C4A6E;
+    --vox-callout-warning: #FDE68A;
+    --vox-callout-warning-bg: #3D2E06;
+    --vox-callout-warning-border: #854D0E;
+    --vox-callout-danger: #FECACA;
+    --vox-callout-danger-bg: #3B1111;
+    --vox-callout-danger-border: #991B1B;
+    --vox-callout-tip: #A7F3D0;
+    --vox-callout-tip-bg: #052E22;
+    --vox-callout-tip-border: #065F46;
+    --vox-callout-note: #DDD6FE;
+    --vox-callout-note-bg: #2E1A5E;
+    --vox-callout-note-border: #5B21B6;
+}
+
+/* Theme toggle */
+.vox-theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--vox-text);
+  box-shadow: var(--vox-shadow);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.vox-theme-toggle:hover {
+  background: var(--vox-border);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--vox-font);
+  color: var(--vox-text);
+  background: var(--vox-bg);
+  line-height: 1.75;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.vox-document {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Headings — geometric sans, tight tracking */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vox-font-heading);
+  margin-top: 2.5em;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--vox-text);
+}
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid var(--vox-border);
+}
+h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin-top: 3em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--vox-border);
+}
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vox-text-secondary);
+}
+h6 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vox-text-secondary);
+}
+
+p {
+  margin: 1.15em 0;
+}
+
+a {
+  color: var(--vox-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--vox-accent-hover);
+}
+
+/* Inline code */
+code {
+  font-family: var(--vox-font-mono);
+  background: var(--vox-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--vox-code-border);
+  font-weight: 500;
+}
+
+/* Code blocks */
+pre {
+  background: var(--vox-code-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--vox-radius);
+  overflow-x: auto;
+  border: 1px solid var(--vox-code-border);
+  line-height: 1.6;
+  font-size: 0.875rem;
+  box-shadow: var(--vox-shadow);
+}
+pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* Callouts — full tinted background */
+.vox-callout {
+  border-left: 4px solid var(--vox-border);
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  border-radius: 0 var(--vox-radius) var(--vox-radius) 0;
+  background: var(--vox-bg-secondary);
+}
+.vox-callout .vox-callout-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+.vox-callout-info {
+  border-left-color: var(--vox-callout-info-border);
+  background: var(--vox-callout-info-bg);
+  color: var(--vox-callout-info);
+}
+.vox-callout-warning {
+  border-left-color: var(--vox-callout-warning-border);
+  background: var(--vox-callout-warning-bg);
+  color: var(--vox-callout-warning);
+}
+.vox-callout-danger {
+  border-left-color: var(--vox-callout-danger-border);
+  background: var(--vox-callout-danger-bg);
+  color: var(--vox-callout-danger);
+}
+.vox-callout-tip {
+  border-left-color: var(--vox-callout-tip-border);
+  background: var(--vox-callout-tip-bg);
+  color: var(--vox-callout-tip);
+}
+.vox-callout-note {
+  border-left-color: var(--vox-callout-note-border);
+  background: var(--vox-callout-note-bg);
+  color: var(--vox-callout-note);
+}
+
+/* Tables — striped rows, refined borders */
+.vox-table-wrapper {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-radius: var(--vox-radius);
+  border: 1px solid var(--vox-border);
+  box-shadow: var(--vox-shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+th, td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--vox-border);
+}
+th {
+  background: var(--vox-bg-secondary);
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vox-text-secondary);
+}
+tbody tr:nth-child(even) {
+  background: var(--vox-bg-secondary);
+}
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Tabs — accent underline */
+.vox-tabs {
+  margin: 1.75rem 0;
+}
+.vox-tabs [role="tablist"] {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--vox-border);
+  margin-bottom: 0;
+}
+.vox-tabs [role="tab"] {
+  font-family: var(--vox-font-heading);
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vox-text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.vox-tabs [role="tab"]:hover {
+  color: var(--vox-text);
+}
+.vox-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--vox-accent);
+  color: var(--vox-accent);
+}
+.vox-tabs [role="tabpanel"] {
+  padding: 1.25rem 0;
+}
+
+/* Layout grid */
+.vox-layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.vox-layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Steps — connecting vertical line */
+.vox-steps {
+  counter-reset: vox-step;
+  list-style: none;
+  padding: 0;
+  position: relative;
+}
+.vox-steps::before {
+  content: '';
+  position: absolute;
+  left: 0.95rem;
+  top: 2rem;
+  bottom: 1rem;
+  width: 2px;
+  background: var(--vox-border);
+  border-radius: 1px;
+}
+.vox-step {
+  position: relative;
+  padding-left: 3.5rem;
+  margin-bottom: 2rem;
+}
+.vox-step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--vox-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 3px var(--vox-bg);
+  z-index: 1;
+}
+.vox-step-title {
+  font-family: var(--vox-font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Accordion */
+.vox-accordion {
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  margin: 1rem 0;
+  box-shadow: var(--vox-shadow);
+  overflow: hidden;
+}
+.vox-accordion summary {
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--vox-bg-secondary);
+  transition: background 0.15s ease;
+}
+.vox-accordion summary:hover {
+  background: var(--vox-border);
+}
+.vox-accordion[open] summary {
+  border-bottom: 1px solid var(--vox-border);
+}
+.vox-accordion .vox-accordion-content {
+  padding: 1.25rem;
+}
+
+/* Code filename header */
+.vox-code-filename {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-code-border);
+  border-bottom: none;
+  padding: 0.45rem 1rem;
+  font-family: var(--vox-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--vox-radius) var(--vox-radius) 0 0;
+  color: var(--vox-text-secondary);
+  letter-spacing: 0.02em;
+}
+.vox-code-filename + pre {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+}
+
+/* Table of Contents */
+.vox-toc {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem 1.75rem;
+  margin: 2rem 0;
+  box-shadow: var(--vox-shadow);
+}
+.vox-toc nav ul {
+  list-style: none;
+  padding-left: 1.25rem;
+}
+.vox-toc nav > ul {
+  padding-left: 0;
+}
+.vox-toc a {
+  text-decoration: none;
+  color: var(--vox-text-secondary);
+  font-size: 0.925rem;
+  transition: color 0.15s ease;
+}
+.vox-toc a:hover {
+  color: var(--vox-accent);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5rem;
+}
+li {
+  margin-bottom: 0.35em;
+}
+li::marker {
+  color: var(--vox-accent);
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--vox-border);
+  margin: 3rem 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--vox-radius);
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--vox-accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  color: var(--vox-text-secondary);
+  font-style: italic;
+}
+
+/* Skip navigation link */
+.vox-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--vox-accent);
+  color: #fff;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 0 0 var(--vox-radius) 0;
+  font-family: var(--vox-font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.vox-skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.vox-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Diagram */
+.vox-diagram {
+  margin: 1.75rem 0;
+  text-align: center;
+}
+.vox-diagram figcaption {
+  font-size: 0.85rem;
+  color: var(--vox-text-secondary);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Math */
+.vox-math {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Handwriting */
+.vox-handwriting {
+  background: var(--vox-bg-secondary);
+  border: 1px solid var(--vox-border);
+  border-radius: var(--vox-radius);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+/* Unsupported block fallback */
+.vox-unsupported {
+  background: var(--vox-callout-warning-bg);
+  border: 1px dashed var(--vox-callout-warning-border);
+  border-radius: var(--vox-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--vox-callout-warning);
+  font-size: 0.875rem;
+}
+
+/* Selection */
+::selection {
+  background: var(--vox-accent-light);
+  color: var(--vox-text);
+}
+
+/* Strong / emphasis */
+strong {
+  font-weight: 600;
+}
+
+/* Responsive: 640px */
+@media (max-width: 640px) {
+  .vox-layout-2col,
+  .vox-layout-3col {
+    grid-template-columns: 1fr;
+  }
+  .vox-tabs [role="tablist"] {
+    flex-wrap: wrap;
+  }
+  .vox-document {
+    padding: 2rem 1.25rem;
+  }
+}
+
+/* Responsive: 400px */
+@media (max-width: 400px) {
+  .vox-document {
+    padding: 1.5rem 1rem;
+  }
+  .vox-callout {
+    padding: 0.75rem 1rem;
+  }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.375rem; }
+}</style>
+</head>
+<body>
+<script>
+// Theme: restore saved preference or detect OS default
+(function() {
+  var saved = localStorage.getItem('vox-theme');
+  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+<button class="vox-theme-toggle" id="vox-theme-btn" aria-label="Toggle theme" title="Toggle light/dark theme">&#9790;</button>
+<a href="#vox-main" class="vox-skip-link">Skip to content</a>
+<main id="vox-main" class="vox-document">
+<h1 id="api-title">Vox API Reference</h1>
+<p id="api-intro">The <a href="https://api.voxformat.dev/v1">https://api.voxformat.dev/v1</a> API provides programmatic access to create, validate, compile, and manage Vox documents. All endpoints accept and return JSON. This reference covers authentication, available endpoints, and code examples in multiple languages.</p>
+<div id="blk_api_quickref" class="vox-layout vox-layout-2col"><div class="vox-layout-column"><div id="blk_quickref_left" class="vox-callout vox-callout-info" role="note" aria-label="info"><div class="vox-callout-title">ℹ️ Base URL</div><div class="vox-callout-content"><code>https://api.voxformat.dev/v1</code>
+
+All endpoints accept and return JSON. Authenticate with a Bearer token in the Authorization header.</div></div></div><div class="vox-layout-column"><div id="blk_quickref_right" class="vox-callout vox-callout-tip" role="note" aria-label="tip"><div class="vox-callout-title">💡 Quick Links</div><div class="vox-callout-content"><strong>8 endpoints</strong> for full document lifecycle
+
+<strong>Formats:</strong> JSON input, HTML + JSON output
+
+<strong>Auth:</strong> Bearer token (required)</div></div></div></div>
+<h2 id="auth-heading">Authentication</h2>
+<p id="auth-paragraph">All API requests must include a Bearer token in the <code>Authorization</code> header. Tokens are issued through the developer dashboard and expire after 90 days. Each token is scoped to a specific organization and set of permissions.</p>
+<div id="auth-warning" class="vox-callout vox-callout-warning" role="note" aria-label="warning"><div class="vox-callout-title">⚠️ Keep Your API Keys Secure</div><div class="vox-callout-content">Never expose your API token in client-side code, public repositories, or logs. Use environment variables or a secrets manager to store tokens. If a token is compromised, revoke it immediately from the developer dashboard.</div></div>
+<div class="vox-code-block"><div class="vox-code-filename">auth-example.sh</div><pre><code class="language-bash"># Set your API token as an environment variable
+export VOX_API_TOKEN=&quot;your-token-here&quot;
+
+# Make an authenticated request
+curl -H &quot;Authorization: Bearer $VOX_API_TOKEN&quot; \
+     {{base_url}}/{{api_version}}/documents</code></pre></div>
+<h2 id="endpoints-heading">Endpoints</h2>
+<p id="endpoints-intro">The following table lists all available API endpoints. All paths are relative to <code>https://api.voxformat.dev/v1</code>.</p>
+<p id="endpoints-table-summary" class="vox-sr-only">A table of all Vox API endpoints showing the HTTP method, URL path, description of what each endpoint does, and whether authentication is required.</p><div class="vox-table-wrapper" id="endpoints-table"><table aria-describedby="endpoints-table-summary"><caption>Available API endpoints</caption><thead><tr><th scope="col">Method</th><th scope="col">Path</th><th scope="col">Description</th><th scope="col">Auth</th></tr></thead><tbody><tr><td>POST</td><td>/documents</td><td>Create a new Vox document</td><td>Required</td></tr><tr><td>GET</td><td>/documents</td><td>List all documents in the organization</td><td>Required</td></tr><tr><td>GET</td><td>/documents/:id</td><td>Retrieve a specific document by ID</td><td>Required</td></tr><tr><td>PUT</td><td>/documents/:id</td><td>Update an existing document</td><td>Required</td></tr><tr><td>DELETE</td><td>/documents/:id</td><td>Delete a document permanently</td><td>Required</td></tr><tr><td>POST</td><td>/documents/:id/validate</td><td>Validate a document against the schema</td><td>Required</td></tr><tr><td>POST</td><td>/documents/:id/compile</td><td>Compile a document to HTML</td><td>Required</td></tr><tr><td>GET</td><td>/documents/:id/comments</td><td>List review comments on a document</td><td>Required</td></tr></tbody></table></div>
+<h3 id="create-heading">Create a Document</h3>
+<p id="create-paragraph">Send a <code>POST</code> request to <code>/documents</code> with a JSON body containing the document metadata and initial blocks. The server assigns an ID and returns the created document.</p>
+<div id="create-examples" class="vox-tabs"><div role="tablist"><button role="tab" id="create-examples-tab-0" aria-controls="create-examples-panel-0" aria-selected="true" tabindex="0">JavaScript</button><button role="tab" id="create-examples-tab-1" aria-controls="create-examples-panel-1" aria-selected="false" tabindex="-1">Python</button><button role="tab" id="create-examples-tab-2" aria-controls="create-examples-panel-2" aria-selected="false" tabindex="-1">curl</button></div><div role="tabpanel" id="create-examples-panel-0" aria-labelledby="create-examples-tab-0"><pre><code class="language-javascript">const response = await fetch('{{base_url}}/{{api_version}}/documents', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${process.env.VOX_API_TOKEN}`,
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    title: 'My Document',
+    description: 'A new Vox document',
+    blocks: [],
+  }),
+});
+
+const doc = await response.json();
+console.log('Created document:', doc.meta.id);</code></pre></div><div role="tabpanel" id="create-examples-panel-1" aria-labelledby="create-examples-tab-1" hidden="true"><pre><code class="language-python">import os
+import requests
+
+response = requests.post(
+    '{{base_url}}/{{api_version}}/documents',
+    headers={
+        'Authorization': f'Bearer {os.environ[&quot;VOX_API_TOKEN&quot;]}',
+        'Content-Type': 'application/json',
+    },
+    json={
+        'title': 'My Document',
+        'description': 'A new Vox document',
+        'blocks': [],
+    },
+)
+
+doc = response.json()
+print(f'Created document: {doc[&quot;meta&quot;][&quot;id&quot;]}')</code></pre></div><div role="tabpanel" id="create-examples-panel-2" aria-labelledby="create-examples-tab-2" hidden="true"><pre><code class="language-bash">curl -X POST {{base_url}}/{{api_version}}/documents \
+  -H &quot;Authorization: Bearer $VOX_API_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+    &quot;title&quot;: &quot;My Document&quot;,
+    &quot;description&quot;: &quot;A new Vox document&quot;,
+    &quot;blocks&quot;: []
+  }'</code></pre></div></div>
+<h3 id="compile-heading">Compile a Document</h3>
+<p id="compile-paragraph">The compile endpoint validates the document, checks accessibility requirements, resolves variables, and generates self-contained HTML. The response includes the compiled HTML and any warnings encountered during compilation.</p>
+<div id="compile-examples" class="vox-tabs"><div role="tablist"><button role="tab" id="compile-examples-tab-0" aria-controls="compile-examples-panel-0" aria-selected="true" tabindex="0">JavaScript</button><button role="tab" id="compile-examples-tab-1" aria-controls="compile-examples-panel-1" aria-selected="false" tabindex="-1">Python</button><button role="tab" id="compile-examples-tab-2" aria-controls="compile-examples-panel-2" aria-selected="false" tabindex="-1">curl</button></div><div role="tabpanel" id="compile-examples-panel-0" aria-labelledby="compile-examples-tab-0"><pre><code class="language-javascript">const response = await fetch(
+  '{{base_url}}/{{api_version}}/documents/doc-id/compile',
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.VOX_API_TOKEN}`,
+    },
+  }
+);
+
+const result = await response.json();
+if (result.success) {
+  // Write the HTML to a file
+  fs.writeFileSync('output.html', result.html);
+}</code></pre></div><div role="tabpanel" id="compile-examples-panel-1" aria-labelledby="compile-examples-tab-1" hidden="true"><pre><code class="language-python">import os
+import requests
+
+response = requests.post(
+    '{{base_url}}/{{api_version}}/documents/doc-id/compile',
+    headers={
+        'Authorization': f'Bearer {os.environ[&quot;VOX_API_TOKEN&quot;]}',
+    },
+)
+
+result = response.json()
+if result['success']:
+    with open('output.html', 'w') as f:
+        f.write(result['html'])</code></pre></div><div role="tabpanel" id="compile-examples-panel-2" aria-labelledby="compile-examples-tab-2" hidden="true"><pre><code class="language-bash">curl -X POST {{base_url}}/{{api_version}}/documents/doc-id/compile \
+  -H &quot;Authorization: Bearer $VOX_API_TOKEN&quot; \
+  -o output.html</code></pre></div></div>
+<h2 id="getting-started-heading">Getting Started</h2>
+<ol id="getting-started-steps" class="vox-steps"><li class="vox-step"><div class="vox-step-number">1</div><div class="vox-step-title">Create an account and get your API token</div><div class="vox-step-content"><p id="step1-content">Sign up at the Vox developer dashboard and navigate to <strong>Settings &gt; API Tokens</strong>. Click <strong>Generate Token</strong>, give it a descriptive name, and copy the token value. Store it securely as an environment variable.</p></div></li><li class="vox-step"><div class="vox-step-number">2</div><div class="vox-step-title">Install the SDK for your language</div><div class="vox-step-content"><div class="vox-code-block"><pre><code class="language-bash"># JavaScript / TypeScript
+npm install @vox/sdk
+
+# Python
+pip install vox-sdk</code></pre></div></div></li><li class="vox-step"><div class="vox-step-number">3</div><div class="vox-step-title">Create your first document via the API</div><div class="vox-step-content"><p id="step3-content">Use the <code>POST /documents</code> endpoint to create a new document. Add blocks using <code>PUT /documents/:id</code> and then compile the result using <code>POST /documents/:id/compile</code>.</p></div></li><li class="vox-step"><div class="vox-step-number">4</div><div class="vox-step-title">Validate and compile</div><div class="vox-step-content"><p id="step4-content">Before publishing, always validate your document with <code>POST /documents/:id/validate</code> to ensure all accessibility requirements are met. Then compile to HTML and verify the output renders correctly.</p></div></li></ol>
+</main>
+<script type="application/vox+json">
+{
+  "$schema": "https://voxformat.dev/schema/v1.json",
+  "meta": {
+    "id": "b7e3a1d9-4c82-4f1a-9e6d-8a2b5c7d0e3f",
+    "title": "Vox API Reference",
+    "description": "API documentation for the Vox document management service, covering authentication, document CRUD operations, and compilation endpoints.",
+    "version": "1.0.0",
+    "authors": [
+      "Vox Team"
+    ],
+    "tags": [
+      "api",
+      "reference",
+      "technical"
+    ],
+    "status": "published",
+    "created": "2026-04-12T00:00:00.000Z",
+    "updated": "2026-04-12T00:00:00.000Z",
+    "variables": {
+      "api_version": "v1",
+      "base_url": "https://api.voxformat.dev"
+    },
+    "provenance": {
+      "generated_by": "vox-cli",
+      "reviewed_by": "human",
+      "approved_blocks": [],
+      "flagged_blocks": []
+    },
+    "accessibility": {
+      "language": "en",
+      "reading_level": "technical"
+    }
+  },
+  "blocks": [
+    {
+      "id": "api-title",
+      "type": "heading",
+      "level": 1,
+      "content": "Vox API Reference"
+    },
+    {
+      "id": "api-intro",
+      "type": "paragraph",
+      "content": "The {{base_url}}/{{api_version}} API provides programmatic access to create, validate, compile, and manage Vox documents. All endpoints accept and return JSON. This reference covers authentication, available endpoints, and code examples in multiple languages."
+    },
+    {
+      "id": "blk_api_quickref",
+      "type": "layout",
+      "columns": 2,
+      "blocks": [
+        [
+          {
+            "id": "blk_quickref_left",
+            "type": "callout",
+            "variant": "info",
+            "title": "Base URL",
+            "content": "`{{base_url}}/{{api_version}}`\n\nAll endpoints accept and return JSON. Authenticate with a Bearer token in the Authorization header."
+          }
+        ],
+        [
+          {
+            "id": "blk_quickref_right",
+            "type": "callout",
+            "variant": "tip",
+            "title": "Quick Links",
+            "content": "**8 endpoints** for full document lifecycle\n\n**Formats:** JSON input, HTML + JSON output\n\n**Auth:** Bearer token (required)"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "auth-heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Authentication"
+    },
+    {
+      "id": "auth-paragraph",
+      "type": "paragraph",
+      "content": "All API requests must include a Bearer token in the `Authorization` header. Tokens are issued through the developer dashboard and expire after 90 days. Each token is scoped to a specific organization and set of permissions."
+    },
+    {
+      "id": "auth-warning",
+      "type": "callout",
+      "variant": "warning",
+      "title": "Keep Your API Keys Secure",
+      "content": "Never expose your API token in client-side code, public repositories, or logs. Use environment variables or a secrets manager to store tokens. If a token is compromised, revoke it immediately from the developer dashboard."
+    },
+    {
+      "id": "auth-code",
+      "type": "code",
+      "language": "bash",
+      "content": "# Set your API token as an environment variable\nexport VOX_API_TOKEN=\"your-token-here\"\n\n# Make an authenticated request\ncurl -H \"Authorization: Bearer $VOX_API_TOKEN\" \\\n     {{base_url}}/{{api_version}}/documents",
+      "filename": "auth-example.sh"
+    },
+    {
+      "id": "endpoints-heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Endpoints"
+    },
+    {
+      "id": "endpoints-intro",
+      "type": "paragraph",
+      "content": "The following table lists all available API endpoints. All paths are relative to `{{base_url}}/{{api_version}}`."
+    },
+    {
+      "id": "endpoints-table",
+      "type": "table",
+      "headers": [
+        "Method",
+        "Path",
+        "Description",
+        "Auth"
+      ],
+      "rows": [
+        [
+          "POST",
+          "/documents",
+          "Create a new Vox document",
+          "Required"
+        ],
+        [
+          "GET",
+          "/documents",
+          "List all documents in the organization",
+          "Required"
+        ],
+        [
+          "GET",
+          "/documents/:id",
+          "Retrieve a specific document by ID",
+          "Required"
+        ],
+        [
+          "PUT",
+          "/documents/:id",
+          "Update an existing document",
+          "Required"
+        ],
+        [
+          "DELETE",
+          "/documents/:id",
+          "Delete a document permanently",
+          "Required"
+        ],
+        [
+          "POST",
+          "/documents/:id/validate",
+          "Validate a document against the schema",
+          "Required"
+        ],
+        [
+          "POST",
+          "/documents/:id/compile",
+          "Compile a document to HTML",
+          "Required"
+        ],
+        [
+          "GET",
+          "/documents/:id/comments",
+          "List review comments on a document",
+          "Required"
+        ]
+      ],
+      "caption": "Available API endpoints",
+      "summary": "A table of all Vox API endpoints showing the HTTP method, URL path, description of what each endpoint does, and whether authentication is required."
+    },
+    {
+      "id": "create-heading",
+      "type": "heading",
+      "level": 3,
+      "content": "Create a Document"
+    },
+    {
+      "id": "create-paragraph",
+      "type": "paragraph",
+      "content": "Send a `POST` request to `/documents` with a JSON body containing the document metadata and initial blocks. The server assigns an ID and returns the created document."
+    },
+    {
+      "id": "create-examples",
+      "type": "tabs",
+      "panels": [
+        {
+          "label": "JavaScript",
+          "language": "javascript",
+          "content": "const response = await fetch('{{base_url}}/{{api_version}}/documents', {\n  method: 'POST',\n  headers: {\n    'Authorization': `Bearer ${process.env.VOX_API_TOKEN}`,\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    title: 'My Document',\n    description: 'A new Vox document',\n    blocks: [],\n  }),\n});\n\nconst doc = await response.json();\nconsole.log('Created document:', doc.meta.id);"
+        },
+        {
+          "label": "Python",
+          "language": "python",
+          "content": "import os\nimport requests\n\nresponse = requests.post(\n    '{{base_url}}/{{api_version}}/documents',\n    headers={\n        'Authorization': f'Bearer {os.environ[\"VOX_API_TOKEN\"]}',\n        'Content-Type': 'application/json',\n    },\n    json={\n        'title': 'My Document',\n        'description': 'A new Vox document',\n        'blocks': [],\n    },\n)\n\ndoc = response.json()\nprint(f'Created document: {doc[\"meta\"][\"id\"]}')"
+        },
+        {
+          "label": "curl",
+          "language": "bash",
+          "content": "curl -X POST {{base_url}}/{{api_version}}/documents \\\n  -H \"Authorization: Bearer $VOX_API_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"title\": \"My Document\",\n    \"description\": \"A new Vox document\",\n    \"blocks\": []\n  }'"
+        }
+      ]
+    },
+    {
+      "id": "compile-heading",
+      "type": "heading",
+      "level": 3,
+      "content": "Compile a Document"
+    },
+    {
+      "id": "compile-paragraph",
+      "type": "paragraph",
+      "content": "The compile endpoint validates the document, checks accessibility requirements, resolves variables, and generates self-contained HTML. The response includes the compiled HTML and any warnings encountered during compilation."
+    },
+    {
+      "id": "compile-examples",
+      "type": "tabs",
+      "panels": [
+        {
+          "label": "JavaScript",
+          "language": "javascript",
+          "content": "const response = await fetch(\n  '{{base_url}}/{{api_version}}/documents/doc-id/compile',\n  {\n    method: 'POST',\n    headers: {\n      'Authorization': `Bearer ${process.env.VOX_API_TOKEN}`,\n    },\n  }\n);\n\nconst result = await response.json();\nif (result.success) {\n  // Write the HTML to a file\n  fs.writeFileSync('output.html', result.html);\n}"
+        },
+        {
+          "label": "Python",
+          "language": "python",
+          "content": "import os\nimport requests\n\nresponse = requests.post(\n    '{{base_url}}/{{api_version}}/documents/doc-id/compile',\n    headers={\n        'Authorization': f'Bearer {os.environ[\"VOX_API_TOKEN\"]}',\n    },\n)\n\nresult = response.json()\nif result['success']:\n    with open('output.html', 'w') as f:\n        f.write(result['html'])"
+        },
+        {
+          "label": "curl",
+          "language": "bash",
+          "content": "curl -X POST {{base_url}}/{{api_version}}/documents/doc-id/compile \\\n  -H \"Authorization: Bearer $VOX_API_TOKEN\" \\\n  -o output.html"
+        }
+      ]
+    },
+    {
+      "id": "getting-started-heading",
+      "type": "heading",
+      "level": 2,
+      "content": "Getting Started"
+    },
+    {
+      "id": "getting-started-steps",
+      "type": "steps",
+      "steps": [
+        {
+          "title": "Create an account and get your API token",
+          "blocks": [
+            {
+              "id": "step1-content",
+              "type": "paragraph",
+              "content": "Sign up at the Vox developer dashboard and navigate to **Settings > API Tokens**. Click **Generate Token**, give it a descriptive name, and copy the token value. Store it securely as an environment variable."
+            }
+          ]
+        },
+        {
+          "title": "Install the SDK for your language",
+          "blocks": [
+            {
+              "id": "step2-content",
+              "type": "code",
+              "language": "bash",
+              "content": "# JavaScript / TypeScript\nnpm install @vox/sdk\n\n# Python\npip install vox-sdk"
+            }
+          ]
+        },
+        {
+          "title": "Create your first document via the API",
+          "blocks": [
+            {
+              "id": "step3-content",
+              "type": "paragraph",
+              "content": "Use the `POST /documents` endpoint to create a new document. Add blocks using `PUT /documents/:id` and then compile the result using `POST /documents/:id/compile`."
+            }
+          ]
+        },
+        {
+          "title": "Validate and compile",
+          "blocks": [
+            {
+              "id": "step4-content",
+              "type": "paragraph",
+              "content": "Before publishing, always validate your document with `POST /documents/:id/validate` to ensure all accessibility requirements are met. Then compile to HTML and verify the output renders correctly."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "var-api-version",
+      "type": "variable_def",
+      "key": "api_version",
+      "value": "v1"
+    },
+    {
+      "id": "var-base-url",
+      "type": "variable_def",
+      "key": "base_url",
+      "value": "https://api.voxformat.dev"
+    }
+  ],
+  "comments": []
+}
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+</script>
+<script>
+// Theme toggle
+(function() {
+  var btn = document.getElementById('vox-theme-btn');
+  var update = function() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀' : '☾'; };
+  update();
+  btn.addEventListener('click', function() {
+    var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('vox-theme', t);
+    update();
+  });
+})();
+
+// Tab switching
+document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+  tablist.querySelectorAll('[role="tab"]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabs = tablist.querySelectorAll('[role="tab"]');
+      tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); t.tabIndex = -1; });
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      const panelId = tab.getAttribute('aria-controls');
+      tablist.closest('.vox-tabs').querySelectorAll('[role="tabpanel"]').forEach(p => p.hidden = true);
+      document.getElementById(panelId).hidden = false;
+    });
+  });
+});
+</script>
+</body>
+</html>

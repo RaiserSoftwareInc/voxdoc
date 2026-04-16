@@ -36,8 +36,7 @@
   "dependencies": {
     "@voxdoc/schema": "workspace:*",
     "katex": "^0.16.0",
-    "marked": "^15.0.0",
-    "shiki": "^3.0.0"
+    "marked": "^15.0.0"
   },
   "devDependencies": {
     "@types/katex": "^0.16.0",

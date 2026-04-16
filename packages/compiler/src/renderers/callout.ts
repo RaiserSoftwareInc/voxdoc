@@ -1,6 +1,7 @@
 import type { CalloutBlock, CalloutVariant } from "@voxdoc/schema";
 import { marked } from "marked";
-import { escapeHtml, resolveVariables } from "../utils.js";
+import { escapeHtml } from "../utils.js";
+import { resolveVariables } from "../variables.js";
 
 const ICONS: Record<CalloutVariant, string> = {
   info: "ℹ️",

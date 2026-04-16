@@ -35,7 +35,7 @@ export function renderTabs(
     if (panel.blocks && renderChild) {
       html += panel.blocks.map((b) => renderChild(b, ctx)).join("");
     } else if (panel.content !== undefined) {
-      if (panel.type === "code" && panel.language) {
+      if ((panel.type === "code" || panel.language) && panel.language) {
         html += `<pre><code class="language-${panel.language}">${escapeHtml(panel.content)}</code></pre>`;
       } else {
         html += `<p>${escapeHtml(panel.content)}</p>`;

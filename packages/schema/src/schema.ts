@@ -1,4 +1,4 @@
-export const BLOCK_TYPES = [
+const BLOCK_TYPES = [
   "heading",
   "paragraph",
   "code",
@@ -54,7 +54,7 @@ function blockSchema(
 // Recursive block ref — used for nested blocks (accordion, steps, tabs, layout)
 const blockRef = { $ref: "#/$defs/block" };
 
-export const blockSchemas: Record<string, object> = {
+const blockSchemas: Record<string, object> = {
   heading: blockSchema(
     "heading",
     {

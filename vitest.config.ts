@@ -7,8 +7,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@vox/schema": path.resolve(__dirname, "packages/schema/src/index.ts"),
-      "@vox/compiler": path.resolve(
+      "@voxdoc/schema": path.resolve(
+        __dirname,
+        "packages/schema/src/index.ts",
+      ),
+      "@voxdoc/compiler": path.resolve(
         __dirname,
         "packages/compiler/src/index.ts",
       ),

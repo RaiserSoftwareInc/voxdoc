@@ -1,6 +1,6 @@
 import type { ParagraphBlock } from "@voxdoc/schema";
 import { marked } from "marked";
-import { resolveVariables } from "../utils.js";
+import { resolveVariables } from "../variables.js";
 
 export function renderParagraph(
   block: ParagraphBlock,

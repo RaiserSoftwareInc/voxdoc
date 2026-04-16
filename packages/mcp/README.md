@@ -14,16 +14,16 @@ npm install @voxdoc/mcp
 import { startServer } from "@voxdoc/mcp";
 
 // Start MCP server for a document
-await startServer("document.vox");
+await startServer("document.vox.html");
 ```
 
 Or use the CLI:
 
 ```bash
 # Single file
-vox mcp serve document.vox
+vox mcp serve document.vox.html
 
-# Workspace — serve a directory of .vox files
+# Workspace — serve a directory of .vox.html files
 vox mcp serve ./docs/
 ```
 
