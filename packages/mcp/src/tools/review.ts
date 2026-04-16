@@ -34,14 +34,23 @@ export function registerReviewTools(
   server.registerTool(
     "resolve_comment",
     {
-      description: "Resolve a review comment",
+      description: "Resolve one or more review comments. Pass an array of comment IDs.",
       annotations: { readOnlyHint: false, destructiveHint: false },
-      inputSchema: { comment_id: z.string() },
+      inputSchema: { comment_ids: z.array(z.string()) },
     },
-    async ({ comment_id }) => {
-      getStore().resolveComment(comment_id);
+    async ({ comment_ids }) => {
+      const results = comment_ids.map((comment_id) => {
+        try {
+          getStore().resolveComment(comment_id);
+          return { comment_id, success: true };
+        } catch (e) {
+          return { comment_id, success: false, error: (e as Error).message };
+        }
+      });
+      const anyFailed = results.some((r) => !r.success);
       return {
-        content: [{ type: "text", text: JSON.stringify({ success: true }) }],
+        content: [{ type: "text", text: JSON.stringify({ results }) }],
+        ...(anyFailed ? { isError: true } : {}),
       };
     },
   );
@@ -49,25 +58,29 @@ export function registerReviewTools(
   server.registerTool(
     "set_block_status",
     {
-      description: "Set the review status of a block",
+      description: "Set the review status of one or more blocks. Batch multiple status updates in one call.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
-        id: z.string(),
-        status: z.enum(["pre_approved", "pending", "flagged", "approved"]),
+        statuses: z.array(z.object({
+          id: z.string(),
+          status: z.enum(["pre_approved", "pending", "flagged", "approved"]),
+        })),
       },
     },
-    async ({ id, status }) => {
-      try {
-        getStore().setBlockStatus(id, status);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true }) }],
-        };
-      } catch (e) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ error: (e as Error).message }) }],
-          isError: true,
-        };
-      }
+    async ({ statuses }) => {
+      const results = statuses.map(({ id, status }) => {
+        try {
+          getStore().setBlockStatus(id, status);
+          return { id, success: true };
+        } catch (e) {
+          return { id, success: false, error: (e as Error).message };
+        }
+      });
+      const anyFailed = results.some((r) => !r.success);
+      return {
+        content: [{ type: "text", text: JSON.stringify({ results }) }],
+        ...(anyFailed ? { isError: true } : {}),
+      };
     },
   );
 

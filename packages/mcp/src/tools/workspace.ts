@@ -68,18 +68,35 @@ export function registerWorkspaceTools(
     "create_document",
     {
       description:
-        "Create a new Vox document in the workspace directory and set it as active.",
+        "Create a new Vox document in the workspace directory and set it as active. Pass initial blocks to avoid multiple add_block calls.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
         filename: z
           .string()
           .describe("Filename for the new document (e.g. getting-started.vox.html)"),
         title: z.string().describe("Document title"),
+        blocks: z
+          .array(
+            z.object({
+              type: z.string(),
+              content: z.record(z.string(), z.any()),
+            }),
+          )
+          .optional()
+          .describe("Optional initial blocks to add to the document"),
       },
     },
-    async ({ filename, title }) => {
+    async ({ filename, title, blocks }) => {
       try {
         const store = getWorkspace().createDocument(filename, title);
+        if (blocks && blocks.length > 0) {
+          let insertAfter: string | undefined;
+          for (const block of blocks) {
+            const blockData = { type: block.type, ...block.content } as any;
+            const id = store.addBlock(blockData, insertAfter);
+            insertAfter = id;
+          }
+        }
         const doc = store.getDocument();
         return {
           content: [
@@ -88,6 +105,7 @@ export function registerWorkspaceTools(
               text: JSON.stringify({
                 created: ensureVoxHtmlExtension(filename),
                 title: doc.meta.title,
+                blocks: doc.blocks.length,
                 active: true,
               }),
             },
