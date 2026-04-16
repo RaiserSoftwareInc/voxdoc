@@ -13,8 +13,11 @@ npm install @voxdoc/mcp
 ```typescript
 import { startServer } from "@voxdoc/mcp";
 
-// Start MCP server for a document
-await startServer("document.vox.html");
+// Start with a workspace path
+await startServer("./docs/");
+
+// Start without a path — AI calls set_workspace to configure
+await startServer();
 ```
 
 Or use the CLI:
@@ -25,11 +28,17 @@ vox mcp serve document.vox.html
 
 # Workspace — serve a directory of .vox.html files
 vox mcp serve ./docs/
+
+# Dynamic — AI calls set_workspace to choose a directory
+vox mcp serve
+
+# Register with Claude (one-time)
+vox mcp install
 ```
 
-## MCP Tools (24 total)
+## MCP Tools (26 total)
 
-**Workspace:** `list_documents`, `open_document`, `create_document`
+**Workspace:** `list_documents`, `open_document`, `create_document`, `set_workspace`, `get_workspace`
 
 **Reads:** `get_document`, `list_blocks`, `get_block`, `get_schema`, `search_blocks`
 
@@ -41,14 +50,21 @@ vox mcp serve ./docs/
 
 **Output:** `validate`, `compile`
 
-## Claude Desktop Config
+## Claude Setup
+
+```bash
+vox mcp install              # dynamic workspace
+vox mcp install ./docs/      # fixed workspace
+```
+
+Or manually add to Claude config:
 
 ```json
 {
   "mcpServers": {
     "vox-document": {
       "command": "vox",
-      "args": ["mcp", "serve", "/path/to/docs/"]
+      "args": ["mcp", "serve"]
     }
   }
 }

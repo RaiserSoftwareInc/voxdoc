@@ -12,10 +12,7 @@ npm install -g @voxdoc/cli
 
 ```bash
 # Create a new document
-vox init my-doc.vox.html --title "My Document"
-
-# Register legacy .vox files with your OS (optional)
-vox setup
+vox init my-doc --title "My Document"
 
 # Validate against schema + accessibility rules
 vox validate my-doc.vox.html
@@ -29,12 +26,13 @@ vox info my-doc.vox.html
 # List all blocks
 vox blocks my-doc.vox.html
 
-# Open in browser
-vox view my-doc.vox.html
+# Start MCP server for AI authoring
+vox mcp serve my-doc.vox.html   # single file
+vox mcp serve ./docs/           # directory
+vox mcp serve                   # dynamic workspace
 
-# Start MCP server for AI authoring (file or directory)
-vox mcp serve my-doc.vox.html
-vox mcp serve ./docs/
+# Register with Claude (one-time)
+vox mcp install
 ```
 
 ## How it works

@@ -23,9 +23,13 @@ vox compile my-doc.vox.html
 # Validate against schema + accessibility rules
 vox validate my-doc.vox.html
 
-# Start MCP server for AI authoring (single file or directory)
-vox mcp serve my-doc.vox.html
-vox mcp serve ./docs/
+# Start MCP server for AI authoring
+vox mcp serve my-doc.vox.html   # single file
+vox mcp serve ./docs/           # directory
+vox mcp serve                   # dynamic — AI picks workspace
+
+# Register with Claude (one-time setup)
+vox mcp install
 ```
 
 > `.vox.html` files open directly in any browser — no setup required.
@@ -43,7 +47,7 @@ AI Agent ──MCP──▶ .vox.html ──Compiler──▶ Self-contained HTM
                      └──── Human Review ◀── Browser
 ```
 
-1. **AI connects via MCP** — 24 tools for reading, writing, reviewing, and compiling documents
+1. **AI connects via MCP** — 26 tools for reading, writing, reviewing, and compiling documents
 2. **AI builds the document** block by block — headings, paragraphs, tables, diagrams, code, callouts
 3. **AI self-reviews** — flags blocks it's uncertain about, auto-approves the rest
 4. **Human reviews only flagged blocks** — approve, flag with a comment, or skip
@@ -75,7 +79,7 @@ Compilation fails if accessibility fields are missing. This is not optional.
 
 | Package                               | Description                                                  |
 | ------------------------------------- | ------------------------------------------------------------ |
-| [@voxdoc/cli](packages/cli)           | CLI — `vox init`, `validate`, `compile`, `mcp serve`         |
+| [@voxdoc/cli](packages/cli)           | CLI — `vox init`, `validate`, `compile`, `mcp serve`, `mcp install` |
 | [@voxdoc/schema](packages/schema)     | TypeScript types, JSONSchema, validation                     |
 | [@voxdoc/compiler](packages/compiler) | Compiles Vox documents to self-contained HTML                |
 | [@voxdoc/mcp](packages/mcp)           | MCP server for AI-first document authoring                   |
@@ -95,12 +99,21 @@ vox mcp serve ./docs/
 vox mcp serve
 ```
 
+Or register automatically with Claude:
+
+```bash
+vox mcp install              # dynamic workspace
+vox mcp install ./docs/      # fixed workspace
+```
+
+Manual config (any MCP client):
+
 ```json
 {
   "mcpServers": {
     "vox-document": {
       "command": "vox",
-      "args": ["mcp", "serve", "path/to/docs/"]
+      "args": ["mcp", "serve"]
     }
   }
 }
