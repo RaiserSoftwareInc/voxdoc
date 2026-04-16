@@ -1,5 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import path from "node:path";
+import { statSync } from "node:fs";
 import { ensureVoxHtmlExtension } from "@voxdoc/schema";
 import type { WorkspaceStore } from "../workspace-store.js";
 
@@ -99,6 +101,80 @@ export function registerWorkspaceTools(
           isError: true,
         };
       }
+    },
+  );
+
+  server.registerTool(
+    "set_workspace",
+    {
+      description:
+        "Set or change the workspace directory. All document tools operate within this directory. Call this before using any other tools if the server was started without a path.",
+      annotations: { readOnlyHint: false, destructiveHint: false },
+      inputSchema: {
+        path: z
+          .string()
+          .describe("Absolute or relative path to a directory containing .vox.html files"),
+      },
+    },
+    async ({ path: inputPath }) => {
+      try {
+        const absPath = path.resolve(inputPath);
+        statSync(absPath);
+        getWorkspace().setWorkspace(absPath);
+        const docs = getWorkspace().listDocuments();
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                workspace: absPath,
+                documents: docs.length,
+              }),
+            },
+          ],
+        };
+      } catch (e) {
+        return {
+          content: [
+            { type: "text", text: JSON.stringify({ error: (e as Error).message }) },
+          ],
+          isError: true,
+        };
+      }
+    },
+  );
+
+  server.registerTool(
+    "get_workspace",
+    {
+      description:
+        "Get the current workspace directory and status. Returns whether a workspace is configured, the path, and document count.",
+      annotations: { readOnlyHint: true, destructiveHint: false },
+    },
+    async () => {
+      const workspace = getWorkspace();
+      if (!workspace.isConfigured()) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ configured: false, workspace: null, documents: null }),
+            },
+          ],
+        };
+      }
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              configured: true,
+              workspace: workspace.getDir(),
+              documents: workspace.listDocuments().length,
+            }),
+          },
+        ],
+      };
     },
   );
 }

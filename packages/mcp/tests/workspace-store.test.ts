@@ -108,4 +108,58 @@ describe("WorkspaceStore", () => {
     expect(files).toContain("new.vox.html");
     expect(files).toHaveLength(2);
   });
+
+  it("starts unconfigured when no path provided", () => {
+    const ws = new WorkspaceStore();
+    expect(ws.isConfigured()).toBe(false);
+    expect(ws.getDir()).toBeNull();
+    expect(ws.getActiveFilename()).toBeNull();
+  });
+
+  it("throws on all operations when unconfigured", () => {
+    const ws = new WorkspaceStore();
+    const msg = "No workspace configured. Call set_workspace with a directory path first.";
+    expect(() => ws.listFiles()).toThrow(msg);
+    expect(() => ws.listDocuments()).toThrow(msg);
+    expect(() => ws.openDocument("x.vox.html")).toThrow(msg);
+    expect(() => ws.createDocument("x", "X")).toThrow(msg);
+    expect(() => ws.getActiveStore()).toThrow(msg);
+  });
+
+  it("configures workspace via setWorkspace()", () => {
+    createTestVox("test.vox.html", "Test");
+    const ws = new WorkspaceStore();
+    ws.setWorkspace(TEST_DIR);
+    expect(ws.isConfigured()).toBe(true);
+    expect(ws.listFiles()).toEqual(["test.vox.html"]);
+  });
+
+  it("switches workspace via setWorkspace()", () => {
+    const dir2 = join(TEST_DIR, "sub");
+    mkdirSync(dir2, { recursive: true });
+    createTestVox("a.vox.html", "A");
+    // Create a doc in dir2
+    const doc = {
+      $schema: "https://voxformat.dev/schema/v1.json",
+      meta: {
+        id: "test", title: "B", description: "", version: "1.0.0",
+        authors: [], tags: [], status: "draft",
+        created: new Date().toISOString(), updated: new Date().toISOString(),
+        variables: {},
+        provenance: { generated_by: null, reviewed_by: null, approved_blocks: [], flagged_blocks: [] },
+        accessibility: { language: "en", reading_level: "technical" },
+      },
+      blocks: [],
+    };
+    const result = compile(doc);
+    writeFileSync(join(dir2, "b.vox.html"), result.html!, "utf-8");
+
+    const ws = new WorkspaceStore(TEST_DIR);
+    expect(ws.listFiles()).toContain("a.vox.html");
+
+    ws.setWorkspace(dir2);
+    expect(ws.listFiles()).toEqual(["b.vox.html"]);
+    // dir2 has one file → auto-activates (same behavior as constructor)
+    expect(ws.getActiveFilename()).toBe("b.vox.html");
+  });
 });

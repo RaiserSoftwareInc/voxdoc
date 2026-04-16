@@ -82,7 +82,7 @@ Compilation fails if accessibility fields are missing. This is not optional.
 
 ## MCP Server
 
-Connect any MCP-compatible AI agent to author Vox documents. Serve a single file or a whole directory:
+Connect any MCP-compatible AI agent to author Vox documents. Serve a single file, a directory, or let the AI choose:
 
 ```bash
 # Single document
@@ -90,6 +90,9 @@ vox mcp serve my-doc.vox.html
 
 # Workspace — AI can list, open, and create documents in the directory
 vox mcp serve ./docs/
+
+# Dynamic — AI calls set_workspace to choose a directory
+vox mcp serve
 ```
 
 ```json
@@ -103,11 +106,11 @@ vox mcp serve ./docs/
 }
 ```
 
-**24 tools:**
+**26 tools:**
 
 | Category      | Tools                                                                       |
 | ------------- | --------------------------------------------------------------------------- |
-| Workspace     | list_documents, open_document, create_document                              |
+| Workspace     | list_documents, open_document, create_document, set_workspace, get_workspace |
 | Read          | get_document, list_blocks, get_block, get_schema, search_blocks             |
 | Write         | add_block, edit_block, delete_block, move_block, set_metadata, set_variable |
 | Review        | add_comment, list_comments, resolve_comment, set_block_status, set_status   |
@@ -121,7 +124,7 @@ git clone https://github.com/RaiserSoftwareInc/voxdoc.git
 cd voxdoc
 pnpm install
 pnpm -r build
-pnpm -r test    # 112 tests
+pnpm -r test    # 126 tests
 ```
 
 ## License

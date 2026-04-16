@@ -4,11 +4,17 @@ import { isVoxFile, ensureVoxHtmlExtension } from "@voxdoc/schema";
 import { DocumentStore } from "./document-store.js";
 
 export class WorkspaceStore {
-  private dir: string;
+  private dir: string | null = null;
   private stores: Map<string, DocumentStore> = new Map();
   private activeFile: string | null = null;
 
-  constructor(pathArg: string) {
+  constructor(pathArg?: string) {
+    if (pathArg !== undefined) {
+      this.initFromPath(pathArg);
+    }
+  }
+
+  private initFromPath(pathArg: string): void {
     const stat = statSync(pathArg);
     if (stat.isDirectory()) {
       this.dir = pathArg;
@@ -24,9 +30,28 @@ export class WorkspaceStore {
     }
   }
 
+  setWorkspace(pathArg: string): void {
+    this.stores = new Map();
+    this.activeFile = null;
+    this.initFromPath(pathArg);
+  }
+
+  isConfigured(): boolean {
+    return this.dir !== null;
+  }
+
+  private ensureConfigured(): void {
+    if (this.dir === null) {
+      throw new Error(
+        "No workspace configured. Call set_workspace with a directory path first.",
+      );
+    }
+  }
+
   listFiles(): string[] {
+    this.ensureConfigured();
     try {
-      return readdirSync(this.dir)
+      return readdirSync(this.dir!)
         .filter((f) => isVoxFile(f))
         .sort();
     } catch {
@@ -41,6 +66,7 @@ export class WorkspaceStore {
     blocks: number;
     active: boolean;
   }> {
+    this.ensureConfigured();
     return this.listFiles().map((filename) => {
       const store = this.getStoreForFile(filename);
       const doc = store.getDocument();
@@ -55,6 +81,7 @@ export class WorkspaceStore {
   }
 
   openDocument(filename: string): DocumentStore {
+    this.ensureConfigured();
     if (!this.listFiles().includes(filename)) {
       throw new Error(`File not found in workspace: ${filename}`);
     }
@@ -63,8 +90,9 @@ export class WorkspaceStore {
   }
 
   createDocument(filename: string, title: string): DocumentStore {
+    this.ensureConfigured();
     filename = ensureVoxHtmlExtension(filename);
-    const filePath = path.join(this.dir, filename);
+    const filePath = path.join(this.dir!, filename);
     const store = DocumentStore.createEmpty(title);
     // Set file path and save
     (store as any).filePath = filePath;
@@ -75,6 +103,7 @@ export class WorkspaceStore {
   }
 
   getActiveStore(): DocumentStore {
+    this.ensureConfigured();
     if (!this.activeFile) {
       throw new Error(
         "No active document. Use list_documents to see available files, then open_document to select one.",
@@ -87,14 +116,14 @@ export class WorkspaceStore {
     return this.activeFile;
   }
 
-  getDir(): string {
+  getDir(): string | null {
     return this.dir;
   }
 
   private getStoreForFile(filename: string): DocumentStore {
     let store = this.stores.get(filename);
     if (!store) {
-      const filePath = path.join(this.dir, filename);
+      const filePath = path.join(this.dir!, filename);
       store = DocumentStore.fromFile(filePath);
       this.stores.set(filename, store);
     }
