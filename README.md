@@ -28,7 +28,7 @@ vox mcp serve my-doc.vox.html
 vox mcp serve ./docs/
 ```
 
-> `.vox.html` files open directly in any browser — no `vox setup` required. `vox setup` is optional and only needed if you want OS-level file association for double-clicking `.vox.html` files.
+> `.vox.html` files open directly in any browser — no setup required.
 
 ### Why `.vox.html`?
 
@@ -75,7 +75,7 @@ Compilation fails if accessibility fields are missing. This is not optional.
 
 | Package                               | Description                                                  |
 | ------------------------------------- | ------------------------------------------------------------ |
-| [@voxdoc/cli](packages/cli)           | CLI — `vox init`, `validate`, `compile`, `view`, `mcp serve` |
+| [@voxdoc/cli](packages/cli)           | CLI — `vox init`, `validate`, `compile`, `mcp serve`         |
 | [@voxdoc/schema](packages/schema)     | TypeScript types, JSONSchema, validation                     |
 | [@voxdoc/compiler](packages/compiler) | Compiles Vox documents to self-contained HTML                |
 | [@voxdoc/mcp](packages/mcp)           | MCP server for AI-first document authoring                   |

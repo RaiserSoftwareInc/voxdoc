@@ -33,7 +33,7 @@ export type {
 } from "./types.js";
 
 // Schema
-export { BLOCK_TYPES, blockSchemas, voxDocumentSchema } from "./schema.js";
+export { voxDocumentSchema } from "./schema.js";
 
 // Validation
 export { validateDocument } from "./validate.js";

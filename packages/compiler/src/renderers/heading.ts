@@ -1,5 +1,6 @@
 import type { HeadingBlock } from "@voxdoc/schema";
-import { escapeHtml, resolveVariables } from "../utils.js";
+import { escapeHtml } from "../utils.js";
+import { resolveVariables } from "../variables.js";
 
 export function renderHeading(
   block: HeadingBlock,

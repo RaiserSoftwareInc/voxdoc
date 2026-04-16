@@ -32,9 +32,7 @@
     "@voxdoc/compiler": "workspace:*",
     "@voxdoc/mcp": "workspace:*",
     "@voxdoc/schema": "workspace:*",
-    "chalk": "^5.4.0",
-    "commander": "^13.0.0",
-    "open": "^10.0.0"
+    "commander": "^13.0.0"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",

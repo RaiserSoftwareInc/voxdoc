@@ -1,6 +1,6 @@
 import type { ListBlock } from "@voxdoc/schema";
 import { marked } from "marked";
-import { resolveVariables } from "../utils.js";
+import { resolveVariables } from "../variables.js";
 
 export function renderList(
   block: ListBlock,
