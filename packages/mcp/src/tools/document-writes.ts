@@ -9,19 +9,27 @@ export function registerWriteTools(
   server.registerTool(
     "add_block",
     {
-      description: "Add a new block to the document",
+      description: "Add one or more blocks to the document. Prefer batching multiple blocks in one call over separate calls to reduce token usage.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
-        type: z.string(),
-        content: z.record(z.string(), z.any()),
-        after: z.string().optional(),
+        blocks: z.array(z.object({
+          type: z.string(),
+          content: z.record(z.string(), z.any()),
+        })),
+        after: z.string().optional().describe("Insert all blocks after this block ID. Omit to append to end."),
       },
     },
-    async ({ type, content, after }) => {
-      const blockData = { type, ...content } as Parameters<DocumentStore["addBlock"]>[0];
-      const id = getStore().addBlock(blockData, after);
+    async ({ blocks, after }) => {
+      const ids: string[] = [];
+      let insertAfter = after;
+      for (const block of blocks) {
+        const blockData = { type: block.type, ...block.content } as Parameters<DocumentStore["addBlock"]>[0];
+        const id = getStore().addBlock(blockData, insertAfter);
+        ids.push(id);
+        insertAfter = id;
+      }
       return {
-        content: [{ type: "text" as const, text: JSON.stringify({ id }, null, 2) }],
+        content: [{ type: "text" as const, text: JSON.stringify({ ids }) }],
       };
     },
   );
@@ -29,47 +37,51 @@ export function registerWriteTools(
   server.registerTool(
     "edit_block",
     {
-      description: "Edit an existing block",
+      description: "Edit one or more existing blocks. Batch edits in one call to reduce token usage.",
       annotations: { readOnlyHint: false, destructiveHint: false },
       inputSchema: {
-        id: z.string(),
-        content: z.record(z.string(), z.any()),
+        edits: z.array(z.object({
+          id: z.string(),
+          content: z.record(z.string(), z.any()),
+        })),
       },
     },
-    async ({ id, content }) => {
-      try {
-        getStore().editBlock(id, content);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true }) }],
-        };
-      } catch (e) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ error: (e as Error).message }) }],
-          isError: true,
-        };
-      }
+    async ({ edits }) => {
+      const results = edits.map(({ id, content }) => {
+        try {
+          getStore().editBlock(id, content);
+          return { id, success: true };
+        } catch (e) {
+          return { id, success: false, error: (e as Error).message };
+        }
+      });
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify({ results }) }],
+      };
     },
   );
 
   server.registerTool(
     "delete_block",
     {
-      description: "Delete a block from the document",
+      description: "Delete one or more blocks from the document. Pass an array of block IDs.",
       annotations: { readOnlyHint: false, destructiveHint: true },
-      inputSchema: { id: z.string() },
+      inputSchema: {
+        ids: z.array(z.string()),
+      },
     },
-    async ({ id }) => {
-      try {
-        getStore().deleteBlock(id);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true }) }],
-        };
-      } catch (e) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ error: (e as Error).message }) }],
-          isError: true,
-        };
-      }
+    async ({ ids }) => {
+      const results = ids.map((id) => {
+        try {
+          getStore().deleteBlock(id);
+          return { id, success: true };
+        } catch (e) {
+          return { id, success: false, error: (e as Error).message };
+        }
+      });
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify({ results }) }],
+      };
     },
   );
 
