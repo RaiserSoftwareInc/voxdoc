@@ -5,6 +5,7 @@ import { compileCommand } from "./commands/compile.js";
 import { infoCommand } from "./commands/info.js";
 import { blocksCommand } from "./commands/blocks.js";
 import { mcpServeCommand } from "./commands/mcp-serve.js";
+import { mcpInstallCommand } from "./commands/mcp-install.js";
 
 export function createCli(): Command {
   const program = new Command();
@@ -50,6 +51,11 @@ export function createCli(): Command {
     .command("serve [path]")
     .description("Start MCP server for a document or directory (omit path for dynamic workspace)")
     .action((path?: string) => mcpServeCommand(path));
+
+  mcpCmd
+    .command("install [path]")
+    .description("Register Vox MCP server with Claude")
+    .action((path?: string) => mcpInstallCommand(path));
 
   return program;
 }
