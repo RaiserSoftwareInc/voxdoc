@@ -30,6 +30,10 @@ vox mcp serve ./docs/
 
 > `.vox.html` files open directly in any browser — no `vox setup` required. `vox setup` is optional and only needed if you want OS-level file association for double-clicking `.vox.html` files.
 
+### Why `.vox.html`?
+
+Vox uses the `.vox.html` extension so that documents are **instantly viewable** — double-click any `.vox.html` file and your OS opens it in a browser. No CLI tools, no plugins, no setup. The `.html` suffix tells the OS it's a web page; the `.vox` prefix tells tooling it's a structured Vox document. The compiled HTML embeds the full Vox JSON source inside a `<script type="application/vox+json">` tag, so a single file is both human-readable and machine-round-trippable.
+
 ## How It Works
 
 ```
@@ -117,7 +121,7 @@ git clone https://github.com/RaiserSoftwareInc/voxdoc.git
 cd voxdoc
 pnpm install
 pnpm -r build
-pnpm -r test    # 102 tests
+pnpm -r test    # 112 tests
 ```
 
 ## License
