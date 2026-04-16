@@ -5,9 +5,13 @@
     "build": "turbo build",
     "test": "turbo test",
     "test:integration": "vitest run --config vitest.config.ts",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "benchmark": "pnpm -r build && tsx benchmarks/run.ts"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "tiktoken": "^1.0.20",
+    "tsx": "^4.19.0",
     "turbo": "^2.4.0",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
